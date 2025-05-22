@@ -1,4 +1,4 @@
-import { pgTable, text, serial, integer, boolean, numeric } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean, numeric, timestamp, json } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -15,6 +15,48 @@ export const insertUserSchema = createInsertSchema(users).pick({
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
+
+// Define the customer table
+export const customers = pgTable("customers", {
+  id: serial("id").primaryKey(),
+  firstName: text("first_name").notNull(),
+  lastName: text("last_name").notNull(),
+  email: text("email").notNull(),
+  phone: text("phone"),
+  company: text("company").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertCustomerSchema = createInsertSchema(customers).pick({
+  firstName: true,
+  lastName: true,
+  email: true,
+  phone: true,
+  company: true,
+});
+
+export type InsertCustomer = z.infer<typeof insertCustomerSchema>;
+export type Customer = typeof customers.$inferSelect;
+
+// Define the calculation results table
+export const calculations = pgTable("calculations", {
+  id: serial("id").primaryKey(),
+  customerId: integer("customer_id").notNull(),
+  projectName: text("project_name").notNull(),
+  inputData: json("input_data").notNull(),
+  resultData: json("result_data").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertCalculationSchema = createInsertSchema(calculations).pick({
+  customerId: true,
+  projectName: true,
+  inputData: true,
+  resultData: true,
+});
+
+export type InsertCalculation = z.infer<typeof insertCalculationSchema>;
+export type Calculation = typeof calculations.$inferSelect;
 
 // Define the calculation input schema
 export const calculationInputSchema = z.object({
