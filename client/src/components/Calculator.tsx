@@ -9,7 +9,6 @@ import { useToast } from "@/hooks/use-toast";
 import { calculateResults } from "@/lib/calculatorUtils";
 import { Button } from "@/components/ui/button";
 import { Check, Save } from "lucide-react";
-import { CalculatorIcon } from "lucide-react";
 
 export default function Calculator() {
   const { toast } = useToast();
@@ -148,7 +147,7 @@ export default function Calculator() {
               <div className="relative flex justify-between">
                 <div className={`flex items-center ${currentStep === 'calculate' || currentStep === 'customer' || currentStep === 'review' ? 'text-primary' : 'text-gray-500'}`}>
                   <span className={`flex h-10 w-10 items-center justify-center rounded-full ${currentStep === 'calculate' || currentStep === 'customer' || currentStep === 'review' ? 'bg-primary text-white' : 'border-2 border-gray-300 bg-white'}`}>
-                    <Calculator className="h-5 w-5" />
+                    <span className="text-sm font-medium">1</span>
                   </span>
                   <span className="ml-3 text-sm font-medium">Calculate</span>
                 </div>
