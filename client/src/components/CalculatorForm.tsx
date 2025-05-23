@@ -20,7 +20,7 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
     defaultValues: {
       projectName: "Site Survey Project",
       numSites: 10,
-      flightFrequency: 4,
+      flightFrequency: 52,
       travelCost: 4000,
       pilotHourly: 75,
       hoursPerFlight: 4,
@@ -100,7 +100,7 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                             <SelectItem value="4">Quarterly</SelectItem>
                             <SelectItem value="12">Monthly</SelectItem>
                             <SelectItem value="26">Bi-weekly</SelectItem>
-                            <SelectItem value="52">Weekly</SelectItem>
+                            <SelectItem value="52" default>Weekly</SelectItem>
                           </SelectContent>
                         </Select>
                         <FormMessage />
