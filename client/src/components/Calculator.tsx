@@ -1,24 +1,19 @@
 import { useState } from "react";
 import CalculatorForm from "./CalculatorForm";
-import CustomerInfoForm from "./CustomerInfoForm";
 import CalculatorResults from "./CalculatorResults";
-import { CalculationInput, CalculationResult, InsertCustomer } from "@shared/schema";
+import { CalculationInput, CalculationResult } from "@shared/schema";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { calculateResults } from "@/lib/calculatorUtils";
 import { Button } from "@/components/ui/button";
-import { Check, Save } from "lucide-react";
 
 export default function Calculator() {
   const { toast } = useToast();
   const [results, setResults] = useState<CalculationResult | null>(null);
-  const [customerInfo, setCustomerInfo] = useState<InsertCustomer | null>(null);
   const [currentStep, setCurrentStep] = useState("calculate");
-  const [submitted, setSubmitted] = useState(false);
-  const [submissionId, setSubmissionId] = useState<number | null>(null);
 
-  // Calculation mutation - only calculates without saving
+  // Calculation mutation
   const calculationMutation = useMutation({
     mutationFn: async (data: CalculationInput) => {
       const response = await apiRequest("POST", "/api/calculate", data);
@@ -26,6 +21,7 @@ export default function Calculator() {
     },
     onSuccess: (data: CalculationResult) => {
       setResults(data);
+      setCurrentStep("results");
     },
     onError: (error) => {
       toast({
@@ -38,64 +34,35 @@ export default function Calculator() {
       try {
         const clientResults = calculateResults(calculationMutation.variables as CalculationInput);
         setResults(clientResults);
+        setCurrentStep("results");
       } catch (err) {
         console.error("Client-side calculation failed:", err);
       }
     },
   });
 
-  // Submission mutation - saves customer info and calculation
-  const submissionMutation = useMutation({
-    mutationFn: async (data: { customer: InsertCustomer, calculation: CalculationInput }) => {
-      const response = await apiRequest("POST", "/api/submit", data);
-      return response.json();
-    },
-    onSuccess: (data) => {
-      setResults(data.results);
-      setSubmissionId(data.calculationId);
-      setSubmitted(true);
-      
-      toast({
-        title: "Success!",
-        description: "Your calculation has been saved. Thanks for your submission!",
-        duration: 5000,
-      });
-    },
-    onError: (error) => {
-      toast({
-        title: "Submission Error",
-        description: error instanceof Error ? error.message : "Failed to save your information",
-        variant: "destructive",
-      });
-    }
-  });
-
   const handleCalculate = (data: CalculationInput) => {
     calculationMutation.mutate(data);
   };
 
-  const handleCustomerInfoChange = (data: InsertCustomer) => {
-    setCustomerInfo(data);
+  const handleBackToCalculate = () => {
+    setCurrentStep("calculate");
   };
 
-  const handleSubmit = () => {
-    if (!customerInfo || !calculationMutation.variables) {
-      toast({
-        title: "Missing Information",
-        description: "Please fill out both your information and the calculation parameters.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    submissionMutation.mutate({
-      customer: customerInfo,
-      calculation: calculationMutation.variables as CalculationInput
+  const handleDownloadPDF = () => {
+    // TODO: Implement PDF generation and download
+    toast({
+      title: "PDF Download",
+      description: "PDF download feature will be implemented soon!",
     });
   };
 
-  const moveToStep = (step: string) => {
-    setCurrentStep(step);
+  const handleEmailReport = () => {
+    // TODO: Implement email functionality
+    toast({
+      title: "Email Report",
+      description: "Email report feature will be implemented soon!",
+    });
   };
 
   return (
