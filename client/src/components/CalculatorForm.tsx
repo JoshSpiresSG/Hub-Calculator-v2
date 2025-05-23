@@ -21,7 +21,7 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
       projectName: "Site Survey Project",
       numSites: 10,
       flightFrequency: 4,
-      travelCost: 250,
+      travelCost: 4000,
       pilotHourly: 75,
       hoursPerFlight: 4,
       equipmentCost: 17000,
@@ -119,11 +119,11 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                     name="travelCost"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Travel Cost per Site Visit ($)</FormLabel>
+                        <FormLabel>Mobilisation Cost per Person ($)</FormLabel>
                         <FormControl>
                           <Input 
                             type="number" 
-                            placeholder="250" 
+                            placeholder="4000" 
                             {...field} 
                             onChange={e => field.onChange(parseFloat(e.target.value))}
                           />
