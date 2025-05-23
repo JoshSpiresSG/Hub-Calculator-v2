@@ -1,9 +1,9 @@
 import { CalculationInput, CalculationResult } from "@shared/schema";
 
 export function formatCurrency(amount: number): string {
-  return new Intl.NumberFormat('en-US', {
+  return new Intl.NumberFormat('en-AU', {
     style: 'currency',
-    currency: 'USD',
+    currency: 'AUD',
     maximumFractionDigits: 0,
   }).format(amount);
 }
