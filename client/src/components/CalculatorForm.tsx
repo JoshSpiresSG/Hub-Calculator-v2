@@ -24,8 +24,8 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
       travelCost: 250,
       pilotHourly: 75,
       hoursPerFlight: 4,
-      equipmentCost: 5000,
-      platformCost: 10000,
+      equipmentCost: 17000,
+      platformCost: 100000,
       droneBoxCost: 8000,
       remoteHours: 0.5,
       remoteHourly: 75,
@@ -180,7 +180,7 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                         <FormControl>
                           <Input 
                             type="number" 
-                            placeholder="5000" 
+                            placeholder="17000" 
                             {...field} 
                             onChange={e => field.onChange(parseFloat(e.target.value))}
                           />
@@ -205,7 +205,7 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                         <FormControl>
                           <Input 
                             type="number" 
-                            placeholder="10000" 
+                            placeholder="100000" 
                             {...field} 
                             onChange={e => field.onChange(parseFloat(e.target.value))}
                           />
