@@ -6,7 +6,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Loader2 } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Loader2, Edit3, Info } from "lucide-react";
 
 interface CalculatorFormProps {
   onCalculate: (data: CalculationInput) => void;
@@ -14,6 +15,8 @@ interface CalculatorFormProps {
 }
 
 export default function CalculatorForm({ onCalculate, isCalculating }: CalculatorFormProps) {
+  const [editableFields, setEditableFields] = useState<Record<string, boolean>>({});
+  
   const form = useForm<CalculationInput>({
     resolver: zodResolver(calculationInputSchema),
     defaultValues: {
@@ -36,9 +39,86 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
       remoteCostPerYear: 100000,
     },
   });
+
+  const toggleEdit = (fieldName: string) => {
+    setEditableFields(prev => ({
+      ...prev,
+      [fieldName]: !prev[fieldName]
+    }));
+  };
   
   const onSubmit = (data: CalculationInput) => {
     onCalculate(data);
+  };
+
+  const EditableField = ({ 
+    name, 
+    label, 
+    tooltip, 
+    placeholder, 
+    type = "number", 
+    step,
+    disabled = false 
+  }: {
+    name: keyof CalculationInput;
+    label: string;
+    tooltip: string;
+    placeholder: string;
+    type?: string;
+    step?: string;
+    disabled?: boolean;
+  }) => {
+    const isEditable = editableFields[name] || false;
+    
+    return (
+      <FormField
+        control={form.control}
+        name={name}
+        render={({ field }) => (
+          <FormItem>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-1">
+                <FormLabel>{label}</FormLabel>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Info className="h-4 w-4 text-gray-400 cursor-help" />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p className="max-w-xs">{tooltip}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
+              {!disabled && (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => toggleEdit(name)}
+                  className="h-6 px-2 text-xs"
+                >
+                  <Edit3 className="h-3 w-3 mr-1" />
+                  {isEditable ? 'Lock' : 'Edit'}
+                </Button>
+              )}
+            </div>
+            <FormControl>
+              <Input 
+                type={type}
+                placeholder={placeholder}
+                step={step}
+                {...field} 
+                onChange={e => field.onChange(parseFloat(e.target.value))}
+                disabled={disabled || !isEditable}
+                className={`${(disabled || !isEditable) ? 'bg-gray-100 cursor-not-allowed' : ''}`}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+    );
   };
 
   return (
@@ -53,80 +133,32 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
               <div>
                 <h4 className="text-sm font-medium text-gray-700 mb-3 uppercase tracking-wider">🛠️ Operation Requirements</h4>
                 <div className="space-y-4">
-                  <FormField
-                    control={form.control}
+                  <EditableField
                     name="numSites"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Number of Sites</FormLabel>
-                        <FormControl>
-                          <Input 
-                            type="number" 
-                            placeholder="1" 
-                            {...field} 
-                            onChange={e => field.onChange(parseFloat(e.target.value))}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
+                    label="Number of Sites"
+                    tooltip="Total number of locations where drone operations will be conducted"
+                    placeholder="1"
                   />
                   
-                  <FormField
-                    control={form.control}
+                  <EditableField
                     name="dronesPerSite"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Drones per Site</FormLabel>
-                        <FormControl>
-                          <Input 
-                            type="number" 
-                            placeholder="3" 
-                            {...field} 
-                            onChange={e => field.onChange(parseFloat(e.target.value))}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
+                    label="Drones per Site"
+                    tooltip="Number of drones deployed at each operational site"
+                    placeholder="3"
                   />
                   
-                  <FormField
-                    control={form.control}
+                  <EditableField
                     name="flightsPerDay"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Flights per Day per Site</FormLabel>
-                        <FormControl>
-                          <Input 
-                            type="number" 
-                            placeholder="2" 
-                            {...field} 
-                            onChange={e => field.onChange(parseFloat(e.target.value))}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
+                    label="Flights per Day per Site"
+                    tooltip="Average number of drone flights conducted per day at each site"
+                    placeholder="2"
                   />
                   
-                  <FormField
-                    control={form.control}
+                  <EditableField
                     name="flightDaysPerWeek"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Flight Days per Week per Site</FormLabel>
-                        <FormControl>
-                          <Input 
-                            type="number" 
-                            placeholder="5" 
-                            {...field} 
-                            onChange={e => field.onChange(parseFloat(e.target.value))}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
+                    label="Flight Days per Week per Site"
+                    tooltip="Number of operational days per week at each site"
+                    placeholder="5"
                   />
                 </div>
               </div>
@@ -135,61 +167,25 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
               <div>
                 <h4 className="text-sm font-medium text-gray-700 mb-3 uppercase tracking-wider">👷 Labour & Travel</h4>
                 <div className="space-y-4">
-                  <FormField
-                    control={form.control}
+                  <EditableField
                     name="pilotSalary"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Pilot Salary ($)</FormLabel>
-                        <FormControl>
-                          <Input 
-                            type="number" 
-                            placeholder="200000" 
-                            {...field} 
-                            onChange={e => field.onChange(parseFloat(e.target.value))}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
+                    label="Pilot Salary ($)"
+                    tooltip="Annual salary cost for drone pilots including benefits and overhead"
+                    placeholder="200000"
                   />
                   
-                  <FormField
-                    control={form.control}
+                  <EditableField
                     name="weeklyHoursPerPilot"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Weekly Hours per Pilot</FormLabel>
-                        <FormControl>
-                          <Input 
-                            type="number" 
-                            placeholder="38" 
-                            {...field} 
-                            onChange={e => field.onChange(parseFloat(e.target.value))}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
+                    label="Weekly Hours per Pilot"
+                    tooltip="Standard working hours per week for each pilot"
+                    placeholder="38"
                   />
                   
-                  <FormField
-                    control={form.control}
+                  <EditableField
                     name="travelAndRelatedCosts"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Travel & Related Costs ($)</FormLabel>
-                        <FormControl>
-                          <Input 
-                            type="number" 
-                            placeholder="3500" 
-                            {...field} 
-                            onChange={e => field.onChange(parseFloat(e.target.value))}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
+                    label="Travel & Related Costs ($)"
+                    tooltip="Costs for on-site presence including travel, accommodation, and per diems"
+                    placeholder="3500"
                   />
                 </div>
               </div>
@@ -198,43 +194,19 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
               <div>
                 <h4 className="text-sm font-medium text-gray-700 mb-3 uppercase tracking-wider">✈️ Manual Operation Cost</h4>
                 <div className="space-y-4">
-                  <FormField
-                    control={form.control}
+                  <EditableField
                     name="pilotTimePerFlight"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Pilot Time per Flight (hours)</FormLabel>
-                        <FormControl>
-                          <Input 
-                            type="number" 
-                            placeholder="1.0" 
-                            step="0.1"
-                            {...field} 
-                            onChange={e => field.onChange(parseFloat(e.target.value))}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
+                    label="Pilot Time per Flight (hours)"
+                    tooltip="Total time required per flight including setup, flying, packdown, and data processing"
+                    placeholder="1.0"
+                    step="0.1"
                   />
                   
-                  <FormField
-                    control={form.control}
+                  <EditableField
                     name="equipmentCostPerYear"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Equipment Cost per Year ($)</FormLabel>
-                        <FormControl>
-                          <Input 
-                            type="number" 
-                            placeholder="15000" 
-                            {...field} 
-                            onChange={e => field.onChange(parseFloat(e.target.value))}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
+                    label="Equipment Cost per Year ($)"
+                    tooltip="Annual cost for drone equipment including purchase, maintenance, batteries, and replacement parts"
+                    placeholder="15000"
                   />
                 </div>
               </div>
@@ -243,26 +215,12 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
               <div>
                 <h4 className="text-sm font-medium text-gray-700 mb-3 uppercase tracking-wider">🛰️ Remote Operation Cost (HubX / HubT)</h4>
                 <div className="space-y-4">
-                  <FormField
-                    control={form.control}
+                  <EditableField
                     name="remoteCostPerYear"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Cost per Year ($)</FormLabel>
-                        <FormControl>
-                          <Input 
-                            type="number" 
-                            placeholder="100000" 
-                            {...field} 
-                            onChange={e => field.onChange(parseFloat(e.target.value))}
-                            disabled
-                            className="bg-gray-100 cursor-not-allowed"
-                          />
-                        </FormControl>
-                        <p className="text-sm text-gray-500">Fixed cost (non-editable)</p>
-                        <FormMessage />
-                      </FormItem>
-                    )}
+                    label="Cost per Year ($)"
+                    tooltip="Fixed annual cost for remote drone platform including HubX or HubT deployment"
+                    placeholder="100000"
+                    disabled={true}
                   />
                 </div>
               </div>
