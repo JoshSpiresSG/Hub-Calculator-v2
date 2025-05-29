@@ -21,8 +21,16 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   const annualManualTotalCost = annualTravelCost + annualManualLaborCost + input.equipmentCostPerYear;
   const fiveYearManualCost = annualManualTotalCost * 5;
   
-  // Calculate remote costs (simplified - just the fixed cost)
-  const annualRemoteCost = input.remoteCostPerYear;
+  // Calculate remote costs based on hub type and managed flight services
+  let hubCost = 0;
+  if (input.hubType === "HubX") {
+    hubCost = 100000;
+  } else if (input.hubType === "HubT") {
+    hubCost = 60000;
+  }
+  
+  const managedFlightServicesCost = input.managedFlightServices === "Yes" ? 40000 : 0;
+  const annualRemoteCost = hubCost + managedFlightServicesCost;
   const fiveYearRemoteCost = annualRemoteCost * 5;
   
   // Calculate savings and ROI

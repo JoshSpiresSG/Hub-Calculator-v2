@@ -78,7 +78,6 @@ export const calculationInputSchema = z.object({
   // Remote Operation Cost (HubX / HubT)
   hubType: z.enum(["HubX", "HubT"], { required_error: "Hub type is required" }),
   managedFlightServices: z.enum(["Yes", "No"], { required_error: "Managed flight services selection is required" }),
-  remoteCostPerYear: z.number().default(100000),
 });
 
 export type CalculationInput = z.infer<typeof calculationInputSchema>;

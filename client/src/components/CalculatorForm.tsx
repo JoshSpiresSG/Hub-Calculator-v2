@@ -39,7 +39,6 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
       // Remote Operation Cost
       hubType: "HubX" as const,
       managedFlightServices: "No" as const,
-      remoteCostPerYear: 100000,
     },
   });
 
@@ -315,13 +314,32 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                     ]}
                   />
                   
-                  <EditableField
-                    name="remoteCostPerYear"
-                    label="Cost per Year ($)"
-                    tooltip="Fixed annual cost for remote drone platform including selected hub type and services"
-                    placeholder="100000"
-                    disabled={true}
-                  />
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <div className="flex items-center gap-1 mb-2">
+                      <h5 className="text-sm font-medium text-gray-700">Calculated Annual Cost</h5>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Info className="h-4 w-4 text-gray-400 cursor-help" />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p className="max-w-xs">Automatically calculated based on hub type and managed flight services selection</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    </div>
+                    <div className="text-lg font-semibold text-gray-900">
+                      ${(() => {
+                        const hubCost = form.watch("hubType") === "HubX" ? 100000 : 60000;
+                        const managedCost = form.watch("managedFlightServices") === "Yes" ? 40000 : 0;
+                        return (hubCost + managedCost).toLocaleString();
+                      })()}
+                    </div>
+                    <div className="text-xs text-gray-500 mt-1">
+                      Hub {form.watch("hubType")}: ${form.watch("hubType") === "HubX" ? "100,000" : "60,000"}
+                      {form.watch("managedFlightServices") === "Yes" && " + Managed Services: $40,000"}
+                    </div>
+                  </div>
                 </div>
               </div>
               
