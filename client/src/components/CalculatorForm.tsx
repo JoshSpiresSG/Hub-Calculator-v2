@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { calculationInputSchema, CalculationInput } from "@shared/schema";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Loader2 } from "lucide-react";
@@ -18,17 +17,23 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
   const form = useForm<CalculationInput>({
     resolver: zodResolver(calculationInputSchema),
     defaultValues: {
-      projectName: "Site Survey Project",
-      numSites: 10,
-      flightFrequency: 52,
-      travelCost: 4000,
-      pilotHourly: 75,
-      hoursPerFlight: 4,
-      equipmentCost: 17000,
-      platformCost: 100000,
-      droneBoxCost: 8000,
-      remoteHours: 0.5,
-      remoteHourly: 75,
+      // Operation Requirements
+      numSites: 1,
+      dronesPerSite: 3,
+      flightsPerDay: 2,
+      flightDaysPerWeek: 5,
+      
+      // Labour & Travel
+      pilotSalary: 200000,
+      weeklyHoursPerPilot: 38,
+      travelAndRelatedCosts: 3500,
+      
+      // Manual Operation Cost
+      pilotTimePerFlight: 1.0,
+      equipmentCostPerYear: 15000,
+      
+      // Remote Operation Cost (fixed)
+      remoteCostPerYear: 100000,
     },
   });
   
@@ -44,24 +49,10 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
           
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              {/* Project Details */}
+              {/* 🛠️ Operation Requirements */}
               <div>
-                <h4 className="text-sm font-medium text-gray-700 mb-3 uppercase tracking-wider">Project Details</h4>
+                <h4 className="text-sm font-medium text-gray-700 mb-3 uppercase tracking-wider">🛠️ Operation Requirements</h4>
                 <div className="space-y-4">
-                  <FormField
-                    control={form.control}
-                    name="projectName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Project Name</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Site Survey Project" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  
                   <FormField
                     control={form.control}
                     name="numSites"
@@ -71,7 +62,7 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                         <FormControl>
                           <Input 
                             type="number" 
-                            placeholder="10" 
+                            placeholder="1" 
                             {...field} 
                             onChange={e => field.onChange(parseFloat(e.target.value))}
                           />
@@ -83,47 +74,14 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                   
                   <FormField
                     control={form.control}
-                    name="flightFrequency"
+                    name="dronesPerSite"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Flight Frequency (per year)</FormLabel>
-                        <Select 
-                          onValueChange={(value) => field.onChange(parseFloat(value))} 
-                          defaultValue={field.value.toString()}
-                        >
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select frequency" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            <SelectItem value="4">Quarterly</SelectItem>
-                            <SelectItem value="12">Monthly</SelectItem>
-                            <SelectItem value="26">Bi-weekly</SelectItem>
-                            <SelectItem value="52" default>Weekly</SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-              </div>
-              
-              {/* Manual Drone Cost */}
-              <div>
-                <h4 className="text-sm font-medium text-gray-700 mb-3 uppercase tracking-wider">Manual Drone Operation</h4>
-                <div className="space-y-4">
-                  <FormField
-                    control={form.control}
-                    name="travelCost"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Mobilisation Cost per Person ($)</FormLabel>
+                        <FormLabel>Drones per Site</FormLabel>
                         <FormControl>
                           <Input 
                             type="number" 
-                            placeholder="4000" 
+                            placeholder="3" 
                             {...field} 
                             onChange={e => field.onChange(parseFloat(e.target.value))}
                           />
@@ -135,14 +93,14 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                   
                   <FormField
                     control={form.control}
-                    name="pilotHourly"
+                    name="flightsPerDay"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Pilot Hourly Rate ($)</FormLabel>
+                        <FormLabel>Flights per Day per Site</FormLabel>
                         <FormControl>
                           <Input 
                             type="number" 
-                            placeholder="75" 
+                            placeholder="2" 
                             {...field} 
                             onChange={e => field.onChange(parseFloat(e.target.value))}
                           />
@@ -154,33 +112,14 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                   
                   <FormField
                     control={form.control}
-                    name="hoursPerFlight"
+                    name="flightDaysPerWeek"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Hours per Flight (incl. setup)</FormLabel>
+                        <FormLabel>Flight Days per Week per Site</FormLabel>
                         <FormControl>
                           <Input 
                             type="number" 
-                            placeholder="4" 
-                            {...field} 
-                            onChange={e => field.onChange(parseFloat(e.target.value))}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  
-                  <FormField
-                    control={form.control}
-                    name="equipmentCost"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Equipment Cost per Year ($)</FormLabel>
-                        <FormControl>
-                          <Input 
-                            type="number" 
-                            placeholder="17000" 
+                            placeholder="5" 
                             {...field} 
                             onChange={e => field.onChange(parseFloat(e.target.value))}
                           />
@@ -192,20 +131,20 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                 </div>
               </div>
               
-              {/* Remote Drone Cost */}
+              {/* 👷 Labour & Travel */}
               <div>
-                <h4 className="text-sm font-medium text-gray-700 mb-3 uppercase tracking-wider">Remote Drone Platform</h4>
+                <h4 className="text-sm font-medium text-gray-700 mb-3 uppercase tracking-wider">👷 Labour & Travel</h4>
                 <div className="space-y-4">
                   <FormField
                     control={form.control}
-                    name="platformCost"
+                    name="pilotSalary"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Platform Subscription ($/year)</FormLabel>
+                        <FormLabel>Pilot Salary ($)</FormLabel>
                         <FormControl>
                           <Input 
                             type="number" 
-                            placeholder="100000" 
+                            placeholder="200000" 
                             {...field} 
                             onChange={e => field.onChange(parseFloat(e.target.value))}
                           />
@@ -217,14 +156,14 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                   
                   <FormField
                     control={form.control}
-                    name="droneBoxCost"
+                    name="weeklyHoursPerPilot"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Drone Box Cost per Site ($)</FormLabel>
+                        <FormLabel>Weekly Hours per Pilot</FormLabel>
                         <FormControl>
                           <Input 
                             type="number" 
-                            placeholder="8000" 
+                            placeholder="38" 
                             {...field} 
                             onChange={e => field.onChange(parseFloat(e.target.value))}
                           />
@@ -236,14 +175,39 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                   
                   <FormField
                     control={form.control}
-                    name="remoteHours"
+                    name="travelAndRelatedCosts"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Remote Operator Hours per Flight</FormLabel>
+                        <FormLabel>Travel & Related Costs ($)</FormLabel>
                         <FormControl>
                           <Input 
                             type="number" 
-                            placeholder="0.5" 
+                            placeholder="3500" 
+                            {...field} 
+                            onChange={e => field.onChange(parseFloat(e.target.value))}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </div>
+              
+              {/* ✈️ Manual Operation Cost */}
+              <div>
+                <h4 className="text-sm font-medium text-gray-700 mb-3 uppercase tracking-wider">✈️ Manual Operation Cost</h4>
+                <div className="space-y-4">
+                  <FormField
+                    control={form.control}
+                    name="pilotTimePerFlight"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Pilot Time per Flight (hours)</FormLabel>
+                        <FormControl>
+                          <Input 
+                            type="number" 
+                            placeholder="1.0" 
                             step="0.1"
                             {...field} 
                             onChange={e => field.onChange(parseFloat(e.target.value))}
@@ -256,18 +220,46 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                   
                   <FormField
                     control={form.control}
-                    name="remoteHourly"
+                    name="equipmentCostPerYear"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Remote Operator Hourly Rate ($)</FormLabel>
+                        <FormLabel>Equipment Cost per Year ($)</FormLabel>
                         <FormControl>
                           <Input 
                             type="number" 
-                            placeholder="75" 
+                            placeholder="15000" 
                             {...field} 
                             onChange={e => field.onChange(parseFloat(e.target.value))}
                           />
                         </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </div>
+              
+              {/* 🛰️ Remote Operation Cost */}
+              <div>
+                <h4 className="text-sm font-medium text-gray-700 mb-3 uppercase tracking-wider">🛰️ Remote Operation Cost (HubX / HubT)</h4>
+                <div className="space-y-4">
+                  <FormField
+                    control={form.control}
+                    name="remoteCostPerYear"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Cost per Year ($)</FormLabel>
+                        <FormControl>
+                          <Input 
+                            type="number" 
+                            placeholder="100000" 
+                            {...field} 
+                            onChange={e => field.onChange(parseFloat(e.target.value))}
+                            disabled
+                            className="bg-gray-100 cursor-not-allowed"
+                          />
+                        </FormControl>
+                        <p className="text-sm text-gray-500">Fixed cost (non-editable)</p>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -301,19 +293,19 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
           <ul className="text-sm text-gray-600 space-y-2">
             <li className="flex items-start">
               <i className="fa fa-info-circle text-blue-500 mt-1 mr-2"></i>
-              <span>Equipment depreciation calculated over 3 years</span>
+              <span>Remote operation cost includes HubX or HubT deployment</span>
             </li>
             <li className="flex items-start">
               <i className="fa fa-info-circle text-blue-500 mt-1 mr-2"></i>
-              <span>Remote platform includes maintenance and updates</span>
+              <span>Travel costs include on-site presence, power, and networking</span>
             </li>
             <li className="flex items-start">
               <i className="fa fa-info-circle text-blue-500 mt-1 mr-2"></i>
-              <span>Analysis does not include data processing time savings</span>
+              <span>Equipment costs include purchase, maintenance, batteries, and parts</span>
             </li>
             <li className="flex items-start">
               <i className="fa fa-info-circle text-blue-500 mt-1 mr-2"></i>
-              <span>Travel costs include fuel, accommodation, and per diems</span>
+              <span>Pilot time includes setup, flying, packdown, and data processing</span>
             </li>
           </ul>
         </CardContent>

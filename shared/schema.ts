@@ -60,17 +60,23 @@ export type Calculation = typeof calculations.$inferSelect;
 
 // Define the calculation input schema
 export const calculationInputSchema = z.object({
-  projectName: z.string().min(1, "Project name is required"),
+  // Operation Requirements
   numSites: z.number().min(1, "Number of sites must be at least 1"),
-  flightFrequency: z.number().min(1, "Flight frequency must be at least 1"),
-  travelCost: z.number().min(0, "Travel cost must be at least 0"),
-  pilotHourly: z.number().min(0, "Pilot hourly rate must be at least 0"),
-  hoursPerFlight: z.number().min(0.1, "Hours per flight must be at least 0.1"),
-  equipmentCost: z.number().min(0, "Equipment cost must be at least 0"),
-  platformCost: z.number().min(0, "Platform subscription must be at least 0"),
-  droneBoxCost: z.number().min(0, "Drone box cost must be at least 0"),
-  remoteHours: z.number().min(0.1, "Remote operator hours must be at least 0.1"),
-  remoteHourly: z.number().min(0, "Remote operator hourly rate must be at least 0"),
+  dronesPerSite: z.number().min(1, "Drones per site must be at least 1"),
+  flightsPerDay: z.number().min(1, "Flights per day must be at least 1"),
+  flightDaysPerWeek: z.number().min(1, "Flight days per week must be at least 1"),
+  
+  // Labour & Travel
+  pilotSalary: z.number().min(0, "Pilot salary must be at least 0"),
+  weeklyHoursPerPilot: z.number().min(1, "Weekly hours per pilot must be at least 1"),
+  travelAndRelatedCosts: z.number().min(0, "Travel and related costs must be at least 0"),
+  
+  // Manual Operation Cost
+  pilotTimePerFlight: z.number().min(0.1, "Pilot time per flight must be at least 0.1"),
+  equipmentCostPerYear: z.number().min(0, "Equipment cost per year must be at least 0"),
+  
+  // Remote Operation Cost (HubX / HubT) - fixed at $100,000
+  remoteCostPerYear: z.number().default(100000),
 });
 
 export type CalculationInput = z.infer<typeof calculationInputSchema>;

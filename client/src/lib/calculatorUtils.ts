@@ -9,35 +9,34 @@ export function formatCurrency(amount: number): string {
 }
 
 export function calculateResults(input: CalculationInput): CalculationResult {
+  // Calculate total flights per year
+  const totalFlightsPerYear = input.numSites * input.flightsPerDay * input.flightDaysPerWeek * 52; // 52 weeks per year
+  
   // Calculate manual costs
-  const annualTravelCost = input.numSites * input.flightFrequency * input.travelCost;
-  const annualManualLaborCost = input.numSites * input.flightFrequency * input.hoursPerFlight * input.pilotHourly;
-  const annualManualTotalCost = annualTravelCost + annualManualLaborCost + input.equipmentCost;
+  const annualTravelCost = input.numSites * input.travelAndRelatedCosts;
+  const hourlyPilotRate = input.pilotSalary / (input.weeklyHoursPerPilot * 52); // Convert annual salary to hourly
+  const annualManualLaborCost = totalFlightsPerYear * input.pilotTimePerFlight * hourlyPilotRate;
+  const annualManualTotalCost = annualTravelCost + annualManualLaborCost + input.equipmentCostPerYear;
   const fiveYearManualCost = annualManualTotalCost * 5;
   
-  // Calculate remote costs
-  const totalDroneBoxCost = input.numSites * input.droneBoxCost;
-  const annualDroneBoxAmortized = totalDroneBoxCost / 3; // Amortized over 3 years
-  const annualRemoteLaborCost = input.numSites * input.flightFrequency * input.remoteHours * input.remoteHourly;
-  const firstYearRemoteCost = input.platformCost + totalDroneBoxCost + annualRemoteLaborCost;
-  const subsequentYearRemoteCost = input.platformCost + annualRemoteLaborCost;
-  const fiveYearRemoteCost = firstYearRemoteCost + (subsequentYearRemoteCost * 4);
+  // Calculate remote costs (simplified - just the fixed cost)
+  const annualRemoteCost = input.remoteCostPerYear;
+  const fiveYearRemoteCost = annualRemoteCost * 5;
   
   // Calculate savings and ROI
   const fiveYearSavings = fiveYearManualCost - fiveYearRemoteCost;
   const savingsPercentage = Math.round((fiveYearSavings / fiveYearManualCost) * 100);
   
-  // Calculate time saved
-  const annualManualHours = input.numSites * input.flightFrequency * input.hoursPerFlight;
-  const annualRemoteHours = input.numSites * input.flightFrequency * input.remoteHours;
+  // Calculate time saved (assuming remote operations require minimal time)
+  const annualManualHours = totalFlightsPerYear * input.pilotTimePerFlight;
+  const annualRemoteHours = totalFlightsPerYear * 0.1; // Assume 0.1 hours per remote flight
   const annualHoursSaved = annualManualHours - annualRemoteHours;
   const fiveYearHoursSaved = annualHoursSaved * 5;
   const efficiencyGain = Math.round(((annualManualHours - annualRemoteHours) / annualManualHours) * 100);
   
   // Calculate ROI timeframe
-  const initialInvestment = totalDroneBoxCost + input.platformCost;
-  const annualSavings = annualManualTotalCost - subsequentYearRemoteCost;
-  const roiTimeframe = initialInvestment / annualSavings;
+  const annualSavings = annualManualTotalCost - annualRemoteCost;
+  const roiTimeframe = annualSavings > 0 ? Math.abs(annualRemoteCost / annualSavings) : 0;
   
   // Create yearly data for chart
   const yearlyManualCosts = [
@@ -49,11 +48,11 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   ];
   
   const yearlyRemoteCosts = [
-    firstYearRemoteCost,
-    subsequentYearRemoteCost,
-    subsequentYearRemoteCost,
-    subsequentYearRemoteCost,
-    subsequentYearRemoteCost
+    annualRemoteCost,
+    annualRemoteCost,
+    annualRemoteCost,
+    annualRemoteCost,
+    annualRemoteCost
   ];
   
   return {
@@ -61,11 +60,11 @@ export function calculateResults(input: CalculationInput): CalculationResult {
     annualManualLaborCost,
     annualManualTotalCost,
     fiveYearManualCost,
-    totalDroneBoxCost,
-    annualDroneBoxAmortized,
-    annualRemoteLaborCost,
-    firstYearRemoteCost,
-    subsequentYearRemoteCost,
+    totalDroneBoxCost: 0, // Not used in new model
+    annualDroneBoxAmortized: 0, // Not used in new model
+    annualRemoteLaborCost: 0, // Included in fixed cost
+    firstYearRemoteCost: annualRemoteCost,
+    subsequentYearRemoteCost: annualRemoteCost,
     fiveYearRemoteCost,
     fiveYearSavings,
     savingsPercentage,
