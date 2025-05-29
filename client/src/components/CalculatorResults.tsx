@@ -57,8 +57,7 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
     return (
       <Card className="shadow-sm p-6 mb-6 flex justify-center items-center h-[500px]">
         <div className="text-center">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">Enter your parameters and click Calculate</h3>
-          <p className="text-gray-600">Your ROI analysis will appear here</p>
+          <p className="text-gray-600">Your ROI analysis will appear here once it's been calculated</p>
         </div>
       </Card>
     );
