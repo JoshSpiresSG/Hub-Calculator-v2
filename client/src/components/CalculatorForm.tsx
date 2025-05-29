@@ -208,9 +208,9 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
           
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              {/* 🛠️ Operation Requirements */}
+              {/* Operation Requirements */}
               <div>
-                <h4 className="text-sm font-medium text-gray-700 mb-3 uppercase tracking-wider">🛠️ Operation Requirements</h4>
+                <h4 className="text-sm font-medium text-gray-700 mb-3 uppercase tracking-wider">Operation Requirements</h4>
                 <div className="space-y-4">
                   <EditableField
                     name="numSites"
@@ -242,9 +242,9 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                 </div>
               </div>
               
-              {/* 👷 Labour & Travel */}
+              {/* Labour & Travel */}
               <div>
-                <h4 className="text-sm font-medium text-gray-700 mb-3 uppercase tracking-wider">👷 Labour & Travel</h4>
+                <h4 className="text-sm font-medium text-gray-700 mb-3 uppercase tracking-wider">Labour & Travel</h4>
                 <div className="space-y-4">
                   <EditableField
                     name="pilotSalary"
@@ -277,9 +277,9 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                 </div>
               </div>
               
-              {/* ✈️ Manual Operation Cost */}
+              {/* Manual Operation Cost */}
               <div>
-                <h4 className="text-sm font-medium text-gray-700 mb-3 uppercase tracking-wider">✈️ Manual Operation Cost</h4>
+                <h4 className="text-sm font-medium text-gray-700 mb-3 uppercase tracking-wider">Manual Operation Cost</h4>
                 <div className="space-y-4">
                   <EditableField
                     name="pilotTimePerFlight"
@@ -298,9 +298,9 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                 </div>
               </div>
               
-              {/* 🛰️ Remote Operation Cost */}
+              {/* Remote Operation Cost */}
               <div>
-                <h4 className="text-sm font-medium text-gray-700 mb-3 uppercase tracking-wider">🛰️ Remote Operation Cost</h4>
+                <h4 className="text-sm font-medium text-gray-700 mb-3 uppercase tracking-wider">Remote Operation Cost</h4>
                 <div className="space-y-4">
                   <DropdownField
                     name="hubType"
