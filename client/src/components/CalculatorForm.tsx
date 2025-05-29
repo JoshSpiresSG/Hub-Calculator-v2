@@ -38,7 +38,6 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
       
       // Remote Operation Cost
       hubType: "HubX" as const,
-      managedFlightServices: "No" as const,
       remotePilotTimePerFlight: 0.1,
       remotePilotSalary: 200000,
     },
@@ -313,16 +312,7 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                     ]}
                   />
                   
-                  <DropdownField
-                    name="managedFlightServices"
-                    label="Managed Flight Services"
-                    tooltip="Choose whether to include managed flight services in the remote operation"
-                    placeholder="Select option"
-                    options={[
-                      { value: "Yes", label: "Yes" },
-                      { value: "No", label: "No" }
-                    ]}
-                  />
+
                   
                   <EditableField
                     name="remotePilotTimePerFlight"
