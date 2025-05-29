@@ -223,21 +223,7 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
         </CardContent>
       </Card>
       
-      {/* Export Options */}
-      <div className="flex flex-wrap justify-end gap-4">
-        <Button variant="outline" className="flex items-center gap-2">
-          <i className="fa fa-file-pdf text-red-500"></i>
-          Export PDF
-        </Button>
-        <Button variant="outline" className="flex items-center gap-2">
-          <i className="fa fa-file-excel text-green-600"></i>
-          Export Excel
-        </Button>
-        <Button variant="outline" className="flex items-center gap-2">
-          <i className="fa fa-envelope text-blue-500"></i>
-          Email Report
-        </Button>
-      </div>
+
     </>
   );
 }
