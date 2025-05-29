@@ -86,7 +86,7 @@ export function calculateResults(input: CalculationInput): CalculationResult {
     fiveYearManualCost,
     totalDroneBoxCost: 0, // Not used in new model
     annualDroneBoxAmortized: 0, // Not used in new model
-    annualRemoteLaborCost: 0, // Included in fixed cost
+    annualRemoteLaborCost: remoteLaborCost, // Show actual remote labor cost
     firstYearRemoteCost: annualRemoteCost,
     subsequentYearRemoteCost: annualRemoteCost,
     fiveYearRemoteCost,
