@@ -12,11 +12,12 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   // Calculate total flights per year
   const totalFlightsPerYear = input.numSites * input.flightsPerDay * input.flightDaysPerWeek * 52; // 52 weeks per year
   
-  // Calculate manual costs - pilots needed based on total flight hours (48 working weeks)
-  const totalManualFlightHours = totalFlightsPerYear * input.pilotTimePerFlight;
-  const pilotsNeeded = Math.ceil(totalManualFlightHours / (input.weeklyHoursPerPilot * 48));
-  const annualTravelCost = pilotsNeeded * input.travelAndRelatedCostsPerPilot;
-  const annualManualLaborCost = pilotsNeeded * input.pilotSalary;
+  // Calculate manual costs - pilots needed per site based on flight hours
+  const flightHoursPerWeekPerSite = input.flightsPerDay * input.flightDaysPerWeek * input.pilotTimePerFlight;
+  const pilotsNeededPerSite = Math.ceil(flightHoursPerWeekPerSite / input.weeklyHoursPerPilot);
+  const totalPilotsNeeded = pilotsNeededPerSite * input.numSites;
+  const annualTravelCost = totalPilotsNeeded * input.travelAndRelatedCostsPerPilot;
+  const annualManualLaborCost = totalPilotsNeeded * input.pilotSalary;
   
   // Equipment costs: per site, depreciated over 3 years, plus 10% maintenance per drone per year
   const totalDrones = input.numSites * input.dronesPerSite;
@@ -49,7 +50,7 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   const savingsPercentage = Math.round((fiveYearSavings / fiveYearManualCost) * 100);
   
   // Calculate time saved 
-  const annualManualHours = totalManualFlightHours;
+  const annualManualHours = flightHoursPerWeekPerSite * input.numSites * 52;
   const annualRemoteHours = totalRemoteFlightHours;
   const annualHoursSaved = annualManualHours - annualRemoteHours;
   const fiveYearHoursSaved = annualHoursSaved * 5;
