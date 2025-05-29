@@ -12,12 +12,11 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   // Calculate total flights per year
   const totalFlightsPerYear = input.numSites * input.flightsPerDay * input.flightDaysPerWeek * 52; // 52 weeks per year
   
-  // Calculate manual costs - travel cost per pilot based on number of pilots needed
-  const totalPilotHoursNeeded = totalFlightsPerYear * input.pilotTimePerFlight;
-  const pilotsNeeded = Math.ceil(totalPilotHoursNeeded / (input.weeklyHoursPerPilot * 52));
+  // Calculate manual costs - pilots needed based on total flight hours (48 working weeks)
+  const totalManualFlightHours = totalFlightsPerYear * input.pilotTimePerFlight;
+  const pilotsNeeded = Math.ceil(totalManualFlightHours / (input.weeklyHoursPerPilot * 48));
   const annualTravelCost = pilotsNeeded * input.travelAndRelatedCostsPerPilot;
-  const hourlyPilotRate = input.pilotSalary / (input.weeklyHoursPerPilot * 52); // Convert annual salary to hourly
-  const annualManualLaborCost = totalFlightsPerYear * input.pilotTimePerFlight * hourlyPilotRate;
+  const annualManualLaborCost = pilotsNeeded * input.pilotSalary;
   
   // Equipment costs: per site, depreciated over 3 years, plus 10% maintenance per drone per year
   const totalDrones = input.numSites * input.dronesPerSite;
@@ -37,23 +36,28 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   }
   
   const managedFlightServicesCost = input.managedFlightServices === "Yes" ? 40000 : 0;
-  const annualRemoteCost = hubCost + managedFlightServicesCost;
+  
+  // Remote labor costs: total remote flight hours * pilot annual salary (48 working weeks)
+  const totalRemoteFlightHours = totalFlightsPerYear * 0.1; // Assume 0.1 hours per remote flight
+  const remoteLaborCost = (totalRemoteFlightHours / (input.weeklyHoursPerPilot * 48)) * input.pilotSalary;
+  
+  const annualRemoteCost = hubCost + managedFlightServicesCost + remoteLaborCost;
   const fiveYearRemoteCost = annualRemoteCost * 5;
   
   // Calculate savings and ROI
   const fiveYearSavings = fiveYearManualCost - fiveYearRemoteCost;
   const savingsPercentage = Math.round((fiveYearSavings / fiveYearManualCost) * 100);
   
-  // Calculate time saved (assuming remote operations require minimal time)
-  const annualManualHours = totalFlightsPerYear * input.pilotTimePerFlight;
-  const annualRemoteHours = totalFlightsPerYear * 0.1; // Assume 0.1 hours per remote flight
+  // Calculate time saved 
+  const annualManualHours = totalManualFlightHours;
+  const annualRemoteHours = totalRemoteFlightHours;
   const annualHoursSaved = annualManualHours - annualRemoteHours;
   const fiveYearHoursSaved = annualHoursSaved * 5;
   const efficiencyGain = Math.round(((annualManualHours - annualRemoteHours) / annualManualHours) * 100);
   
   // Calculate ROI timeframe
   const annualSavings = annualManualTotalCost - annualRemoteCost;
-  const roiTimeframe = annualSavings > 0 ? Math.abs(annualRemoteCost / annualSavings) : 0;
+  const roiTimeframe = annualSavings > 0 ? Math.abs(hubCost / annualSavings) : 0;
   
   // Create yearly data for chart
   const yearlyManualCosts = [

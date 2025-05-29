@@ -250,6 +250,14 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                     tooltip="Annual salary cost for drone pilots including benefits and overhead"
                     placeholder="200000"
                   />
+                  <div className="text-xs text-gray-500 mt-1 ml-1">
+                    Hourly rate: ${(() => {
+                      const salary = form.watch("pilotSalary") || 200000;
+                      const weeklyHours = form.watch("weeklyHoursPerPilot") || 38;
+                      const hourlyRate = salary / (weeklyHours * 48); // 48 working weeks (4 weeks annual leave)
+                      return hourlyRate.toFixed(0);
+                    })()} (based on 48 working weeks per year)
+                  </div>
                   
                   <EditableField
                     name="weeklyHoursPerPilot"
