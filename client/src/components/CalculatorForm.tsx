@@ -39,6 +39,8 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
       // Remote Operation Cost
       hubType: "HubX" as const,
       managedFlightServices: "No" as const,
+      remotePilotTimePerFlight: 0.1,
+      remotePilotSalary: 200000,
     },
   });
 
@@ -322,6 +324,29 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                     ]}
                   />
                   
+                  <EditableField
+                    name="remotePilotTimePerFlight"
+                    label="Remote Pilot Time per Flight (hours)"
+                    tooltip="Time required per remote flight including monitoring, setup, and data processing"
+                    placeholder="0.1"
+                    step="0.01"
+                  />
+                  
+                  <EditableField
+                    name="remotePilotSalary"
+                    label="Remote Pilot Salary ($)"
+                    tooltip="Annual salary cost for remote drone pilots including benefits and overhead"
+                    placeholder="200000"
+                  />
+                  <div className="text-xs text-gray-500 mt-1 ml-1">
+                    Hourly rate: ${(() => {
+                      const salary = form.watch("remotePilotSalary") || 200000;
+                      const weeklyHours = form.watch("weeklyHoursPerPilot") || 38;
+                      const hourlyRate = salary / (weeklyHours * 48); // 48 working weeks (4 weeks annual leave)
+                      return hourlyRate.toFixed(0);
+                    })()} (based on 48 working weeks per year)
+                  </div>
+                  
                   <div className="bg-gray-50 p-4 rounded-lg">
                     <div className="flex items-center gap-1 mb-2">
                       <h5 className="text-sm font-medium text-gray-700">Calculated Annual Cost</h5>
@@ -340,12 +365,56 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                       ${(() => {
                         const hubCost = form.watch("hubType") === "HubX" ? 100000 : 60000;
                         const managedCost = form.watch("managedFlightServices") === "Yes" ? 40000 : 0;
-                        return (hubCost + managedCost).toLocaleString();
+                        
+                        // Calculate remote pilot labor cost
+                        const numSites = form.watch("numSites") || 1;
+                        const flightsPerDay = form.watch("flightsPerDay") || 2;
+                        const flightDaysPerWeek = form.watch("flightDaysPerWeek") || 5;
+                        const remotePilotTimePerFlight = form.watch("remotePilotTimePerFlight") || 0.1;
+                        const remotePilotSalary = form.watch("remotePilotSalary") || 200000;
+                        const weeklyHoursPerPilot = form.watch("weeklyHoursPerPilot") || 38;
+                        
+                        const totalFlightsPerYear = numSites * flightsPerDay * flightDaysPerWeek * 52;
+                        const totalRemoteFlightHours = totalFlightsPerYear * remotePilotTimePerFlight;
+                        const remoteFlightHoursPerWeek = totalRemoteFlightHours / 52;
+                        const remotePilotsNeeded = remoteFlightHoursPerWeek / weeklyHoursPerPilot;
+                        const remoteLaborCost = remotePilotsNeeded * remotePilotSalary;
+                        
+                        return (hubCost + managedCost + remoteLaborCost).toLocaleString();
                       })()}
                     </div>
                     <div className="text-xs text-gray-500 mt-1">
                       Hub {form.watch("hubType")}: ${form.watch("hubType") === "HubX" ? "100,000" : "60,000"}
                       {form.watch("managedFlightServices") === "Yes" && " + Managed Services: $40,000"}
+                      <br />+ Remote Pilot Labor: ${(() => {
+                        const numSites = form.watch("numSites") || 1;
+                        const flightsPerDay = form.watch("flightsPerDay") || 2;
+                        const flightDaysPerWeek = form.watch("flightDaysPerWeek") || 5;
+                        const remotePilotTimePerFlight = form.watch("remotePilotTimePerFlight") || 0.1;
+                        const remotePilotSalary = form.watch("remotePilotSalary") || 200000;
+                        const weeklyHoursPerPilot = form.watch("weeklyHoursPerPilot") || 38;
+                        
+                        const totalFlightsPerYear = numSites * flightsPerDay * flightDaysPerWeek * 52;
+                        const totalRemoteFlightHours = totalFlightsPerYear * remotePilotTimePerFlight;
+                        const remoteFlightHoursPerWeek = totalRemoteFlightHours / 52;
+                        const remotePilotsNeeded = remoteFlightHoursPerWeek / weeklyHoursPerPilot;
+                        const remoteLaborCost = remotePilotsNeeded * remotePilotSalary;
+                        
+                        return remoteLaborCost.toLocaleString();
+                      })()} ({(() => {
+                        const numSites = form.watch("numSites") || 1;
+                        const flightsPerDay = form.watch("flightsPerDay") || 2;
+                        const flightDaysPerWeek = form.watch("flightDaysPerWeek") || 5;
+                        const remotePilotTimePerFlight = form.watch("remotePilotTimePerFlight") || 0.1;
+                        const weeklyHoursPerPilot = form.watch("weeklyHoursPerPilot") || 38;
+                        
+                        const totalFlightsPerYear = numSites * flightsPerDay * flightDaysPerWeek * 52;
+                        const totalRemoteFlightHours = totalFlightsPerYear * remotePilotTimePerFlight;
+                        const remoteFlightHoursPerWeek = totalRemoteFlightHours / 52;
+                        const remotePilotsNeeded = remoteFlightHoursPerWeek / weeklyHoursPerPilot;
+                        
+                        return remotePilotsNeeded.toFixed(2);
+                      })()} pilots)
                     </div>
                   </div>
                 </div>
