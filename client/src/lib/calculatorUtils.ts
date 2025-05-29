@@ -18,7 +18,14 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   const annualTravelCost = pilotsNeeded * input.travelAndRelatedCostsPerPilot;
   const hourlyPilotRate = input.pilotSalary / (input.weeklyHoursPerPilot * 52); // Convert annual salary to hourly
   const annualManualLaborCost = totalFlightsPerYear * input.pilotTimePerFlight * hourlyPilotRate;
-  const annualManualTotalCost = annualTravelCost + annualManualLaborCost + input.equipmentCostPerYear;
+  
+  // Equipment costs: per site, depreciated over 3 years, plus 10% maintenance per drone per year
+  const totalDrones = input.numSites * input.dronesPerSite;
+  const equipmentDepreciationPerYear = (input.equipmentCostPerYear * input.numSites) / 3; // Depreciated over 3 years
+  const maintenanceCostPerYear = (input.equipmentCostPerYear * totalDrones) * 0.1; // 10% maintenance per drone
+  const totalEquipmentCostPerYear = equipmentDepreciationPerYear + maintenanceCostPerYear;
+  
+  const annualManualTotalCost = annualTravelCost + annualManualLaborCost + totalEquipmentCostPerYear;
   const fiveYearManualCost = annualManualTotalCost * 5;
   
   // Calculate remote costs based on hub type and managed flight services

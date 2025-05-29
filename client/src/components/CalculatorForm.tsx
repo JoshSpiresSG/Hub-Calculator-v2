@@ -281,8 +281,8 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                   
                   <EditableField
                     name="equipmentCostPerYear"
-                    label="Equipment Cost per Year ($)"
-                    tooltip="Annual cost for drone equipment including purchase, maintenance, batteries, and replacement parts"
+                    label="Equipment Cost per Site ($)"
+                    tooltip="Cost per site for drone equipment (depreciated over 3 years) plus 10% annual maintenance per drone. Automatically multiplied by number of sites and drones."
                     placeholder="15000"
                   />
                 </div>
