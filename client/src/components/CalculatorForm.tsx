@@ -347,76 +347,7 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                     })()} (based on 48 working weeks per year)
                   </div>
                   
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <div className="flex items-center gap-1 mb-2">
-                      <h5 className="text-sm font-medium text-gray-700">Calculated Annual Cost</h5>
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <Info className="h-4 w-4 text-gray-400 cursor-help" />
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p className="max-w-xs">Automatically calculated based on hub type and managed flight services selection</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
-                    </div>
-                    <div className="text-lg font-semibold text-gray-900">
-                      ${(() => {
-                        const hubCost = form.watch("hubType") === "HubX" ? 100000 : 60000;
-                        const managedCost = form.watch("managedFlightServices") === "Yes" ? 40000 : 0;
-                        
-                        // Calculate remote pilot labor cost
-                        const numSites = form.watch("numSites") || 1;
-                        const flightsPerDay = form.watch("flightsPerDay") || 2;
-                        const flightDaysPerWeek = form.watch("flightDaysPerWeek") || 5;
-                        const remotePilotTimePerFlight = form.watch("remotePilotTimePerFlight") || 0.1;
-                        const remotePilotSalary = form.watch("remotePilotSalary") || 200000;
-                        const weeklyHoursPerPilot = form.watch("weeklyHoursPerPilot") || 38;
-                        
-                        const totalFlightsPerYear = numSites * flightsPerDay * flightDaysPerWeek * 52;
-                        const totalRemoteFlightHours = totalFlightsPerYear * remotePilotTimePerFlight;
-                        const remoteFlightHoursPerWeek = totalRemoteFlightHours / 52;
-                        const remotePilotsNeeded = remoteFlightHoursPerWeek / weeklyHoursPerPilot;
-                        const remoteLaborCost = remotePilotsNeeded * remotePilotSalary;
-                        
-                        return (hubCost + managedCost + remoteLaborCost).toLocaleString();
-                      })()}
-                    </div>
-                    <div className="text-xs text-gray-500 mt-1">
-                      Hub {form.watch("hubType")}: ${form.watch("hubType") === "HubX" ? "100,000" : "60,000"}
-                      {form.watch("managedFlightServices") === "Yes" && " + Managed Services: $40,000"}
-                      <br />+ Remote Pilot Labor: ${(() => {
-                        const numSites = form.watch("numSites") || 1;
-                        const flightsPerDay = form.watch("flightsPerDay") || 2;
-                        const flightDaysPerWeek = form.watch("flightDaysPerWeek") || 5;
-                        const remotePilotTimePerFlight = form.watch("remotePilotTimePerFlight") || 0.1;
-                        const remotePilotSalary = form.watch("remotePilotSalary") || 200000;
-                        const weeklyHoursPerPilot = form.watch("weeklyHoursPerPilot") || 38;
-                        
-                        const totalFlightsPerYear = numSites * flightsPerDay * flightDaysPerWeek * 52;
-                        const totalRemoteFlightHours = totalFlightsPerYear * remotePilotTimePerFlight;
-                        const remoteFlightHoursPerWeek = totalRemoteFlightHours / 52;
-                        const remotePilotsNeeded = remoteFlightHoursPerWeek / weeklyHoursPerPilot;
-                        const remoteLaborCost = remotePilotsNeeded * remotePilotSalary;
-                        
-                        return remoteLaborCost.toLocaleString();
-                      })()} ({(() => {
-                        const numSites = form.watch("numSites") || 1;
-                        const flightsPerDay = form.watch("flightsPerDay") || 2;
-                        const flightDaysPerWeek = form.watch("flightDaysPerWeek") || 5;
-                        const remotePilotTimePerFlight = form.watch("remotePilotTimePerFlight") || 0.1;
-                        const weeklyHoursPerPilot = form.watch("weeklyHoursPerPilot") || 38;
-                        
-                        const totalFlightsPerYear = numSites * flightsPerDay * flightDaysPerWeek * 52;
-                        const totalRemoteFlightHours = totalFlightsPerYear * remotePilotTimePerFlight;
-                        const remoteFlightHoursPerWeek = totalRemoteFlightHours / 52;
-                        const remotePilotsNeeded = remoteFlightHoursPerWeek / weeklyHoursPerPilot;
-                        
-                        return remotePilotsNeeded.toFixed(2);
-                      })()} pilots)
-                    </div>
-                  </div>
+
                 </div>
               </div>
               
