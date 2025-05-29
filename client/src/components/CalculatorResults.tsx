@@ -171,10 +171,6 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
                 <span className="font-medium text-gray-800">{formatCurrency(results.yearlyRemoteCosts[1] - results.annualRemoteLaborCost)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600">Drone Box Investment (amortized)</span>
-                <span className="font-medium text-gray-800">{formatCurrency(results.annualDroneBoxAmortized)}</span>
-              </div>
-              <div className="flex justify-between">
                 <span className="text-gray-600">Annual Labor Costs</span>
                 <span className="font-medium text-gray-800">{formatCurrency(results.annualRemoteLaborCost)}</span>
               </div>
