@@ -73,7 +73,7 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
             <p className="text-2xl font-semibold text-gray-800">{formatCurrency(results.fiveYearSavings)}</p>
             <p className="text-sm text-green-600 flex items-center">
               <i className="fa fa-arrow-up mr-1"></i>
-              <span>{results.savingsPercentage}% </span> cost reduction
+              <span>{results.savingsPercentage}%</span>&nbsp;cost reduction
             </p>
           </CardContent>
         </Card>
@@ -83,7 +83,7 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
             <p className="text-2xl font-semibold text-gray-800">{results.fiveYearHoursSaved.toLocaleString()} hours</p>
             <p className="text-sm text-green-600 flex items-center">
               <i className="fa fa-arrow-up mr-1"></i>
-              <span>{results.efficiencyGain}% </span> efficiency gain
+              <span>{results.efficiencyGain}%</span>&nbsp;efficiency gain
             </p>
           </CardContent>
         </Card>
