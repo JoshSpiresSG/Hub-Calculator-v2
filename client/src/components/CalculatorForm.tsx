@@ -124,6 +124,81 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
     );
   };
 
+  const DropdownField = ({ 
+    name, 
+    label, 
+    tooltip, 
+    placeholder,
+    options,
+    disabled = false 
+  }: {
+    name: keyof CalculationInput;
+    label: string;
+    tooltip: string;
+    placeholder: string;
+    options: { value: string; label: string }[];
+    disabled?: boolean;
+  }) => {
+    const isEditable = editableFields[name] || false;
+    
+    return (
+      <FormField
+        control={form.control}
+        name={name}
+        render={({ field }) => (
+          <FormItem>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-1">
+                <FormLabel>{label}</FormLabel>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Info className="h-4 w-4 text-gray-400 cursor-help" />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p className="max-w-xs">{tooltip}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
+              {!disabled && (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => toggleEdit(name)}
+                  className="h-6 px-2 text-xs"
+                >
+                  <Edit3 className="h-3 w-3 mr-1" />
+                  {isEditable ? 'Lock' : 'Edit'}
+                </Button>
+              )}
+            </div>
+            <Select
+              onValueChange={field.onChange}
+              defaultValue={field.value?.toString()}
+              disabled={disabled || !isEditable}
+            >
+              <FormControl>
+                <SelectTrigger className={`${(disabled || !isEditable) ? 'bg-gray-100 cursor-not-allowed' : ''}`}>
+                  <SelectValue placeholder={placeholder} />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                {options.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+    );
+  };
+
   return (
     <>
       <Card className="shadow-sm mb-6">
@@ -216,12 +291,34 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
               
               {/* 🛰️ Remote Operation Cost */}
               <div>
-                <h4 className="text-sm font-medium text-gray-700 mb-3 uppercase tracking-wider">🛰️ Remote Operation Cost (HubX / HubT)</h4>
+                <h4 className="text-sm font-medium text-gray-700 mb-3 uppercase tracking-wider">🛰️ Remote Operation Cost</h4>
                 <div className="space-y-4">
+                  <DropdownField
+                    name="hubType"
+                    label="Hub Type"
+                    tooltip="Select the type of remote drone platform (HubX or HubT)"
+                    placeholder="Select hub type"
+                    options={[
+                      { value: "HubX", label: "HubX" },
+                      { value: "HubT", label: "HubT" }
+                    ]}
+                  />
+                  
+                  <DropdownField
+                    name="managedFlightServices"
+                    label="Managed Flight Services"
+                    tooltip="Choose whether to include managed flight services in the remote operation"
+                    placeholder="Select option"
+                    options={[
+                      { value: "Yes", label: "Yes" },
+                      { value: "No", label: "No" }
+                    ]}
+                  />
+                  
                   <EditableField
                     name="remoteCostPerYear"
                     label="Cost per Year ($)"
-                    tooltip="Fixed annual cost for remote drone platform including HubX or HubT deployment"
+                    tooltip="Fixed annual cost for remote drone platform including selected hub type and services"
                     placeholder="100000"
                     disabled={true}
                   />
