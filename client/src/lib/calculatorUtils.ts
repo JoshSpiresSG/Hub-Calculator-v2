@@ -14,10 +14,10 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   
   // Calculate manual costs - pilots needed per site based on flight hours
   const flightHoursPerWeekPerSite = input.flightsPerDay * input.flightDaysPerWeek * input.pilotTimePerFlight;
-  const pilotsNeededPerSite = Math.ceil(flightHoursPerWeekPerSite / input.weeklyHoursPerPilot);
+  const pilotsNeededPerSite = flightHoursPerWeekPerSite / input.weeklyHoursPerPilot;
   const totalPilotsNeeded = pilotsNeededPerSite * input.numSites;
-  const annualTravelCost = totalPilotsNeeded * input.travelAndRelatedCostsPerPilot;
-  const annualManualLaborCost = totalPilotsNeeded * input.pilotSalary;
+  const annualTravelCost = Math.ceil(totalPilotsNeeded) * input.travelAndRelatedCostsPerPilot; // Travel costs for whole pilots
+  const annualManualLaborCost = totalPilotsNeeded * input.pilotSalary; // Labor costs for fractional pilots
   
   // Equipment costs: per site, depreciated over 3 years, plus 10% maintenance per drone per year
   const totalDrones = input.numSites * input.dronesPerSite;
