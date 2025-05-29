@@ -11,7 +11,6 @@ import { Button } from "@/components/ui/button";
 export default function Calculator() {
   const { toast } = useToast();
   const [results, setResults] = useState<CalculationResult | null>(null);
-  const [currentStep, setCurrentStep] = useState("calculate");
 
   // Calculation mutation
   const calculationMutation = useMutation({
@@ -21,7 +20,6 @@ export default function Calculator() {
     },
     onSuccess: (data: CalculationResult) => {
       setResults(data);
-      setCurrentStep("results");
     },
     onError: (error) => {
       toast({
@@ -34,7 +32,6 @@ export default function Calculator() {
       try {
         const clientResults = calculateResults(calculationMutation.variables as CalculationInput);
         setResults(clientResults);
-        setCurrentStep("results");
       } catch (err) {
         console.error("Client-side calculation failed:", err);
       }
@@ -43,10 +40,6 @@ export default function Calculator() {
 
   const handleCalculate = (data: CalculationInput) => {
     calculationMutation.mutate(data);
-  };
-
-  const handleBackToCalculate = () => {
-    setCurrentStep("calculate");
   };
 
   const handleDownloadPDF = () => {
@@ -104,80 +97,26 @@ export default function Calculator() {
           </div>
         </div>
 
-        {/* Step Progress Bar */}
-        <div className="mb-8">
-          <div className="max-w-2xl mx-auto">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center" aria-hidden="true">
-                <div className="w-full border-t border-gray-300"></div>
-              </div>
-              <div className="relative flex justify-between">
-                <div 
-                  className={`flex items-center cursor-pointer ${currentStep === 'calculate' ? 'text-primary' : 'text-gray-500'}`}
-                  onClick={() => setCurrentStep('calculate')}
-                  style={currentStep === 'calculate' ? {
-                    background: '#fff',
-                    borderRadius: '50px',
-                    border: '1px solid',
-                    padding: '0px 15px 0px 0px'
-                  } : {}}
-                >
-                  <span className={`flex h-10 w-10 items-center justify-center rounded-full ${currentStep === 'calculate' ? 'bg-primary text-white' : 'border-2 border-gray-300 bg-white'}`}>
-                    <span className="text-sm font-medium">1</span>
-                  </span>
-                  <span className="ml-3 text-sm font-medium">Calculate</span>
-                </div>
-                <div 
-                  className={`flex items-center ${currentStep === 'results' ? 'text-primary' : 'text-gray-500'} ${results ? 'cursor-pointer' : 'cursor-not-allowed'}`}
-                  onClick={() => results && setCurrentStep('results')}
-                  style={currentStep === 'results' ? {
-                    background: '#fff',
-                    borderRadius: '50px',
-                    border: '1px solid',
-                    padding: '0px 15px 0px 0px'
-                  } : {}}
-                >
-                  <span className={`flex h-10 w-10 items-center justify-center rounded-full ${currentStep === 'results' ? 'bg-primary text-white' : 'border-2 border-gray-300 bg-white'}`}>
-                    <span className="text-sm font-medium">2</span>
-                  </span>
-                  <span className="ml-3 text-sm font-medium">Results</span>
-                </div>
-              </div>
-            </div>
+        {/* Calculator Layout - Form and Results Side by Side */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Input Section */}
+          <div className="lg:col-span-1">
+            <CalculatorForm 
+              onCalculate={handleCalculate}
+              isCalculating={calculationMutation.isPending}
+            />
           </div>
-        </div>
-
-        {/* Main Content */}
-        <div>
-          {currentStep === 'calculate' && (
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {/* Input Section */}
-              <div className="lg:col-span-1">
-                <CalculatorForm 
-                  onCalculate={handleCalculate}
-                  isCalculating={calculationMutation.isPending}
-                />
-              </div>
-              
-              {/* Results Section */}
-              <div className="lg:col-span-2">
-                <CalculatorResults 
-                  results={results} 
-                  isLoading={calculationMutation.isPending}
-                />
-              </div>
-            </div>
-          )}
-
-          {currentStep === 'results' && results && (
-            <div className="max-w-6xl mx-auto">
-              <CalculatorResults 
-                results={results} 
-                isLoading={false}
-              />
-              
-              {/* PDF and Email Actions */}
-              <div className="mt-8 bg-white rounded-lg shadow-sm p-6">
+          
+          {/* Results Section */}
+          <div className="lg:col-span-2">
+            <CalculatorResults 
+              results={results} 
+              isLoading={calculationMutation.isPending}
+            />
+            
+            {/* PDF and Email Actions - Show when results are available */}
+            {results && (
+              <div className="mt-6 bg-white rounded-lg shadow-sm p-6">
                 <h3 className="text-lg font-semibold text-gray-800 mb-4">Get Your Report</h3>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Button 
@@ -194,17 +133,10 @@ export default function Calculator() {
                     <i className="fa fa-envelope mr-2"></i>
                     Email Report to Me
                   </Button>
-                  <Button 
-                    onClick={handleBackToCalculate}
-                    variant="outline"
-                  >
-                    <i className="fa fa-arrow-left mr-2"></i>
-                    Back to Calculator
-                  </Button>
                 </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </main>
       
