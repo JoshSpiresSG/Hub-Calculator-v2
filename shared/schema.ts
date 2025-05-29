@@ -69,13 +69,15 @@ export const calculationInputSchema = z.object({
   // Labour & Travel
   pilotSalary: z.number().min(0, "Pilot salary must be at least 0"),
   weeklyHoursPerPilot: z.number().min(1, "Weekly hours per pilot must be at least 1"),
-  travelAndRelatedCosts: z.number().min(0, "Travel and related costs must be at least 0"),
+  travelAndRelatedCostsPerPilot: z.number().min(0, "Travel and related costs per pilot must be at least 0"),
   
   // Manual Operation Cost
   pilotTimePerFlight: z.number().min(0.1, "Pilot time per flight must be at least 0.1"),
   equipmentCostPerYear: z.number().min(0, "Equipment cost per year must be at least 0"),
   
-  // Remote Operation Cost (HubX / HubT) - fixed at $100,000
+  // Remote Operation Cost (HubX / HubT)
+  hubType: z.enum(["HubX", "HubT"], { required_error: "Hub type is required" }),
+  managedFlightServices: z.enum(["Yes", "No"], { required_error: "Managed flight services selection is required" }),
   remoteCostPerYear: z.number().default(100000),
 });
 

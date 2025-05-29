@@ -12,8 +12,10 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   // Calculate total flights per year
   const totalFlightsPerYear = input.numSites * input.flightsPerDay * input.flightDaysPerWeek * 52; // 52 weeks per year
   
-  // Calculate manual costs
-  const annualTravelCost = input.numSites * input.travelAndRelatedCosts;
+  // Calculate manual costs - travel cost per pilot based on number of pilots needed
+  const totalPilotHoursNeeded = totalFlightsPerYear * input.pilotTimePerFlight;
+  const pilotsNeeded = Math.ceil(totalPilotHoursNeeded / (input.weeklyHoursPerPilot * 52));
+  const annualTravelCost = pilotsNeeded * input.travelAndRelatedCostsPerPilot;
   const hourlyPilotRate = input.pilotSalary / (input.weeklyHoursPerPilot * 52); // Convert annual salary to hourly
   const annualManualLaborCost = totalFlightsPerYear * input.pilotTimePerFlight * hourlyPilotRate;
   const annualManualTotalCost = annualTravelCost + annualManualLaborCost + input.equipmentCostPerYear;

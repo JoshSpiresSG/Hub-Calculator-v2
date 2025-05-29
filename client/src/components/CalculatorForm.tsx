@@ -6,6 +6,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Loader2, Edit3, Info } from "lucide-react";
 
@@ -29,13 +30,15 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
       // Labour & Travel
       pilotSalary: 200000,
       weeklyHoursPerPilot: 38,
-      travelAndRelatedCosts: 3500,
+      travelAndRelatedCostsPerPilot: 3500,
       
       // Manual Operation Cost
       pilotTimePerFlight: 1.0,
       equipmentCostPerYear: 15000,
       
-      // Remote Operation Cost (fixed)
+      // Remote Operation Cost
+      hubType: "HubX" as const,
+      managedFlightServices: "No" as const,
       remoteCostPerYear: 100000,
     },
   });
@@ -182,9 +185,9 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                   />
                   
                   <EditableField
-                    name="travelAndRelatedCosts"
-                    label="Travel & Related Costs ($)"
-                    tooltip="Costs for on-site presence including travel, accommodation, and per diems"
+                    name="travelAndRelatedCostsPerPilot"
+                    label="Travel & Related Costs per Pilot ($)"
+                    tooltip="Costs per pilot for on-site presence including travel, accommodation, and per diems"
                     placeholder="3500"
                   />
                 </div>
