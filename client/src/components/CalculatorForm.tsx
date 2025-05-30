@@ -124,7 +124,22 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                 placeholder={placeholder}
                 step={step}
                 {...field} 
-                onChange={e => field.onChange(parseFloat(e.target.value))}
+                onChange={e => {
+                  const value = e.target.value;
+                  if (type === "number") {
+                    // Allow typing and only parse when valid
+                    if (value === "" || value === "-") {
+                      field.onChange(value);
+                    } else {
+                      const numValue = parseFloat(value);
+                      if (!isNaN(numValue)) {
+                        field.onChange(numValue);
+                      }
+                    }
+                  } else {
+                    field.onChange(value);
+                  }
+                }}
                 disabled={disabled || !isEditable}
                 className={`${(disabled || !isEditable) ? 'bg-gray-100 cursor-not-allowed' : ''}`}
               />
