@@ -36,15 +36,13 @@ export function calculateResults(input: CalculationInput): CalculationResult {
     hubCost = 60000;
   }
   
-  const managedFlightServicesCost = input.managedFlightServices === "Yes" ? 40000 : 0;
-  
   // Remote labor costs: calculate pilots needed for remote operations
   const totalRemoteFlightHours = totalFlightsPerYear * input.remotePilotTimePerFlight;
   const remoteFlightHoursPerWeek = (totalRemoteFlightHours / 52);
   const remotePilotsNeeded = remoteFlightHoursPerWeek / input.weeklyHoursPerPilot;
   const remoteLaborCost = remotePilotsNeeded * input.remotePilotSalary;
   
-  const annualRemoteCost = hubCost + managedFlightServicesCost + remoteLaborCost;
+  const annualRemoteCost = hubCost + remoteLaborCost;
   const fiveYearRemoteCost = annualRemoteCost * 5;
   
   // Calculate savings and ROI

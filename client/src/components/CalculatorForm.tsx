@@ -33,13 +33,13 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
       travelAndRelatedCostsPerPilot: 3500,
       
       // Manual Operation Cost
-      pilotTimePerFlight: 5.0,
+      pilotTimePerFlight: 1.0,
       equipmentCostPerYear: 15000,
       
       // Remote Operation Cost
       hubType: "HubX" as const,
       managedFlightServices: "No" as const,
-      remotePilotTimePerFlight: 2.5,
+      remotePilotTimePerFlight: 0.1,
       remotePilotSalary: 200000,
     },
   });
@@ -285,7 +285,7 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                     name="pilotTimePerFlight"
                     label="Pilot Time per Flight (hours)"
                     tooltip="Total time required per flight including setup, flying, packdown, and data processing"
-                    placeholder="5.0"
+                    placeholder="1.0"
                     step="0.1"
                   />
                   
@@ -328,8 +328,8 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                     name="remotePilotTimePerFlight"
                     label="Remote Pilot Time per Flight (hours)"
                     tooltip="Time required per remote flight including monitoring, setup, and data processing"
-                    placeholder="2.5"
-                    step="0.1"
+                    placeholder="0.1"
+                    step="0.01"
                   />
                   
                   <EditableField
