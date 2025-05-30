@@ -1,16 +1,16 @@
 | **Field Name**                              | **Input**                       | **Description**                                          |
 | ------------------------------------------- | ------------------------------- | -------------------------------------------------------- |
-| **🛠️ Operation Requirements**              |                                 |                                                          |
+| **Operation Requirements**                  |                                 |                                                          |
 | Number of Sites                             | Default: 1 (user input)         | Total project locations using drones                     |
 | Drones per Site                             | Default: 3 (user input)         | Number of drones deployed at each site                   |
 | Flights per Day per Site                    | Default: 2 (user input)         | Number of flights taking place at one site               |
 | Flight Days per Week per Site               | Default: 5 (user input)         | Number of days per week drone flights take place         |
-| **👷 Labour & Travel**                      |                                 |                                                          |
+| **Labour & Travel**                         |                                 |                                                          |
 | Pilot Salary                                | Default: \$200,000 (user input) | The annual salary of a drone pilot                       |
 | Weekly Hours per Pilot                      | Default: 38 hrs (user input)    | Total hours a pilot spends on drone operations           |
 | Travel & Related Costs                      | Default: \$3,500 (user input)   | Travel costs, on-site presence, power, and networking    |
-| **✈️ Manual Operation Cost**                |                                 |                                                          |
+| **Manual Operation Cost**                   |                                 |                                                          |
 | Pilot Time per Flight                       | Default: \[user input]          | Time for setup, flying, packdown, and data processing    |
 | Equipment Cost per Year                     | Default: \$15,000 (editable)    | Purchase price, maintenance, batteries, parts, per diems |
-| **🛰️ Remote Operation Cost (HubX / HubT)** |                                 |                                                          |
+| **Remote Operation Cost (HubX / HubT)**     |                                 |                                                          |
 | Cost per Year                               | **\$100,000 (fixed)**           | Annual cost to deploy HubX or HubT (non-editable)        |
