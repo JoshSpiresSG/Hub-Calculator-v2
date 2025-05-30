@@ -113,7 +113,7 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                   className="h-6 px-2 text-xs"
                 >
                   <Edit3 className="h-3 w-3 mr-1" />
-                  {isEditable ? 'Lock' : 'Edit'}
+                  {isEditable ? 'Confirm' : 'Edit'}
                 </Button>
               )}
             </div>
@@ -181,7 +181,7 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                   className="h-6 px-2 text-xs"
                 >
                   <Edit3 className="h-3 w-3 mr-1" />
-                  {isEditable ? 'Lock' : 'Edit'}
+                  {isEditable ? 'Confirm' : 'Edit'}
                 </Button>
               )}
             </div>
