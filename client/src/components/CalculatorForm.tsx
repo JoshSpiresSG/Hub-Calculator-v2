@@ -353,7 +353,7 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
               
               <Button 
                 type="submit" 
-                className="w-full bg-primary hover:bg-blue-600" 
+                className="w-full bg-primary hover:bg-[#bc4200]" 
                 disabled={isCalculating}
               >
                 {isCalculating ? (
