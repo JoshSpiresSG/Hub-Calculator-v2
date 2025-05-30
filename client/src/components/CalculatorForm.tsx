@@ -31,6 +31,7 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
       pilotSalary: 200000,
       weeklyHoursPerPilot: 38,
       travelAndRelatedCostsPerPilot: 3500,
+      fifoRoster: "Not applicable" as const,
       
       // Manual Operation Cost
       pilotTimePerFlight: 5.0,
@@ -274,6 +275,19 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                     tooltip="Costs per pilot for on-site presence including travel, accommodation, and per diems"
                     placeholder="3500"
                   />
+                  
+                  <DropdownField
+                    name="fifoRoster"
+                    label="FIFO Roster"
+                    tooltip="Fly-in fly-out roster schedule that affects travel frequency and costs"
+                    placeholder="Select roster"
+                    options={[
+                      { value: "2:1", label: "2:1 (14 days on, 7 days off)" },
+                      { value: "8:6", label: "8:6 (8 days on, 6 days off)" },
+                      { value: "2:2", label: "2:2 (14 days on, 14 days off)" },
+                      { value: "Not applicable", label: "Not applicable" }
+                    ]}
+                  />
                 </div>
               </div>
               
@@ -353,7 +367,7 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
               
               <Button 
                 type="submit" 
-                className="w-full bg-primary hover:bg-blue-600" 
+                className="w-full bg-primary hover:bg-[#bc4200]" 
                 disabled={isCalculating}
               >
                 {isCalculating ? (

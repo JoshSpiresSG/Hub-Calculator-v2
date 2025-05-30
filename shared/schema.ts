@@ -70,6 +70,7 @@ export const calculationInputSchema = z.object({
   pilotSalary: z.number().min(0, "Pilot salary must be at least 0"),
   weeklyHoursPerPilot: z.number().min(1, "Weekly hours per pilot must be at least 1"),
   travelAndRelatedCostsPerPilot: z.number().min(0, "Travel and related costs per pilot must be at least 0"),
+  fifoRoster: z.enum(["2:1", "8:6", "2:2", "Not applicable"], { required_error: "FIFO roster is required" }),
   
   // Manual Operation Cost
   pilotTimePerFlight: z.number().min(0.1, "Pilot time per flight must be at least 0.1"),
