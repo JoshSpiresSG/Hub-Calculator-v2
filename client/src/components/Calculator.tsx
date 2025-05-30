@@ -27,7 +27,7 @@ const defaultValues: CalculationInput = {
   
   // Remote Operation Cost
   hubType: "HubX" as const,
-  remotePilotTimePerFlight: 0.1,
+  remotePilotTimePerFlight: 2.5,
   remotePilotSalary: 120000,
 };
 
