@@ -23,6 +23,7 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
     flightDaysPerWeek: true,
     pilotSalary: true,
     weeklyHoursPerPilot: true,
+    pilotTimePerFlight: true,
     remotePilotTimePerFlight: true,
     remotePilotSalary: true,
   });
