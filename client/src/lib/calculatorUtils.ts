@@ -20,11 +20,11 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   // Calculate FIFO roster multiplier for travel costs
   let fifoMultiplier = 1;
   if (input.fifoRoster === "2:1") {
-    fifoMultiplier = 52 / 21; // 52 weeks / 21 days cycle = ~2.48 cycles per year
+    fifoMultiplier = 16; // 2:1 roster multiplier
   } else if (input.fifoRoster === "8:6") {
-    fifoMultiplier = 52 / 14; // 52 weeks / 14 days cycle = ~3.71 cycles per year  
+    fifoMultiplier = 24; // 8:6 roster multiplier  
   } else if (input.fifoRoster === "2:2") {
-    fifoMultiplier = 52 / 28; // 52 weeks / 28 days cycle = ~1.86 cycles per year
+    fifoMultiplier = 12; // 2:2 roster multiplier
   } else {
     fifoMultiplier = 1; // Not applicable - standard travel costs
   }
