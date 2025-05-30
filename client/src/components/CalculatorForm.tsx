@@ -235,12 +235,12 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
             <Button 
               type="submit" 
               form="calculator-form"
-              className="bg-orange-600 hover:bg-orange-700 text-white px-6"
+              className="bg-orange-600 hover:bg-orange-700 text-white w-[150px]"
               disabled={isCalculating}
             >
               {isCalculating ? (
                 <>
-                  <i className="fa fa-spinner fa-spin mr-2"></i>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
                   Calculating...
                 </>
               ) : (
