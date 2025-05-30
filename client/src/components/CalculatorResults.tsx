@@ -65,6 +65,11 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
 
   return (
     <>
+      {/* Results Heading */}
+      <div className="mb-6">
+        <h2 className="text-2xl font-semibold text-gray-800">Results</h2>
+      </div>
+      
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <Card className="shadow-sm border-l-4 border-primary">
