@@ -67,11 +67,6 @@ export default function Calculator() {
             <h1 className="text-2xl font-semibold text-gray-800">Drone ROI Calculator</h1>
             <span className="ml-2 bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">Beta</span>
           </div>
-          <div>
-            <button className="bg-white text-gray-700 border border-gray-300 rounded-md px-4 py-2 text-sm font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
-              <i className="fa fa-question-circle mr-2"></i>Help
-            </button>
-          </div>
         </div>
       </header>
 
@@ -146,17 +141,6 @@ export default function Calculator() {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-4 md:mb-0">
               <p className="text-sm">© 2025 Sphere. All rights reserved.</p>
-            </div>
-            <div className="flex space-x-6">
-              <a href="#" className="text-gray-300 hover:text-white">
-                <i className="fab fa-twitter"></i>
-              </a>
-              <a href="#" className="text-gray-300 hover:text-white">
-                <i className="fab fa-linkedin"></i>
-              </a>
-              <a href="#" className="text-gray-300 hover:text-white">
-                <i className="fab fa-facebook"></i>
-              </a>
             </div>
           </div>
         </div>
