@@ -313,7 +313,7 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                     ]}
                   />
                   
-                  <DropdownField
+                  {/*<DropdownField
                     name="managedFlightServices"
                     label="Managed Flight Services"
                     tooltip="Choose whether to include managed flight services in the remote operation"
@@ -322,7 +322,7 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                       { value: "Yes", label: "Yes" },
                       { value: "No", label: "No" }
                     ]}
-                  />
+                  />*/}
                   
                   <EditableField
                     name="remotePilotTimePerFlight"
