@@ -41,7 +41,7 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
       hubType: "HubX" as const,
       managedFlightServices: "No" as const,
       remotePilotTimePerFlight: 2.5,
-      remotePilotSalary: 200000,
+      remotePilotSalary: 120000,
     },
   });
 
@@ -318,12 +318,12 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                 <div className="space-y-4">
                   <DropdownField
                     name="hubType"
-                    label="Hub Type"
-                    tooltip="Select the type of remote drone platform (HubX or HubT)"
-                    placeholder="Select hub type"
+                    label="Installation Type"
+                    tooltip="Select the type of remote drone platform installation"
+                    placeholder="Select installation type"
                     options={[
-                      { value: "HubX", label: "HubX" },
-                      { value: "HubT", label: "HubT" }
+                      { value: "HubX", label: "Portable & flexible (HubX)" },
+                      { value: "HubT", label: "Fixed (HubT)" }
                     ]}
                   />
                   
