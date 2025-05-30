@@ -92,7 +92,7 @@ export default function Calculator() {
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="flex items-center">
-            <h1 className="text-2xl font-semibold text-gray-800">Remote vs Manual Drone Ops ROI Calculator</h1>
+            <h1 className="text-2xl font-semibold text-gray-800">Remote Drone Ops ROI Calculator</h1>
             <span className="ml-2 bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">Beta</span>
           </div>
         </div>
@@ -102,7 +102,7 @@ export default function Calculator() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Intro Section */}
         <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">Estimate your drone ops ROI in 60 seconds</h2>
+          <h2 className="text-xl font-semibold text-gray-800 mb-4">Estimate your remote drone ops ROI in 60 seconds</h2>
           <p className="text-gray-600 mb-4">Thinking of switching to remote drone operations but not sure what the savings look like? Compare manual vs remote drone ops to see how much time and money you could save. Get an instant cost breakdown with 5-year projections.</p>
           <p className="text-sm text-gray-500 mb-4"><strong>Disclaimer:</strong> These results are indicative only. Real-world savings may vary depending on your setup, team, and operational needs.</p>
           <div className="flex flex-wrap items-center gap-4">
