@@ -16,7 +16,16 @@ interface CalculatorFormProps {
 }
 
 export default function CalculatorForm({ onCalculate, isCalculating }: CalculatorFormProps) {
-  const [editableFields, setEditableFields] = useState<Record<string, boolean>>({});
+  const [editableFields, setEditableFields] = useState<Record<string, boolean>>({
+    numSites: true,
+    dronesPerSite: true,
+    flightsPerDay: true,
+    flightDaysPerWeek: true,
+    pilotSalary: true,
+    weeklyHoursPerPilot: true,
+    remotePilotTimePerFlight: true,
+    remotePilotSalary: true,
+  });
   
   const form = useForm<CalculationInput>({
     resolver: zodResolver(calculationInputSchema),

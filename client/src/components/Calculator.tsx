@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CalculatorForm from "./CalculatorForm";
 import CalculatorResults from "./CalculatorResults";
 import { CalculationInput, CalculationResult } from "@shared/schema";
@@ -7,6 +7,29 @@ import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { calculateResults } from "@/lib/calculatorUtils";
 import { Button } from "@/components/ui/button";
+
+const defaultValues: CalculationInput = {
+  // Operation Requirements
+  numSites: 1,
+  dronesPerSite: 3,
+  flightsPerDay: 2,
+  flightDaysPerWeek: 5,
+  
+  // Labour & Travel
+  pilotSalary: 200000,
+  weeklyHoursPerPilot: 38,
+  travelAndRelatedCostsPerPilot: 3500,
+  fifoRoster: "Not applicable" as const,
+  
+  // Manual Operation Cost
+  pilotTimePerFlight: 5.0,
+  equipmentCostPerYear: 15000,
+  
+  // Remote Operation Cost
+  hubType: "HubX" as const,
+  remotePilotTimePerFlight: 0.1,
+  remotePilotSalary: 120000,
+};
 
 export default function Calculator() {
   const { toast } = useToast();
@@ -41,6 +64,11 @@ export default function Calculator() {
   const handleCalculate = (data: CalculationInput) => {
     calculationMutation.mutate(data);
   };
+
+  // Load default results when component mounts
+  useEffect(() => {
+    handleCalculate(defaultValues);
+  }, []);
 
   const handleDownloadPDF = () => {
     // TODO: Implement PDF generation and download
