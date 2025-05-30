@@ -231,6 +231,7 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
       <Card className="shadow-sm mb-6">
         <CardContent className="p-6">
           <h3 className="text-lg font-semibold text-gray-800 mb-4">Input Parameters</h3>
+          <p className="text-sm text-gray-600 mb-6">Update the details below to calculate your cost savings and ROI, or leave them blank to use our default averages.</p>
           
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
