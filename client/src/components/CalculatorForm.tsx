@@ -240,7 +240,7 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
             >
               {isCalculating ? (
                 <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   Calculating...
                 </>
               ) : (
