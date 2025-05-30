@@ -68,13 +68,9 @@ export default function Calculator() {
             <span className="ml-2 bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">Beta</span>
           </div>
           <div>
-            <a
-              href="https://www.spheredrones.com.au/company/contact-us"
-              target="_blank""
-              className="inline-flex items-center bg-white text-gray-700 border border-gray-300 rounded-md px-4 py-2 text-sm font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-            >
+            <button className="bg-white text-gray-700 border border-gray-300 rounded-md px-4 py-2 text-sm font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
               <i className="fa fa-question-circle mr-2"></i>Help
-            </a>
+            </button>
           </div>
         </div>
       </header>
