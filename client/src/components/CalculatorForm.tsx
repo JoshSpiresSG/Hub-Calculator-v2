@@ -230,11 +230,31 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
     <>
       <Card className="shadow-sm mb-6">
         <CardContent className="p-6">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">Input Parameters</h3>
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-lg font-semibold text-gray-800">Input Parameters</h3>
+            <Button 
+              type="submit" 
+              form="calculator-form"
+              className="bg-orange-600 hover:bg-orange-700 text-white px-6"
+              disabled={isCalculating}
+            >
+              {isCalculating ? (
+                <>
+                  <i className="fa fa-spinner fa-spin mr-2"></i>
+                  Calculating...
+                </>
+              ) : (
+                <>
+                  <i className="fa fa-calculator mr-2"></i>
+                  Calculate ROI
+                </>
+              )}
+            </Button>
+          </div>
           <p className="text-sm text-gray-600 mb-6">Update the details below to calculate your cost savings and ROI, or leave them blank to use our default averages.</p>
           
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <form id="calculator-form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               {/* Operation Requirements */}
               <div>
                 <h4 className="text-sm font-medium text-gray-700 mb-3 uppercase tracking-wider">Operation Requirements</h4>
