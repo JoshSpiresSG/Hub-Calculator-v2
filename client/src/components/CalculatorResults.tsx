@@ -70,6 +70,11 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
         <h2 className="text-2xl font-semibold text-gray-800">Results</h2>
       </div>
       
+      {/* Commercial Benefits Heading */}
+      <div className="mb-4">
+        <h3 className="text-lg font-semibold text-gray-800">Commercial Benefits</h3>
+      </div>
+      
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <Card className="shadow-sm border-l-4 border-primary">
@@ -103,6 +108,36 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
           </CardContent>
         </Card>
       </div>
+      
+      {/* Additional Benefits */}
+      <Card className="shadow-sm mb-6">
+        <CardContent className="p-6">
+          <h3 className="text-lg font-semibold text-gray-800 mb-4">Additional Benefits</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="flex flex-col items-center p-3 bg-blue-50 rounded-lg">
+              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-3">
+                <i className="fa fa-bolt text-blue-600 text-xl"></i>
+              </div>
+              <h4 className="font-medium text-gray-800 mb-1">Faster Response</h4>
+              <p className="text-sm text-gray-600 text-center">Deploy flights instantly without travel delays</p>
+            </div>
+            <div className="flex flex-col items-center p-3 bg-green-50 rounded-lg">
+              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-3">
+                <i className="fa fa-leaf text-green-600 text-xl"></i>
+              </div>
+              <h4 className="font-medium text-gray-800 mb-1">Reduced Emissions</h4>
+              <p className="text-sm text-gray-600 text-center">Eliminate travel-related carbon footprint</p>
+            </div>
+            <div className="flex flex-col items-center p-3 bg-purple-50 rounded-lg">
+              <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-3">
+                <i className="fa fa-shield-alt text-purple-600 text-xl"></i>
+              </div>
+              <h4 className="font-medium text-gray-800 mb-1">Improved Safety</h4>
+              <p className="text-sm text-gray-600 text-center">Reduce personnel exposure to hazardous environments</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
       
       {/* Comparison Chart */}
       <Card className="shadow-sm mb-6">
@@ -192,37 +227,6 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
           </CardContent>
         </Card>
       </div>
-      
-      {/* Additional Benefits */}
-      <Card className="shadow-sm mb-6">
-        <CardContent className="p-6">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">Additional Benefits</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="flex flex-col items-center p-3 bg-blue-50 rounded-lg">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-3">
-                <i className="fa fa-bolt text-blue-600 text-xl"></i>
-              </div>
-              <h4 className="font-medium text-gray-800 mb-1">Faster Response</h4>
-              <p className="text-sm text-gray-600 text-center">Deploy flights instantly without travel delays</p>
-            </div>
-            <div className="flex flex-col items-center p-3 bg-green-50 rounded-lg">
-              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-3">
-                <i className="fa fa-leaf text-green-600 text-xl"></i>
-              </div>
-              <h4 className="font-medium text-gray-800 mb-1">Reduced Emissions</h4>
-              <p className="text-sm text-gray-600 text-center">Eliminate travel-related carbon footprint</p>
-            </div>
-            <div className="flex flex-col items-center p-3 bg-purple-50 rounded-lg">
-              <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-3">
-                <i className="fa fa-shield-alt text-purple-600 text-xl"></i>
-              </div>
-              <h4 className="font-medium text-gray-800 mb-1">Improved Safety</h4>
-              <p className="text-sm text-gray-600 text-center">Reduce personnel exposure to hazardous environments</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-      
 
     </>
   );
