@@ -19,7 +19,7 @@ const defaultValues: CalculationInput = {
   pilotSalary: 200000,
   weeklyHoursPerPilot: 38,
   travelAndRelatedCostsPerPilot: 3500,
-  fifoRoster: "Not applicable" as const,
+  frequencyOfOperation: 2,
   
   // Manual Operation Cost
   pilotTimePerFlight: 5.0,

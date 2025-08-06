@@ -55,7 +55,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Save calculation results to database
       const savedCalculation = await storage.createCalculation({
         customerId,
-        projectName: calculation.projectName,
+        projectName: calculation.projectName || "Untitled Calculation",
         inputData: calculation,
         resultData: results
       });

@@ -101,6 +101,14 @@ The deployment uses:
 2. **Schema Migrations**: Use `npm run db:push` to push schema changes to the database
 3. **Type Safety**: The application leverages TypeScript for end-to-end type safety
 
+## Recent Changes
+
+### January 2025
+- **Field Update**: Replaced FIFO roster dropdown with flexible "Frequency of Operation" number input (default: 2)
+  - User can now input any frequency value instead of being limited to preset roster options
+  - Travel cost calculation now uses frequency multiplier: if frequency=1, includes cost for going to and returning from operation
+  - Higher frequencies reduce relative travel costs per operation
+
 ## Feature Expansion
 
 Potential areas for expansion:

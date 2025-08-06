@@ -60,6 +60,9 @@ export type Calculation = typeof calculations.$inferSelect;
 
 // Define the calculation input schema
 export const calculationInputSchema = z.object({
+  // Project Information
+  projectName: z.string().optional(),
+  
   // Operation Requirements
   numSites: z.number().min(1, "Number of sites must be at least 1"),
   dronesPerSite: z.number().min(1, "Drones per site must be at least 1"),
@@ -70,7 +73,7 @@ export const calculationInputSchema = z.object({
   pilotSalary: z.number().min(0, "Pilot salary must be at least 0"),
   weeklyHoursPerPilot: z.number().min(1, "Weekly hours per pilot must be at least 1"),
   travelAndRelatedCostsPerPilot: z.number().min(0, "Travel and related costs per pilot must be at least 0"),
-  fifoRoster: z.enum(["2:1", "8:6", "2:2", "Not applicable"], { required_error: "FIFO roster is required" }),
+  frequencyOfOperation: z.number().min(1, "Frequency of operation must be at least 1"),
   
   // Manual Operation Cost
   pilotTimePerFlight: z.number().min(0.1, "Pilot time per flight must be at least 0.1"),

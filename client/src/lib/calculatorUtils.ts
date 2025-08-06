@@ -17,19 +17,12 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   const pilotsNeededPerSite = flightHoursPerWeekPerSite / input.weeklyHoursPerPilot;
   const totalPilotsNeeded = pilotsNeededPerSite * input.numSites;
   
-  // Calculate FIFO roster multiplier for travel costs
-  let fifoMultiplier = 1;
-  if (input.fifoRoster === "2:1") {
-    fifoMultiplier = 16; // 2:1 roster multiplier
-  } else if (input.fifoRoster === "8:6") {
-    fifoMultiplier = 24; // 8:6 roster multiplier  
-  } else if (input.fifoRoster === "2:2") {
-    fifoMultiplier = 12; // 2:2 roster multiplier
-  } else {
-    fifoMultiplier = 1; // Not applicable - standard travel costs
-  }
+  // Calculate frequency multiplier for travel costs
+  // If frequency is 1, full round-trip cost (go + return)
+  // Higher frequencies reduce relative travel costs per operation
+  const frequencyMultiplier = input.frequencyOfOperation;
   
-  const annualTravelCost = Math.ceil(totalPilotsNeeded) * input.travelAndRelatedCostsPerPilot * fifoMultiplier; // Travel costs adjusted for FIFO
+  const annualTravelCost = Math.ceil(totalPilotsNeeded) * input.travelAndRelatedCostsPerPilot * frequencyMultiplier;
   const annualManualLaborCost = totalPilotsNeeded * input.pilotSalary; // Labor costs for fractional pilots
   
   // Equipment costs: per site, depreciated over 3 years, plus 10% maintenance per drone per year
