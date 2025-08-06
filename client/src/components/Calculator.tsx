@@ -138,8 +138,8 @@ export default function Calculator() {
               isLoading={calculationMutation.isPending}
             />
             
-            {/* PDF and Email Actions - Show when results are available */}
-            {results && (
+            {/* PDF and Email Actions - Hidden while feature is being built */}
+            {/* {results && (
               <div className="mt-6 bg-white rounded-lg shadow-sm p-6">
                 <h3 className="text-lg font-semibold text-gray-800 mb-4">Get Your Report</h3>
                 <div className="flex flex-col sm:flex-row gap-4">
@@ -159,7 +159,7 @@ export default function Calculator() {
                   </Button>
                 </div>
               </div>
-            )}
+            )} */}
           </div>
         </div>
       </main>
