@@ -55,4 +55,9 @@
   body {
     @apply font-sans antialiased bg-background text-foreground;
   }
+
+  /* Apply Bai Jamjuree font to all headings */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Bai Jamjuree', sans-serif;
+  }
 }
