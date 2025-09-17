@@ -177,7 +177,7 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
               </div>
               <div>
                 <span className="text-gray-600">Airtime/Annual:</span>
-                <p className="font-medium">{(results.annualRemoteHours || 0).toFixed(0)} hours</p>
+                <p className="font-medium">{(results.inputAirtimeHours * 12).toFixed(0)} hours</p>
               </div>
               <div>
                 <span className="text-gray-600">Operational Efficiency:</span>
