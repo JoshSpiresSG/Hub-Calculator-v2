@@ -106,8 +106,8 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   const annualSavingsAfterFirstYear = annualManualTotalCost - subsequentYearRemoteCost;
   const roiTimeframe = annualSavingsAfterFirstYear > 0 ? hubCost / annualSavingsAfterFirstYear : 0;
   
-  // Calculate annual savings
-  const annualSavings = annualManualTotalCost - subsequentYearRemoteCost;
+  // Calculate annual savings - simple comparison between client operations and Sphere operations
+  const annualSavings = annualManualLaborCost - annualSphereBackedCost;
   
   const annualHoursSaved = annualManualHours - annualRemoteHours;
   const efficiencyGain = annualManualHours > 0 ? Math.round((annualHoursSaved / annualManualHours) * 100) : 0;

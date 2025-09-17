@@ -107,14 +107,21 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-blue-50 p-4 rounded-lg">
               <h4 className="font-medium text-gray-800 mb-2">Client Operations</h4>
-              <p className="text-2xl font-semibold text-blue-700">{formatCurrency(results.annualManualTotalCost)}</p>
-              <p className="text-sm text-gray-600 mt-1">Full year manual operations cost</p>
+              <p className="text-2xl font-semibold text-blue-700">{formatCurrency(results.annualManualLaborCost)}</p>
+              <p className="text-sm text-gray-600 mt-1">Annual pilot labor cost</p>
             </div>
             <div className="bg-green-50 p-4 rounded-lg">
-              <h4 className="font-medium text-gray-800 mb-2">Sphere Backed Operations</h4>
-              <p className="text-2xl font-semibold text-green-700">{formatCurrency(results.subsequentYearRemoteCost)}</p>
-              <p className="text-sm text-gray-600 mt-1">Full year remote operations cost</p>
+              <h4 className="font-medium text-gray-800 mb-2">Sphere Backed Operations (HubT)</h4>
+              <p className="text-2xl font-semibold text-green-700">{formatCurrency(results.annualSphereBackedCost)}</p>
+              <p className="text-sm text-gray-600 mt-1">Annual hub infrastructure cost</p>
             </div>
+          </div>
+          <div className="mt-4 p-4 bg-gray-50 rounded-lg text-center">
+            <h4 className="font-medium text-gray-800 mb-2">Annual Savings</h4>
+            <p className="text-3xl font-bold text-green-600">{formatCurrency(results.annualSavings)}</p>
+            <p className="text-sm text-gray-600 mt-1">
+              {((results.annualSavings / results.annualManualLaborCost) * 100).toFixed(1)}% cost reduction
+            </p>
           </div>
         </CardContent>
       </Card>
