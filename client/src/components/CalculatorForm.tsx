@@ -35,10 +35,6 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
     onCalculate(sanitizedData);
   };
 
-  // Calculate operational efficiency display value
-  const operationalEfficiency = form.watch("operationHours") > 0 
-    ? ((form.watch("airtimeHours") || 0) / (form.watch("operationHours") || 1) * 100).toFixed(2)
-    : "0.00";
 
   return (
     <Card className="w-full max-w-2xl mx-auto">
@@ -134,12 +130,6 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                 />
               </div>
 
-              <div className="text-sm text-gray-600 bg-white p-3 rounded border">
-                <div className="font-medium">Operational Efficiency: {operationalEfficiency}%</div>
-                <div className="text-xs text-gray-500 mt-1">
-                  Calculated as: Airtime hours ÷ Operation hours × 100
-                </div>
-              </div>
             </div>
 
             <Button 
