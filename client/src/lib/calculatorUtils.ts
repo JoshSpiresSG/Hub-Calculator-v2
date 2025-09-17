@@ -44,8 +44,8 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   // Flight assumptions for equipment calculations
   const AVERAGE_FLIGHT_DURATION_MINUTES = 25; // 20-30 min average
   
-  // Sphere operations have fixed 80% efficiency
-  const operationalEfficiency = Math.round(SPHERE_EFFICIENCY * 100); // Fixed 80%
+  // Calculate operational efficiency dynamically based on airtime vs operations ratio
+  const operationalEfficiency = input.operationHours > 0 ? Math.round((input.airtimeHours / input.operationHours) * 100) : 0;
   
   // FIXED: Separate base wage from fixed costs
   const baseSalary = input.annualSalary;
