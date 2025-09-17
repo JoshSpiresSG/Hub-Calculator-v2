@@ -303,12 +303,20 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
             <h4 className="font-medium text-gray-700 mb-3">Sphere Backed Operations</h4>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
               <div>
-                <span className="text-gray-600">Hub Cost (HubX):</span>
+                <span className="text-gray-600">HubX Yearly Cost:</span>
                 <p className="font-medium">{formatCurrency(results.totalDroneBoxCost || 0)}</p>
               </div>
               <div>
-                <span className="text-gray-600">Hub Idle Cost:</span>
+                <span className="text-gray-600">Hub Idle Yearly Cost:</span>
                 <p className="font-medium">{formatCurrency(results.hubIdleCost || 0)}</p>
+              </div>
+              <div>
+                <span className="text-gray-600">HubT Yearly Cost:</span>
+                <p className="font-medium">{formatCurrency(results.hubtCost || 0)}</p>
+              </div>
+              <div>
+                <span className="text-gray-600">HubT Idle Cost:</span>
+                <p className="font-medium">{formatCurrency(results.hubtIdleCost || 0)}</p>
               </div>
               <div>
                 <span className="text-gray-600">Sphere Hourly Rate:</span>

@@ -81,6 +81,8 @@ export const calculationResultSchema = z.object({
   // Remote costs
   totalDroneBoxCost: z.number(),
   hubIdleCost: z.number(),
+  hubtCost: z.number(),
+  hubtIdleCost: z.number(),
   annualDroneBoxAmortized: z.number(),
   annualRemoteLaborCost: z.number(),
   annualSphereBackedCost: z.number(),

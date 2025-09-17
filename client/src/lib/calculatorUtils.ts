@@ -112,6 +112,8 @@ export function calculateResults(input: CalculationInput): CalculationResult {
     annualManualTotalCost,
     totalDroneBoxCost: hubCost,
     hubIdleCost,
+    hubtCost: HUBT_COST,
+    hubtIdleCost: HUBT_IDLE_COST,
     annualDroneBoxAmortized,
     annualRemoteLaborCost,
     annualSphereBackedCost,
