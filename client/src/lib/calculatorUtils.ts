@@ -89,7 +89,7 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   const annualRemoteHours = input.airtimeHours * 12; // Monthly airtime hours to annual
   
   // Sphere backed operations cost calculation
-  const annualSphereBackedCost = annualRemoteHours * SPHERE_HOURLY_RATE;
+  const annualSphereBackedCost = annualManualHours * SPHERE_HOURLY_RATE;
   
   // First year includes upfront hub cost, subsequent years only include amortized cost
   const firstYearRemoteCost = hubCost + annualRemoteLaborCost;
