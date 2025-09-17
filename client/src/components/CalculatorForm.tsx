@@ -82,7 +82,7 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                   name="airtimeHours"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Airtime (hours)</FormLabel>
+                      <FormLabel>Airtime (hours/month)</FormLabel>
                       <FormControl>
                         <Input 
                           type="number"
@@ -108,7 +108,7 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                   name="operationHours"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Ops Time (hours)</FormLabel>
+                      <FormLabel>Ops Time (hours/month)</FormLabel>
                       <FormControl>
                         <Input 
                           type="number"

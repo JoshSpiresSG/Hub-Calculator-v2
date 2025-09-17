@@ -59,7 +59,7 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   const annualTravelCost = FIFO_TRAVEL;
   
   // FIXED: Equipment cost methodology with proper flight duration conversion
-  const airtimeHoursPerYear = input.airtimeHours * 52; // Weekly to annual
+  const airtimeHoursPerYear = input.airtimeHours * 12; // Monthly to annual
   const flightsPerYear = (airtimeHoursPerYear * 60) / AVERAGE_FLIGHT_DURATION_MINUTES; // Convert airtime to flights
   
   const batteryCostPerYear = (flightsPerYear / BATTERY_CYCLES) * BATTERY_COST;
@@ -67,7 +67,9 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   const maintenanceCostPerYear = (flightsPerYear / MAINTENANCE_FLIGHTS) * MAINTENANCE_COST;
   const droneCostPerYear = (flightsPerYear / DRONE_FLIGHTS) * DRONE_COST;
   
-  const totalEquipmentCostPerYear = batteryCostPerYear + propellerCostPerYear + maintenanceCostPerYear + droneCostPerYear;
+  // Add 10% contingency to total equipment costs
+  const baseEquipmentCostPerYear = batteryCostPerYear + propellerCostPerYear + maintenanceCostPerYear + droneCostPerYear;
+  const totalEquipmentCostPerYear = baseEquipmentCostPerYear * 1.10; // 10% contingency
   
   // FIXED: Ensure cost totals are consistent
   const annualManualTotalCost = annualManualLaborCost + totalEquipmentCostPerYear;
@@ -93,8 +95,8 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   const savingsPercentage = fiveYearManualCost > 0 ? Math.round((fiveYearSavings / fiveYearManualCost) * 100) : 0;
   
   // Calculate time saved (based on operational efficiency)
-  const annualManualHours = input.operationHours * 52; // Assuming weekly operation hours
-  const annualRemoteHours = input.airtimeHours * 52; // Remote operations are more efficient
+  const annualManualHours = input.operationHours * 12; // Monthly operation hours to annual
+  const annualRemoteHours = input.airtimeHours * 12; // Monthly airtime hours to annual
   const annualHoursSaved = annualManualHours - annualRemoteHours;
   const fiveYearHoursSaved = annualHoursSaved * 5;
   const efficiencyGain = annualManualHours > 0 ? Math.round((annualHoursSaved / annualManualHours) * 100) : 0;

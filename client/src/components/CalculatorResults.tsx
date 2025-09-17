@@ -275,11 +275,23 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
                     <td className="text-right">$5,000.00</td>
                     <td className="text-right">$12.50</td>
                   </tr>
-                  <tr className="font-semibold">
-                    <td className="py-2">Total</td>
+                  <tr>
+                    <td className="py-2">Sub-total</td>
                     <td className="text-right"></td>
                     <td className="text-right"></td>
                     <td className="text-right">$20.42</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2">10% Contingency</td>
+                    <td className="text-right"></td>
+                    <td className="text-right"></td>
+                    <td className="text-right">$2.04</td>
+                  </tr>
+                  <tr className="font-semibold border-t">
+                    <td className="py-2">Total</td>
+                    <td className="text-right"></td>
+                    <td className="text-right"></td>
+                    <td className="text-right">$22.46</td>
                   </tr>
                 </tbody>
               </table>
