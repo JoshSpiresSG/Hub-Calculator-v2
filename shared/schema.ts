@@ -58,31 +58,15 @@ export const insertCalculationSchema = createInsertSchema(calculations).pick({
 export type InsertCalculation = z.infer<typeof insertCalculationSchema>;
 export type Calculation = typeof calculations.$inferSelect;
 
-// Define the calculation input schema
+// Define the simplified calculation input schema
 export const calculationInputSchema = z.object({
   // Project Information
   projectName: z.string().optional(),
   
-  // Operation Requirements
-  numSites: z.number().min(1, "Number of sites must be at least 1"),
-  dronesPerSite: z.number().min(1, "Drones per site must be at least 1"),
-  flightsPerDay: z.number().min(1, "Flights per day must be at least 1"),
-  flightDaysPerWeek: z.number().min(1, "Flight days per week must be at least 1"),
-  
-  // Labour & Travel
-  pilotSalary: z.number().min(0, "Pilot salary must be at least 0"),
-  weeklyHoursPerPilot: z.number().min(1, "Weekly hours per pilot must be at least 1"),
-  travelAndRelatedCostsPerPilot: z.number().min(0, "Travel and related costs per pilot must be at least 0"),
-  frequencyOfOperation: z.number().min(1, "Frequency of operation must be at least 1"),
-  
-  // Manual Operation Cost
-  pilotTimePerFlight: z.number().min(0.1, "Pilot time per flight must be at least 0.1"),
-  equipmentCostPerYear: z.number().min(0, "Equipment cost per year must be at least 0"),
-  
-  // Remote Operation Cost (HubX / HubT)
-  hubType: z.enum(["HubX", "HubT"], { required_error: "Hub type is required" }),
-  remotePilotTimePerFlight: z.number().min(0.01, "Remote pilot time per flight must be at least 0.01 hours"),
-  remotePilotSalary: z.number().min(0, "Remote pilot salary must be at least 0"),
+  // Simplified inputs
+  annualSalary: z.number().min(0, "Annual salary must be at least 0"),
+  airtimeHours: z.number().min(0, "Airtime hours must be at least 0"),
+  operationHours: z.number().min(0, "Operation hours must be at least 0"),
 });
 
 export type CalculationInput = z.infer<typeof calculationInputSchema>;
@@ -113,6 +97,9 @@ export const calculationResultSchema = z.object({
   annualHoursSaved: z.number(),
   fiveYearHoursSaved: z.number(),
   efficiencyGain: z.number(),
+  
+  // Operational efficiency
+  operationalEfficiency: z.number(),
   
   // ROI timeframe
   roiTimeframe: z.number(),

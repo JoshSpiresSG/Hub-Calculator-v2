@@ -9,78 +9,106 @@ export function formatCurrency(amount: number): string {
 }
 
 export function calculateResults(input: CalculationInput): CalculationResult {
-  // Calculate total flights per year
-  const totalFlightsPerYear = input.numSites * input.flightsPerDay * input.flightDaysPerWeek * 52; // 52 weeks per year
+  // Constants based on user requirements
+  const HOURS_PER_DAY = 12;
+  const WORK_DAYS_PER_YEAR = 209;
+  const BONUS_RATE = 0.05; // 5%
+  const SUPERANNUATION_RATE = 0.12; // 12%
+  const ON_COSTS = 25000; // $25,000
+  const FIFO_TRAVEL = 100000; // $100,000
+  const SATURDAY_MULTIPLIER = 1.5;
+  const SUNDAY_MULTIPLIER = 2.0;
   
-  // Calculate manual costs - pilots needed per site based on flight hours
-  const flightHoursPerWeekPerSite = input.flightsPerDay * input.flightDaysPerWeek * input.pilotTimePerFlight;
-  const pilotsNeededPerSite = flightHoursPerWeekPerSite / input.weeklyHoursPerPilot;
-  const totalPilotsNeeded = pilotsNeededPerSite * input.numSites;
+  // Equipment costs per cycle/flight
+  const BATTERY_COST = 300;
+  const BATTERY_CYCLES = 200;
+  const PROPELLER_COST = 25;
+  const PROPELLER_FLIGHTS = 150;
+  const MAINTENANCE_COST = 2500;
+  const MAINTENANCE_FLIGHTS = 400;
+  const DRONE_COST = 5000;
+  const DRONE_FLIGHTS = 400;
   
-  // Calculate frequency multiplier for travel costs
-  // If frequency is 1, full round-trip cost (go + return)
-  // Higher frequencies reduce relative travel costs per operation
-  const frequencyMultiplier = input.frequencyOfOperation;
+  // Hub costs
+  const HUBX_COST = 114815; // From Excel
+  const HUBT_COST = 89815; // From Excel
   
-  const annualTravelCost = Math.ceil(totalPilotsNeeded) * input.travelAndRelatedCostsPerPilot * frequencyMultiplier;
-  const annualManualLaborCost = totalPilotsNeeded * input.pilotSalary; // Labor costs for fractional pilots
+  // Flight assumptions for equipment calculations
+  const AVERAGE_FLIGHT_DURATION_MINUTES = 25; // 20-30 min average
   
-  // Equipment costs: per site, depreciated over 3 years, plus 10% maintenance per drone per year
-  const totalDrones = input.numSites * input.dronesPerSite;
-  const equipmentDepreciationPerYear = (input.equipmentCostPerYear * input.numSites) / 3; // Depreciated over 3 years
-  const maintenanceCostPerYear = (input.equipmentCostPerYear * totalDrones) * 0.1; // 10% maintenance per drone
-  const totalEquipmentCostPerYear = equipmentDepreciationPerYear + maintenanceCostPerYear;
+  // Calculate operational efficiency
+  const operationalEfficiency = input.operationHours > 0 ? (input.airtimeHours / input.operationHours) * 100 : 0;
   
-  const annualManualTotalCost = annualTravelCost + annualManualLaborCost + totalEquipmentCostPerYear;
+  // FIXED: Separate base wage from fixed costs
+  const baseSalary = input.annualSalary;
+  const salaryWithBonusAndSuper = baseSalary + (baseSalary * BONUS_RATE) + (baseSalary * SUPERANNUATION_RATE);
+  
+  // Calculate working hours per year 
+  const workingHoursPerYear = WORK_DAYS_PER_YEAR * HOURS_PER_DAY;
+  const baseHourlyWageRate = salaryWithBonusAndSuper / workingHoursPerYear;
+  
+  // FIXED: Apply weekend premiums only to wage component
+  const weekdayHours = workingHoursPerYear * (5/7); // 5 weekdays
+  const saturdayHours = workingHoursPerYear * (1/7); // 1 Saturday  
+  const sundayHours = workingHoursPerYear * (1/7); // 1 Sunday
+  
+  const totalWeekdayWageCost = weekdayHours * baseHourlyWageRate;
+  const totalSaturdayWageCost = saturdayHours * baseHourlyWageRate * SATURDAY_MULTIPLIER;
+  const totalSundayWageCost = sundayHours * baseHourlyWageRate * SUNDAY_MULTIPLIER;
+  const totalAnnualWageCost = totalWeekdayWageCost + totalSaturdayWageCost + totalSundayWageCost;
+  
+  // Add fixed costs once (not multiplied by weekend rates)
+  const annualManualLaborCost = totalAnnualWageCost + ON_COSTS + FIFO_TRAVEL;
+  const annualTravelCost = FIFO_TRAVEL;
+  
+  // FIXED: Equipment cost methodology with proper flight duration conversion
+  const airtimeHoursPerYear = input.airtimeHours * 52; // Weekly to annual
+  const flightsPerYear = (airtimeHoursPerYear * 60) / AVERAGE_FLIGHT_DURATION_MINUTES; // Convert airtime to flights
+  
+  const batteryCostPerYear = (flightsPerYear / BATTERY_CYCLES) * BATTERY_COST;
+  const propellerCostPerYear = (flightsPerYear / PROPELLER_FLIGHTS) * PROPELLER_COST;
+  const maintenanceCostPerYear = (flightsPerYear / MAINTENANCE_FLIGHTS) * MAINTENANCE_COST;
+  const droneCostPerYear = (flightsPerYear / DRONE_FLIGHTS) * DRONE_COST;
+  
+  const totalEquipmentCostPerYear = batteryCostPerYear + propellerCostPerYear + maintenanceCostPerYear + droneCostPerYear;
+  
+  // FIXED: Ensure cost totals are consistent
+  const annualManualTotalCost = annualManualLaborCost + totalEquipmentCostPerYear;
   const fiveYearManualCost = annualManualTotalCost * 5;
   
-  // Calculate remote costs based on hub type and managed flight services
-  let hubCost = 0;
-  if (input.hubType === "HubX") {
-    hubCost = 100000;
-  } else if (input.hubType === "HubT") {
-    hubCost = 60000;
-  }
+  // FIXED: Remote cost modeling with proper amortization
+  const hubCost = HUBX_COST; // Default to HubX for now
+  const annualDroneBoxAmortized = hubCost / 5; // Amortize over 5 years
+  const annualRemoteLaborCost = totalAnnualWageCost * 0.2 + ON_COSTS * 0.2; // 20% of wage + proportional on-costs
   
-  // Remote labor costs: calculate pilots needed for remote operations
-  const totalRemoteFlightHours = totalFlightsPerYear * input.remotePilotTimePerFlight;
-  const remoteFlightHoursPerWeek = (totalRemoteFlightHours / 52);
-  const remotePilotsNeeded = remoteFlightHoursPerWeek / input.weeklyHoursPerPilot;
-  const remoteLaborCost = remotePilotsNeeded * input.remotePilotSalary;
+  // First year includes upfront hub cost, subsequent years only include amortized cost
+  const firstYearRemoteCost = hubCost + annualRemoteLaborCost;
+  const subsequentYearRemoteCost = annualDroneBoxAmortized + annualRemoteLaborCost;
+  const fiveYearRemoteCost = firstYearRemoteCost + (subsequentYearRemoteCost * 4);
   
-  const annualRemoteCost = hubCost + remoteLaborCost;
-  const fiveYearRemoteCost = annualRemoteCost * 5;
+  // FIXED: ROI calculation using recurring annual savings
+  const annualSavingsAfterFirstYear = annualManualTotalCost - subsequentYearRemoteCost;
+  const roiTimeframe = annualSavingsAfterFirstYear > 0 ? hubCost / annualSavingsAfterFirstYear : 0;
   
   // Calculate savings and ROI
   const fiveYearSavings = fiveYearManualCost - fiveYearRemoteCost;
-  const savingsPercentage = Math.round((fiveYearSavings / fiveYearManualCost) * 100);
+  const savingsPercentage = fiveYearManualCost > 0 ? Math.round((fiveYearSavings / fiveYearManualCost) * 100) : 0;
   
-  // Calculate time saved 
-  const annualManualHours = flightHoursPerWeekPerSite * input.numSites * 52;
-  const annualRemoteHours = totalRemoteFlightHours;
+  // Calculate time saved (based on operational efficiency)
+  const annualManualHours = input.operationHours * 52; // Assuming weekly operation hours
+  const annualRemoteHours = input.airtimeHours * 52; // Remote operations are more efficient
   const annualHoursSaved = annualManualHours - annualRemoteHours;
   const fiveYearHoursSaved = annualHoursSaved * 5;
-  const efficiencyGain = Math.round(((annualManualHours - annualRemoteHours) / annualManualHours) * 100);
+  const efficiencyGain = annualManualHours > 0 ? Math.round((annualHoursSaved / annualManualHours) * 100) : 0;
   
-  // Calculate ROI timeframe
-  const annualSavings = annualManualTotalCost - annualRemoteCost;
-  const roiTimeframe = annualSavings > 0 ? Math.abs(hubCost / annualSavings) : 0;
-  
-  // Create yearly data for chart
-  const yearlyManualCosts = [
-    annualManualTotalCost,
-    annualManualTotalCost,
-    annualManualTotalCost,
-    annualManualTotalCost,
-    annualManualTotalCost
-  ];
-  
+  // Create yearly data for chart with proper remote cost progression
+  const yearlyManualCosts = Array(5).fill(annualManualTotalCost);
   const yearlyRemoteCosts = [
-    annualRemoteCost,
-    annualRemoteCost,
-    annualRemoteCost,
-    annualRemoteCost,
-    annualRemoteCost
+    firstYearRemoteCost,
+    subsequentYearRemoteCost,
+    subsequentYearRemoteCost,
+    subsequentYearRemoteCost,
+    subsequentYearRemoteCost
   ];
   
   return {
@@ -88,11 +116,11 @@ export function calculateResults(input: CalculationInput): CalculationResult {
     annualManualLaborCost,
     annualManualTotalCost,
     fiveYearManualCost,
-    totalDroneBoxCost: 0, // Not used in new model
-    annualDroneBoxAmortized: 0, // Not used in new model
-    annualRemoteLaborCost: remoteLaborCost, // Show actual remote labor cost
-    firstYearRemoteCost: annualRemoteCost,
-    subsequentYearRemoteCost: annualRemoteCost,
+    totalDroneBoxCost: hubCost,
+    annualDroneBoxAmortized,
+    annualRemoteLaborCost,
+    firstYearRemoteCost,
+    subsequentYearRemoteCost,
     fiveYearRemoteCost,
     fiveYearSavings,
     savingsPercentage,
@@ -101,6 +129,7 @@ export function calculateResults(input: CalculationInput): CalculationResult {
     annualHoursSaved,
     fiveYearHoursSaved,
     efficiencyGain,
+    operationalEfficiency, // FIXED: Include operational efficiency
     roiTimeframe,
     yearlyManualCosts,
     yearlyRemoteCosts
