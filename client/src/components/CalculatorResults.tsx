@@ -109,17 +109,20 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
               <h4 className="font-medium text-gray-800 mb-2">Client Operations</h4>
               <p className="text-xl font-semibold text-blue-700">{formatCurrency(results.annualManualLaborCost)}</p>
               <p className="text-sm text-gray-600 mt-1">Annual pilot labor cost</p>
+              <p className="text-xs text-blue-600 mt-1 font-medium">{formatCurrency(results.pilotHourlyRate || 157)}/hour</p>
             </div>
             <div className="bg-green-50 p-4 rounded-lg">
               <h4 className="font-medium text-gray-800 mb-2">Sphere HubT</h4>
               <p className="text-xl font-semibold text-green-700">{formatCurrency(results.hubtCost)}</p>
               <p className="text-sm text-gray-600 mt-1">Hub infrastructure cost</p>
+              <p className="text-xs text-gray-600 mt-1">{formatCurrency(results.hubtCost / results.annualManualHours)}/hour equivalent</p>
               <p className="text-xs text-green-600 mt-1 font-medium">Save: {formatCurrency(results.annualManualLaborCost - results.hubtCost)}</p>
             </div>
             <div className="bg-green-50 p-4 rounded-lg">
               <h4 className="font-medium text-gray-800 mb-2">Sphere HubX</h4>
               <p className="text-xl font-semibold text-green-700">{formatCurrency(results.totalDroneBoxCost)}</p>
               <p className="text-sm text-gray-600 mt-1">Hub infrastructure cost</p>
+              <p className="text-xs text-gray-600 mt-1">{formatCurrency(results.totalDroneBoxCost / results.annualManualHours)}/hour equivalent</p>
               <p className="text-xs text-green-600 mt-1 font-medium">Save: {formatCurrency(results.annualManualLaborCost - results.totalDroneBoxCost)}</p>
             </div>
             <div className="bg-purple-50 p-4 rounded-lg">
