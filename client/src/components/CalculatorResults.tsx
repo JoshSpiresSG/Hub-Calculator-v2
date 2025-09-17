@@ -100,6 +100,24 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
         </CardContent>
       </Card>
       
+      {/* Cost Comparison */}
+      <Card className="shadow-sm mb-6">
+        <CardContent className="p-6">
+          <h3 className="text-lg font-semibold text-gray-800 mb-4">Annual Cost Comparison</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-blue-50 p-4 rounded-lg">
+              <h4 className="font-medium text-gray-800 mb-2">Client Operations</h4>
+              <p className="text-2xl font-semibold text-blue-700">{formatCurrency(results.annualManualTotalCost)}</p>
+              <p className="text-sm text-gray-600 mt-1">Full year manual operations cost</p>
+            </div>
+            <div className="bg-green-50 p-4 rounded-lg">
+              <h4 className="font-medium text-gray-800 mb-2">Sphere Backed Operations</h4>
+              <p className="text-2xl font-semibold text-green-700">{formatCurrency(results.subsequentYearRemoteCost)}</p>
+              <p className="text-sm text-gray-600 mt-1">Full year remote operations cost</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
     </>
   );
