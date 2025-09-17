@@ -315,7 +315,7 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
                 <p className="font-medium">{formatCurrency(results.hubtCost || 0)}</p>
               </div>
               <div>
-                <span className="text-gray-600">HubT Idle Cost:</span>
+                <span className="text-gray-600">HubT Yearly Idle Cost:</span>
                 <p className="font-medium">{formatCurrency(results.hubtIdleCost || 0)}</p>
               </div>
               <div>
