@@ -40,8 +40,8 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <Card className="shadow-sm border-l-4 border-primary">
           <CardContent className="p-4">
-            <h4 className="text-sm font-medium text-gray-500">5-Year Savings</h4>
-            <p className="text-2xl font-semibold text-gray-800">{formatCurrency(results.fiveYearSavings)}</p>
+            <h4 className="text-sm font-medium text-gray-500">Annual Savings</h4>
+            <p className="text-2xl font-semibold text-gray-800">{formatCurrency(results.annualSavings)}</p>
             <p className="text-sm text-green-600 flex items-center">
               <i className="fa fa-arrow-up mr-1"></i>
               <span>{results.savingsPercentage}%</span>&nbsp;cost reduction
@@ -50,8 +50,8 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
         </Card>
         <Card className="shadow-sm border-l-4 border-secondary">
           <CardContent className="p-4">
-            <h4 className="text-sm font-medium text-gray-500">Time Saved (5-Year)</h4>
-            <p className="text-2xl font-semibold text-gray-800">{results.fiveYearHoursSaved.toLocaleString()} hours</p>
+            <h4 className="text-sm font-medium text-gray-500">Time Saved (Annual)</h4>
+            <p className="text-2xl font-semibold text-gray-800">{results.annualHoursSaved.toLocaleString()} hours</p>
             <p className="text-sm text-green-600 flex items-center">
               <i className="fa fa-arrow-up mr-1"></i>
               <span>{results.efficiencyGain}%</span>&nbsp;efficiency gain
@@ -307,6 +307,18 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
                 <p className="font-medium">{formatCurrency(results.totalDroneBoxCost || 0)}</p>
               </div>
               <div>
+                <span className="text-gray-600">Hub Idle Cost:</span>
+                <p className="font-medium">{formatCurrency(results.hubIdleCost || 0)}</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Sphere Hourly Rate:</span>
+                <p className="font-medium">{formatCurrency(results.sphereHourlyRate || 0)}/hour</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Annual Sphere Cost:</span>
+                <p className="font-medium">{formatCurrency(results.annualSphereBackedCost || 0)}</p>
+              </div>
+              <div>
                 <span className="text-gray-600">Annual Hub Amortized:</span>
                 <p className="font-medium">{formatCurrency(results.annualDroneBoxAmortized || 0)}</p>
               </div>
@@ -319,20 +331,8 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
                 <p className="font-medium">20%</p>
               </div>
               <div>
-                <span className="text-gray-600">First Year Cost:</span>
-                <p className="font-medium">{formatCurrency(results.firstYearRemoteCost || 0)}</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Subsequent Year Cost:</span>
-                <p className="font-medium">{formatCurrency(results.subsequentYearRemoteCost || 0)}</p>
-              </div>
-              <div>
                 <span className="text-gray-600">ROI Timeframe:</span>
                 <p className="font-medium">{(results.roiTimeframe || 0).toFixed(1)} years</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Annual Savings (Y2+):</span>
-                <p className="font-medium">{formatCurrency((results.annualManualTotalCost || 0) - (results.subsequentYearRemoteCost || 0))}</p>
               </div>
             </div>
           </div>

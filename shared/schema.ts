@@ -77,25 +77,24 @@ export const calculationResultSchema = z.object({
   annualTravelCost: z.number(),
   annualManualLaborCost: z.number(),
   annualManualTotalCost: z.number(),
-  fiveYearManualCost: z.number(),
   
   // Remote costs
   totalDroneBoxCost: z.number(),
+  hubIdleCost: z.number(),
   annualDroneBoxAmortized: z.number(),
   annualRemoteLaborCost: z.number(),
+  annualSphereBackedCost: z.number(),
+  sphereHourlyRate: z.number(),
   firstYearRemoteCost: z.number(),
   subsequentYearRemoteCost: z.number(),
-  fiveYearRemoteCost: z.number(),
   
   // Savings and ROI
-  fiveYearSavings: z.number(),
-  savingsPercentage: z.number(),
+  annualSavings: z.number(),
   
   // Time saved
   annualManualHours: z.number(),
   annualRemoteHours: z.number(),
   annualHoursSaved: z.number(),
-  fiveYearHoursSaved: z.number(),
   efficiencyGain: z.number(),
   
   // Operational efficiency
@@ -103,10 +102,6 @@ export const calculationResultSchema = z.object({
   
   // ROI timeframe
   roiTimeframe: z.number(),
-  
-  // Yearly costs for chart
-  yearlyManualCosts: z.array(z.number()),
-  yearlyRemoteCosts: z.array(z.number()),
 });
 
 export type CalculationResult = z.infer<typeof calculationResultSchema>;
