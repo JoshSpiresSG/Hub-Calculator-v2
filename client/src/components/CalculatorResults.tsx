@@ -303,13 +303,28 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
                 <span className="text-gray-600">Sphere Operations/Month:</span>
                 <p className="font-medium">{(results.sphereOperationsPerMonth || 0).toFixed(1)} hours</p>
               </div>
+            </div>
+          </div>
+
+          {/* Sphere Cost Calculation Steps */}
+          <div className="mb-6">
+            <h4 className="font-medium text-gray-700 mb-3">Sphere Cost Calculation Steps</h4>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
               <div>
-                <span className="text-gray-600">Monthly Sphere Cost:</span>
-                <p className="font-medium">{formatCurrency(results.monthlySphereBackedCost)}</p>
+                <span className="text-gray-600">Step 1 - Monthly:</span>
+                <p className="font-medium">{(results.sphereOperationsPerMonth || 0).toFixed(1)} hours × $110</p>
               </div>
               <div>
-                <span className="text-gray-600">Annual Sphere Cost:</span>
-                <p className="font-medium">{formatCurrency(results.annualSphereBackedCost)}</p>
+                <span className="text-gray-600">Monthly Cost:</span>
+                <p className="font-medium font-semibold text-green-600">{formatCurrency(results.monthlySphereBackedCost || 0)}</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Step 2 - Annual:</span>
+                <p className="font-medium">{formatCurrency(results.monthlySphereBackedCost || 0)} × 12</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Annual Cost:</span>
+                <p className="font-medium font-semibold text-blue-600">{formatCurrency(results.annualSphereBackedCost || 0)}</p>
               </div>
             </div>
           </div>
