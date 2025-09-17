@@ -288,16 +288,16 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
             <h4 className="font-medium text-gray-700 mb-3">Client Operations Cost Calculation Steps</h4>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
               <div>
-                <span className="text-gray-600">Step 1 - Monthly:</span>
-                <p className="font-medium">{results.manualOperationsPerMonth} hours × {formatCurrency(394000 / (209 * 12))}</p>
+                <span className="text-gray-600">Calculation Method:</span>
+                <p className="font-medium">Fixed Annual FIFO Package</p>
               </div>
               <div>
                 <span className="text-gray-600">Monthly Labor Cost:</span>
                 <p className="font-medium font-semibold text-green-600">{formatCurrency(results.annualManualLaborCost / 12)}</p>
               </div>
               <div>
-                <span className="text-gray-600">Step 2 - Annual:</span>
-                <p className="font-medium">{formatCurrency(results.annualManualLaborCost / 12)} × 12</p>
+                <span className="text-gray-600">Annual Calculation:</span>
+                <p className="font-medium">Total FIFO Salary Package</p>
               </div>
               <div>
                 <span className="text-gray-600">Annual Labor Cost:</span>
