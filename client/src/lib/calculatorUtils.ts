@@ -57,9 +57,10 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   // Total salary package includes salary, bonus, super, on costs, and FIFO travel
   const totalSalaryPackage = salaryWithBonusAndSuper + onCosts + FIFO_TRAVEL;
   const dayRate = totalSalaryPackage / WORK_DAYS_PER_YEAR;
+  const pilotHourlyRate = totalSalaryPackage / (WORK_DAYS_PER_YEAR * HOURS_PER_DAY);
   
-  // Annual labor cost is simply the total salary package
-  const annualManualLaborCost = totalSalaryPackage;
+  // Annual labor cost based on actual operation hours worked
+  const annualManualLaborCost = (input.operationHours * 12) * pilotHourlyRate;
   const annualTravelCost = FIFO_TRAVEL;
   
   // FIXED: Equipment cost methodology with proper flight duration conversion
