@@ -9,26 +9,9 @@ import { calculateResults } from "@/lib/calculatorUtils";
 import { Button } from "@/components/ui/button";
 
 const defaultValues: CalculationInput = {
-  // Operation Requirements
-  numSites: 1,
-  dronesPerSite: 3,
-  flightsPerDay: 2,
-  flightDaysPerWeek: 5,
-  
-  // Labour & Travel
-  pilotSalary: 200000,
-  weeklyHoursPerPilot: 38,
-  travelAndRelatedCostsPerPilot: 3500,
-  frequencyOfOperation: 2,
-  
-  // Manual Operation Cost
-  pilotTimePerFlight: 5.0,
-  equipmentCostPerYear: 15000,
-  
-  // Remote Operation Cost
-  hubType: "HubX" as const,
-  remotePilotTimePerFlight: 2.5,
-  remotePilotSalary: 120000,
+  annualSalary: 200000,
+  airtimeHours: 21.1,
+  operationHours: 62.6,
 };
 
 export default function Calculator() {
