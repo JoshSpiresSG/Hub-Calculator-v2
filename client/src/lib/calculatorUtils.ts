@@ -87,10 +87,14 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   
   // Calculate time saved (based on operational efficiency)
   const annualManualHours = input.operationHours * 12; // Monthly operation hours to annual
-  const annualRemoteHours = annualManualHours * SPHERE_EFFICIENCY; // Sphere runs at 80% efficiency
   
-  // Sphere backed operations cost calculation
-  const annualSphereBackedCost = annualManualHours * SPHERE_HOURLY_RATE;
+  // Sphere is 80% efficient, so it needs fewer operation hours to accomplish the same airtime work
+  const sphereOperationsHoursPerMonth = input.airtimeHours / SPHERE_EFFICIENCY; // 21.1 / 0.8 = 26.38
+  const annualSphereOperationsHours = sphereOperationsHoursPerMonth * 12;
+  const annualRemoteHours = annualSphereOperationsHours; // For consistency with existing logic
+  
+  // Sphere backed operations cost calculation - based on Sphere's operation hours, not manual operation hours
+  const annualSphereBackedCost = annualSphereOperationsHours * SPHERE_HOURLY_RATE;
   
   // First year includes upfront hub cost, subsequent years only include amortized cost
   const firstYearRemoteCost = hubCost + annualRemoteLaborCost;
