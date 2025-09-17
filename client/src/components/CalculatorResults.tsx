@@ -61,7 +61,7 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
         <Card className="shadow-sm border-l-4 border-accent">
           <CardContent className="p-4">
             <h4 className="text-sm font-medium text-gray-500">ROI Timeframe</h4>
-            <p className="text-2xl font-semibold text-gray-800">{results.roiTimeframe.toFixed(1)} years</p>
+            <p className="text-2xl font-semibold text-gray-800">{(results.roiTimeframe || 0).toFixed(1)} years</p>
             <p className="text-sm text-blue-600 flex items-center">
               <i className="fa fa-check-circle mr-1"></i>
               <span>Positive long-term ROI</span>
@@ -313,11 +313,11 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
               </div>
               <div>
                 <span className="text-gray-600">Annual Operations Total:</span>
-                <p className="font-medium font-semibold text-blue-600">{results.annualManualHours.toLocaleString()} hours</p>
+                <p className="font-medium font-semibold text-blue-600">{(results.annualManualHours || 0).toLocaleString()} hours</p>
               </div>
               <div>
                 <span className="text-gray-600">Monthly Average:</span>
-                <p className="font-medium">{(results.annualManualHours / 12).toFixed(1)} hours</p>
+                <p className="font-medium">{((results.annualManualHours || 0) / 12).toFixed(1)} hours</p>
               </div>
             </div>
           </div>

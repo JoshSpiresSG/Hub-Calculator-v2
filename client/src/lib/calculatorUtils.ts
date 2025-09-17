@@ -81,7 +81,7 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   const baseCostWithMaintenance = annualManualLaborCost + maintenanceForAirtime;
   const insuranceCost = baseCostWithMaintenance * 0.25; // 25% insurance
   const totalCostWithInsurance = baseCostWithMaintenance + insuranceCost;
-  const clientOperationsHourlyRate = totalCostWithInsurance / airtimeHoursPerYear;
+  const clientOperationsHourlyRate = airtimeHoursPerYear > 0 ? totalCostWithInsurance / airtimeHoursPerYear : 0;
   
   // FIXED: Ensure cost totals are consistent
   const annualManualTotalCost = annualManualLaborCost + totalEquipmentCostPerYear;
