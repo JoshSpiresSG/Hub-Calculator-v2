@@ -138,6 +138,7 @@ export function calculateResults(input: CalculationInput): CalculationResult {
     manualOperationsPerMonth: input.operationHours,
     manualEfficiencyPercent: input.operationHours > 0 ? Math.round((input.airtimeHours / input.operationHours) * 100) : 0,
     sphereOperationsPerMonth: sphereOperationsHoursPerMonth,
-    monthlySphereBackedCost
+    monthlySphereBackedCost,
+    pilotHourlyRate
   };
 }

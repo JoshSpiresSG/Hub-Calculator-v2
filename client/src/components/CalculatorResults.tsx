@@ -289,7 +289,7 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
               <div>
                 <span className="text-gray-600">Step 1 - Monthly:</span>
-                <p className="font-medium">{results.manualOperationsPerMonth} hours × {formatCurrency(394000 / (209 * 12))}</p>
+                <p className="font-medium">{results.manualOperationsPerMonth} hours × {formatCurrency(results.pilotHourlyRate || 157)}</p>
               </div>
               <div>
                 <span className="text-gray-600">Monthly Labor Cost:</span>

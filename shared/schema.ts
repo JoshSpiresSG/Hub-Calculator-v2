@@ -110,6 +110,7 @@ export const calculationResultSchema = z.object({
   manualEfficiencyPercent: z.number(),
   sphereOperationsPerMonth: z.number(),
   monthlySphereBackedCost: z.number(),
+  pilotHourlyRate: z.number(),
 });
 
 export type CalculationResult = z.infer<typeof calculationResultSchema>;
