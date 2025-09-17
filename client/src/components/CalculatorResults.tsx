@@ -119,6 +119,175 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
         </CardContent>
       </Card>
 
+      {/* Detailed Calculation Breakdown */}
+      <Card className="shadow-sm mb-6">
+        <CardContent className="p-6">
+          <h3 className="text-lg font-semibold text-gray-800 mb-4">Calculation Breakdown</h3>
+          
+          {/* Operational Hours */}
+          <div className="mb-6">
+            <h4 className="font-medium text-gray-700 mb-3">Operational Analysis</h4>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+              <div>
+                <span className="text-gray-600">Airtime/Week:</span>
+                <p className="font-medium">{((results.annualRemoteHours || 0) / 52).toFixed(1)} hours</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Airtime/Month:</span>
+                <p className="font-medium">{((results.annualRemoteHours || 0) / 12).toFixed(1)} hours</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Airtime/Annual:</span>
+                <p className="font-medium">{(results.annualRemoteHours || 0).toFixed(0)} hours</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Operational Efficiency:</span>
+                <p className="font-medium">80%</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Ops Hours/Week:</span>
+                <p className="font-medium">{((results.annualManualHours || 0) / 52).toFixed(1)} hours</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Ops Hours/Month:</span>
+                <p className="font-medium">{((results.annualManualHours || 0) / 12).toFixed(1)} hours</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Ops Hours/Annual:</span>
+                <p className="font-medium">{(results.annualManualHours || 0).toFixed(0)} hours</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Hourly Rate:</span>
+                <p className="font-medium">{formatCurrency((results.annualManualLaborCost || 0) / (results.annualManualHours || 1))}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Salary Breakdown */}
+          <div className="mb-6">
+            <h4 className="font-medium text-gray-700 mb-3">Salary Breakdown</h4>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+              <div>
+                <span className="text-gray-600">Annual Salary:</span>
+                <p className="font-medium">{formatCurrency(200000)}</p>
+              </div>
+              <div>
+                <span className="text-gray-600">5% Bonus:</span>
+                <p className="font-medium">{formatCurrency(10000)}</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Super (12%):</span>
+                <p className="font-medium">{formatCurrency(25200)}</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Total Comp:</span>
+                <p className="font-medium">{formatCurrency(235200)}</p>
+              </div>
+              <div>
+                <span className="text-gray-600">25% On Costs:</span>
+                <p className="font-medium">{formatCurrency(58800)}</p>
+              </div>
+              <div>
+                <span className="text-gray-600">FIFO Travel:</span>
+                <p className="font-medium">{formatCurrency(100000)}</p>
+              </div>
+              <div className="md:col-span-3">
+                <span className="text-gray-600">Total Cost to Business:</span>
+                <p className="font-semibold text-lg">{formatCurrency(394000)}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Work Schedule */}
+          <div className="mb-6">
+            <h4 className="font-medium text-gray-700 mb-3">Work Schedule</h4>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+              <div>
+                <span className="text-gray-600">Hours per Day:</span>
+                <p className="font-medium">12</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Work Days in Year:</span>
+                <p className="font-medium">209</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Annual Leave:</span>
+                <p className="font-medium">30 days</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Public Holidays:</span>
+                <p className="font-medium">11 days</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Sick Days:</span>
+                <p className="font-medium">10 days</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Net Work Days:</span>
+                <p className="font-medium">209</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Implicit Day Rate:</span>
+                <p className="font-medium">{formatCurrency(394000 / 209)}</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Implicit Hourly Rate:</span>
+                <p className="font-medium">{formatCurrency(394000 / (209 * 12))}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Maintenance Calculations */}
+          <div>
+            <h4 className="font-medium text-gray-700 mb-3">Maintenance Calculations (Per Hour Rate)</h4>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b">
+                    <th className="text-left py-2">Component</th>
+                    <th className="text-right py-2">Cycle/Flights</th>
+                    <th className="text-right py-2">Unit Cost</th>
+                    <th className="text-right py-2">Hour Rate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b">
+                    <td className="py-2">Battery</td>
+                    <td className="text-right">200</td>
+                    <td className="text-right">$300.00</td>
+                    <td className="text-right">$1.50</td>
+                  </tr>
+                  <tr className="border-b">
+                    <td className="py-2">Propellers</td>
+                    <td className="text-right">150</td>
+                    <td className="text-right">$25.00</td>
+                    <td className="text-right">$0.17</td>
+                  </tr>
+                  <tr className="border-b">
+                    <td className="py-2">Maintenance</td>
+                    <td className="text-right">400</td>
+                    <td className="text-right">$2,500.00</td>
+                    <td className="text-right">$6.25</td>
+                  </tr>
+                  <tr className="border-b">
+                    <td className="py-2">Drone</td>
+                    <td className="text-right">400</td>
+                    <td className="text-right">$5,000.00</td>
+                    <td className="text-right">$12.50</td>
+                  </tr>
+                  <tr className="font-semibold">
+                    <td className="py-2">Total</td>
+                    <td className="text-right"></td>
+                    <td className="text-right"></td>
+                    <td className="text-right">$20.42</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
     </>
   );
 }
