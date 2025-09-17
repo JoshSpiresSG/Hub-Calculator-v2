@@ -75,6 +75,13 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   // Add 10% contingency to total equipment costs
   const baseEquipmentCostPerYear = batteryCostPerYear + propellerCostPerYear + maintenanceCostPerYear + droneCostPerYear;
   const totalEquipmentCostPerYear = baseEquipmentCostPerYear * 1.10; // 10% contingency
+
+  // Calculate adjusted client operations hourly rate including maintenance and insurance
+  const maintenanceForAirtime = (MAINTENANCE_COST / MAINTENANCE_FLIGHTS) * airtimeHoursPerYear * (60 / AVERAGE_FLIGHT_DURATION_MINUTES);
+  const baseCostWithMaintenance = annualManualLaborCost + maintenanceForAirtime;
+  const insuranceCost = baseCostWithMaintenance * 0.25; // 25% insurance
+  const totalCostWithInsurance = baseCostWithMaintenance + insuranceCost;
+  const clientOperationsHourlyRate = totalCostWithInsurance / airtimeHoursPerYear;
   
   // FIXED: Ensure cost totals are consistent
   const annualManualTotalCost = annualManualLaborCost + totalEquipmentCostPerYear;
@@ -139,6 +146,7 @@ export function calculateResults(input: CalculationInput): CalculationResult {
     manualEfficiencyPercent: input.operationHours > 0 ? Math.round((input.airtimeHours / input.operationHours) * 100) : 0,
     sphereOperationsPerMonth: sphereOperationsHoursPerMonth,
     monthlySphereBackedCost,
-    pilotHourlyRate
+    pilotHourlyRate,
+    clientOperationsHourlyRate
   };
 }

@@ -109,7 +109,7 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
               <h4 className="font-medium text-gray-800 mb-2">Client Operations</h4>
               <p className="text-xl font-semibold text-blue-700">{formatCurrency(results.annualManualLaborCost)}</p>
               <p className="text-sm text-gray-600 mt-1">Annual pilot labor cost</p>
-              <p className="text-xs text-blue-600 mt-1 font-medium">{formatCurrency(results.pilotHourlyRate || 157)}/hour</p>
+              <p className="text-xs text-blue-600 mt-1 font-medium">{formatCurrency(results.clientOperationsHourlyRate)}/hour</p>
             </div>
             <div className="bg-green-50 p-4 rounded-lg">
               <h4 className="font-medium text-gray-800 mb-2">Sphere HubT</h4>
