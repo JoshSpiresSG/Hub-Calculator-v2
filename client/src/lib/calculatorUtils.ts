@@ -53,10 +53,18 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   const workingHoursPerYear = WORK_DAYS_PER_YEAR * HOURS_PER_DAY;
   const baseHourlyWageRate = salaryWithBonusAndSuper / workingHoursPerYear;
   
-  // FIXED: Apply weekend premiums only to wage component
-  const weekdayHours = workingHoursPerYear * (5/7); // 5 weekdays
-  const saturdayHours = workingHoursPerYear * (1/7); // 1 Saturday  
-  const sundayHours = workingHoursPerYear * (1/7); // 1 Sunday
+  // FIXED: Apply weekend premiums for 8-on-6-off roster
+  // In a 14-day cycle (8 on + 6 off), approximately:
+  // - 5.7 weekdays, 1.15 Saturdays, 1.15 Sundays per 8-day work period
+  // This reflects the reality that 8 consecutive working days will include weekends
+  const cyclesPerYear = WORK_DAYS_PER_YEAR / 8; // ~26.125 cycles
+  const weekdaysPerCycle = 5.7; // Average weekdays in 8 consecutive days
+  const saturdaysPerCycle = 1.15; // Average Saturdays in 8 consecutive days  
+  const sundaysPerCycle = 1.15; // Average Sundays in 8 consecutive days
+  
+  const weekdayHours = cyclesPerYear * weekdaysPerCycle * HOURS_PER_DAY;
+  const saturdayHours = cyclesPerYear * saturdaysPerCycle * HOURS_PER_DAY;
+  const sundayHours = cyclesPerYear * sundaysPerCycle * HOURS_PER_DAY;
   
   const totalWeekdayWageCost = weekdayHours * baseHourlyWageRate;
   const totalSaturdayWageCost = saturdayHours * baseHourlyWageRate * SATURDAY_MULTIPLIER;
