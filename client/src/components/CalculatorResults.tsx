@@ -129,12 +129,12 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
             <h4 className="font-medium text-gray-700 mb-3">Operational Analysis</h4>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
               <div>
-                <span className="text-gray-600">Airtime/Week:</span>
-                <p className="font-medium">{((results.annualRemoteHours || 0) / 52).toFixed(1)} hours</p>
+                <span className="text-gray-600">Airtime Input (monthly):</span>
+                <p className="font-medium">{((results.annualRemoteHours || 0) / 12).toFixed(1)} hours</p>
               </div>
               <div>
-                <span className="text-gray-600">Airtime/Month:</span>
-                <p className="font-medium">{((results.annualRemoteHours || 0) / 12).toFixed(1)} hours</p>
+                <span className="text-gray-600">Airtime/Week (derived):</span>
+                <p className="font-medium">{((results.annualRemoteHours || 0) / 52).toFixed(1)} hours</p>
               </div>
               <div>
                 <span className="text-gray-600">Airtime/Annual:</span>
@@ -142,15 +142,15 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
               </div>
               <div>
                 <span className="text-gray-600">Operational Efficiency:</span>
-                <p className="font-medium">80%</p>
+                <p className="font-medium">{results.operationalEfficiency}%</p>
               </div>
               <div>
-                <span className="text-gray-600">Ops Hours/Week:</span>
-                <p className="font-medium">{((results.annualManualHours || 0) / 52).toFixed(1)} hours</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Ops Hours/Month:</span>
+                <span className="text-gray-600">Ops Time Input (monthly):</span>
                 <p className="font-medium">{((results.annualManualHours || 0) / 12).toFixed(1)} hours</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Ops Time/Week (derived):</span>
+                <p className="font-medium">{((results.annualManualHours || 0) / 52).toFixed(1)} hours</p>
               </div>
               <div>
                 <span className="text-gray-600">Ops Hours/Annual:</span>
@@ -238,7 +238,7 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
           </div>
 
           {/* Maintenance Calculations */}
-          <div>
+          <div className="mb-6">
             <h4 className="font-medium text-gray-700 mb-3">Maintenance Calculations (Per Hour Rate)</h4>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
@@ -295,6 +295,45 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
                   </tr>
                 </tbody>
               </table>
+            </div>
+          </div>
+
+          {/* Sphere Backed Operations */}
+          <div>
+            <h4 className="font-medium text-gray-700 mb-3">Sphere Backed Operations</h4>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+              <div>
+                <span className="text-gray-600">Hub Cost (HubX):</span>
+                <p className="font-medium">{formatCurrency(results.totalDroneBoxCost || 0)}</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Annual Hub Amortized:</span>
+                <p className="font-medium">{formatCurrency(results.annualDroneBoxAmortized || 0)}</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Annual Remote Labor:</span>
+                <p className="font-medium">{formatCurrency(results.annualRemoteLaborCost || 0)}</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Labor as % of Total:</span>
+                <p className="font-medium">20%</p>
+              </div>
+              <div>
+                <span className="text-gray-600">First Year Cost:</span>
+                <p className="font-medium">{formatCurrency(results.firstYearRemoteCost || 0)}</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Subsequent Year Cost:</span>
+                <p className="font-medium">{formatCurrency(results.subsequentYearRemoteCost || 0)}</p>
+              </div>
+              <div>
+                <span className="text-gray-600">ROI Timeframe:</span>
+                <p className="font-medium">{(results.roiTimeframe || 0).toFixed(1)} years</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Annual Savings (Y2+):</span>
+                <p className="font-medium">{formatCurrency((results.annualManualTotalCost || 0) - (results.subsequentYearRemoteCost || 0))}</p>
+              </div>
             </div>
           </div>
         </CardContent>

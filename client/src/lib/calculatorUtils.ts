@@ -36,8 +36,8 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   // Flight assumptions for equipment calculations
   const AVERAGE_FLIGHT_DURATION_MINUTES = 25; // 20-30 min average
   
-  // Assume 80% operational efficiency for both HubT and HubX
-  const operationalEfficiency = 80;
+  // Calculate operational efficiency as airtime/ops time ratio
+  const operationalEfficiency = input.operationHours > 0 ? Math.round((input.airtimeHours / input.operationHours) * 100) : 0;
   
   // FIXED: Separate base wage from fixed costs
   const baseSalary = input.annualSalary;
