@@ -41,7 +41,10 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   
   // FIXED: Separate base wage from fixed costs
   const baseSalary = input.annualSalary;
-  const salaryWithBonusAndSuper = baseSalary + (baseSalary * BONUS_RATE) + (baseSalary * SUPERANNUATION_RATE);
+  const bonus = baseSalary * BONUS_RATE;
+  const salaryPlusBonus = baseSalary + bonus;
+  const superannuation = salaryPlusBonus * SUPERANNUATION_RATE; // Super calculated on salary + bonus
+  const salaryWithBonusAndSuper = salaryPlusBonus + superannuation;
   
   // Calculate on costs as 25% of salary including bonus and super
   const onCosts = salaryWithBonusAndSuper * ON_COSTS_RATE;
