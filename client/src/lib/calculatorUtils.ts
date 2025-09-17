@@ -14,7 +14,7 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   const WORK_DAYS_PER_YEAR = 209;
   const BONUS_RATE = 0.05; // 5%
   const SUPERANNUATION_RATE = 0.12; // 12%
-  const ON_COSTS = 25000; // $25,000
+  const ON_COSTS_RATE = 0.25; // 25% of salary incl bonus and super
   const FIFO_TRAVEL = 100000; // $100,000
   const SATURDAY_MULTIPLIER = 1.5;
   const SUNDAY_MULTIPLIER = 2.0;
@@ -43,6 +43,9 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   const baseSalary = input.annualSalary;
   const salaryWithBonusAndSuper = baseSalary + (baseSalary * BONUS_RATE) + (baseSalary * SUPERANNUATION_RATE);
   
+  // Calculate on costs as 25% of salary including bonus and super
+  const onCosts = salaryWithBonusAndSuper * ON_COSTS_RATE;
+  
   // Calculate working hours per year 
   const workingHoursPerYear = WORK_DAYS_PER_YEAR * HOURS_PER_DAY;
   const baseHourlyWageRate = salaryWithBonusAndSuper / workingHoursPerYear;
@@ -58,7 +61,7 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   const totalAnnualWageCost = totalWeekdayWageCost + totalSaturdayWageCost + totalSundayWageCost;
   
   // Add fixed costs once (not multiplied by weekend rates)
-  const annualManualLaborCost = totalAnnualWageCost + ON_COSTS + FIFO_TRAVEL;
+  const annualManualLaborCost = totalAnnualWageCost + onCosts + FIFO_TRAVEL;
   const annualTravelCost = FIFO_TRAVEL;
   
   // FIXED: Equipment cost methodology with proper flight duration conversion
@@ -79,7 +82,7 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   // FIXED: Remote cost modeling with proper amortization
   const hubCost = HUBX_COST; // Default to HubX for now
   const annualDroneBoxAmortized = hubCost / 5; // Amortize over 5 years
-  const annualRemoteLaborCost = totalAnnualWageCost * 0.2 + ON_COSTS * 0.2; // 20% of wage + proportional on-costs
+  const annualRemoteLaborCost = totalAnnualWageCost * 0.2 + onCosts * 0.2; // 20% of wage + proportional on-costs
   
   // First year includes upfront hub cost, subsequent years only include amortized cost
   const firstYearRemoteCost = hubCost + annualRemoteLaborCost;
