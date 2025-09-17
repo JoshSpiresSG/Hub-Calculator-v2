@@ -35,12 +35,13 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   const HUBX_IDLE_COST = 80000; // HubX idle cost
   const HUBT_IDLE_COST = 55000; // HubT idle cost
   const SPHERE_HOURLY_RATE = 110; // Sphere backed operations hourly cost
+  const SPHERE_EFFICIENCY = 0.8; // Fixed 80% efficiency for Sphere operations
   
   // Flight assumptions for equipment calculations
   const AVERAGE_FLIGHT_DURATION_MINUTES = 25; // 20-30 min average
   
-  // Calculate operational efficiency as airtime/ops time ratio
-  const operationalEfficiency = input.operationHours > 0 ? Math.round((input.airtimeHours / input.operationHours) * 100) : 0;
+  // Sphere operations have fixed 80% efficiency
+  const operationalEfficiency = Math.round(SPHERE_EFFICIENCY * 100); // Fixed 80%
   
   // FIXED: Separate base wage from fixed costs
   const baseSalary = input.annualSalary;
@@ -86,7 +87,7 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   
   // Calculate time saved (based on operational efficiency)
   const annualManualHours = input.operationHours * 12; // Monthly operation hours to annual
-  const annualRemoteHours = input.airtimeHours * 12; // Monthly airtime hours to annual
+  const annualRemoteHours = annualManualHours * SPHERE_EFFICIENCY; // Sphere runs at 80% efficiency
   
   // Sphere backed operations cost calculation
   const annualSphereBackedCost = annualManualHours * SPHERE_HOURLY_RATE;

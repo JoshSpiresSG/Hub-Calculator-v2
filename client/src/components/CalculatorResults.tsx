@@ -237,6 +237,29 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
             </div>
           </div>
 
+          {/* Hub Costs */}
+          <div className="mb-6">
+            <h4 className="font-medium text-gray-700 mb-3">Hub Costs</h4>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+              <div>
+                <span className="text-gray-600">HubX Yearly Cost:</span>
+                <p className="font-medium">{formatCurrency(results.totalDroneBoxCost || 0)}</p>
+              </div>
+              <div>
+                <span className="text-gray-600">HubX Idle Yearly Cost:</span>
+                <p className="font-medium">{formatCurrency(results.hubIdleCost || 0)}</p>
+              </div>
+              <div>
+                <span className="text-gray-600">HubT Yearly Cost:</span>
+                <p className="font-medium">{formatCurrency(results.hubtCost || 0)}</p>
+              </div>
+              <div>
+                <span className="text-gray-600">HubT Yearly Idle Cost:</span>
+                <p className="font-medium">{formatCurrency(results.hubtIdleCost || 0)}</p>
+              </div>
+            </div>
+          </div>
+
           {/* Maintenance Calculations */}
           <div className="mb-6">
             <h4 className="font-medium text-gray-700 mb-3">Maintenance Calculations (Per Hour Rate)</h4>
