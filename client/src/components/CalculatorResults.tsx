@@ -260,6 +260,29 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
             </div>
           </div>
 
+          {/* Client Operations for the Year */}
+          <div className="mb-6">
+            <h4 className="font-medium text-gray-700 mb-3">Client Operations for the Year</h4>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+              <div>
+                <span className="text-gray-600">Monthly Operations Input:</span>
+                <p className="font-medium">{results.manualOperationsPerMonth} hours</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Calculation:</span>
+                <p className="font-medium">{results.manualOperationsPerMonth} × 12 months</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Annual Operations Total:</span>
+                <p className="font-medium font-semibold text-blue-600">{results.annualManualHours.toLocaleString()} hours</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Monthly Average:</span>
+                <p className="font-medium">{(results.annualManualHours / 12).toFixed(1)} hours</p>
+              </div>
+            </div>
+          </div>
+
           {/* Sphere Operations Calculation */}
           <div className="mb-6">
             <h4 className="font-medium text-gray-700 mb-3">Sphere Operations Calculation</h4>
