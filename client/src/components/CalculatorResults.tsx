@@ -318,22 +318,6 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
                 <span className="text-gray-600">Annual Sphere Cost:</span>
                 <p className="font-medium">{formatCurrency(results.annualSphereBackedCost || 0)}</p>
               </div>
-              <div>
-                <span className="text-gray-600">Annual Hub Amortized:</span>
-                <p className="font-medium">{formatCurrency(results.annualDroneBoxAmortized || 0)}</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Annual Remote Labor:</span>
-                <p className="font-medium">{formatCurrency(results.annualRemoteLaborCost || 0)}</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Labor as % of Total:</span>
-                <p className="font-medium">20%</p>
-              </div>
-              <div>
-                <span className="text-gray-600">ROI Timeframe:</span>
-                <p className="font-medium">{(results.roiTimeframe || 0).toFixed(1)} years</p>
-              </div>
             </div>
           </div>
         </CardContent>
