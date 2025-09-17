@@ -247,31 +247,31 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
               </div>
               <div>
                 <span className="text-gray-600">Work Days in Year:</span>
-                <p className="font-medium">209</p>
+                <p className="font-medium">{results.workDaysPerYear}</p>
               </div>
               <div>
                 <span className="text-gray-600">Annual Leave:</span>
-                <p className="font-medium">30 days</p>
+                <p className="font-medium">{results.annualLeaveDays} days</p>
               </div>
               <div>
                 <span className="text-gray-600">Public Holidays:</span>
-                <p className="font-medium">11 days</p>
+                <p className="font-medium">{results.publicHolidayDays} days</p>
               </div>
               <div>
                 <span className="text-gray-600">Sick Days:</span>
-                <p className="font-medium">10 days</p>
+                <p className="font-medium">{results.sickLeaveDays} days</p>
               </div>
               <div>
                 <span className="text-gray-600">Net Work Days:</span>
-                <p className="font-medium">209</p>
+                <p className="font-medium">{results.netWorkDaysPerYear}</p>
               </div>
               <div>
                 <span className="text-gray-600">Implicit Day Rate:</span>
-                <p className="font-medium">{formatCurrency(394000 / 209)}</p>
+                <p className="font-medium">{formatCurrency(394000 / results.netWorkDaysPerYear)}</p>
               </div>
               <div>
                 <span className="text-gray-600">Implicit Hourly Rate:</span>
-                <p className="font-medium">{formatCurrency(394000 / (209 * 12))}</p>
+                <p className="font-medium">{formatCurrency(394000 / (results.netWorkDaysPerYear * 12))}</p>
               </div>
             </div>
           </div>

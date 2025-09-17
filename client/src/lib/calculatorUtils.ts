@@ -12,6 +12,10 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   // Constants based on user requirements
   const HOURS_PER_DAY = 12;
   const WORK_DAYS_PER_YEAR = 209;
+  const ANNUAL_LEAVE_DAYS = 30;
+  const PUBLIC_HOLIDAY_DAYS = 11;
+  const SICK_LEAVE_DAYS = 10;
+  const NET_WORK_DAYS_PER_YEAR = WORK_DAYS_PER_YEAR - ANNUAL_LEAVE_DAYS - PUBLIC_HOLIDAY_DAYS - SICK_LEAVE_DAYS;
   const BONUS_RATE = 0.05; // 5%
   const SUPERANNUATION_RATE = 0.12; // 12%
   const ON_COSTS_RATE = 0.25; // 25% of salary incl bonus and super
@@ -56,8 +60,8 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   // Calculate day rate for FIFO operations
   // Total salary package includes salary, bonus, super, on costs, and FIFO travel
   const totalSalaryPackage = salaryWithBonusAndSuper + onCosts + FIFO_TRAVEL;
-  const dayRate = totalSalaryPackage / WORK_DAYS_PER_YEAR;
-  const pilotHourlyRate = totalSalaryPackage / (WORK_DAYS_PER_YEAR * HOURS_PER_DAY);
+  const dayRate = totalSalaryPackage / NET_WORK_DAYS_PER_YEAR;
+  const pilotHourlyRate = totalSalaryPackage / (NET_WORK_DAYS_PER_YEAR * HOURS_PER_DAY);
   
   // Annual labor cost based on actual operation hours worked
   const annualManualLaborCost = (input.operationHours * 12) * pilotHourlyRate;
@@ -147,6 +151,12 @@ export function calculateResults(input: CalculationInput): CalculationResult {
     sphereOperationsPerMonth: sphereOperationsHoursPerMonth,
     monthlySphereBackedCost,
     pilotHourlyRate,
-    clientOperationsHourlyRate
+    clientOperationsHourlyRate,
+    // Work schedule breakdown values for display
+    workDaysPerYear: WORK_DAYS_PER_YEAR,
+    annualLeaveDays: ANNUAL_LEAVE_DAYS,
+    publicHolidayDays: PUBLIC_HOLIDAY_DAYS,
+    sickLeaveDays: SICK_LEAVE_DAYS,
+    netWorkDaysPerYear: NET_WORK_DAYS_PER_YEAR
   };
 }

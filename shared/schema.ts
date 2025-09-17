@@ -112,6 +112,13 @@ export const calculationResultSchema = z.object({
   monthlySphereBackedCost: z.number(),
   pilotHourlyRate: z.number(),
   clientOperationsHourlyRate: z.number(),
+  
+  // Work schedule breakdown values for display
+  workDaysPerYear: z.number(),
+  annualLeaveDays: z.number(),
+  publicHolidayDays: z.number(),
+  sickLeaveDays: z.number(),
+  netWorkDaysPerYear: z.number(),
 });
 
 export type CalculationResult = z.infer<typeof calculationResultSchema>;
