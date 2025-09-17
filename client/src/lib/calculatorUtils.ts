@@ -157,6 +157,9 @@ export function calculateResults(input: CalculationInput): CalculationResult {
     annualLeaveDays: ANNUAL_LEAVE_DAYS,
     publicHolidayDays: PUBLIC_HOLIDAY_DAYS,
     sickLeaveDays: SICK_LEAVE_DAYS,
-    netWorkDaysPerYear: NET_WORK_DAYS_PER_YEAR
+    netWorkDaysPerYear: NET_WORK_DAYS_PER_YEAR,
+    // Original input values for display
+    inputAirtimeHours: input.airtimeHours,
+    inputOperationHours: input.operationHours
   };
 }

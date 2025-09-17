@@ -119,6 +119,10 @@ export const calculationResultSchema = z.object({
   publicHolidayDays: z.number(),
   sickLeaveDays: z.number(),
   netWorkDaysPerYear: z.number(),
+  
+  // Original input values for display
+  inputAirtimeHours: z.number(),
+  inputOperationHours: z.number(),
 });
 
 export type CalculationResult = z.infer<typeof calculationResultSchema>;

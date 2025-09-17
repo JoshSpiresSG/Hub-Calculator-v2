@@ -169,7 +169,7 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
               <div>
                 <span className="text-gray-600">Airtime Input (monthly):</span>
-                <p className="font-medium">{((results.annualRemoteHours || 0) / 12).toFixed(1)} hours</p>
+                <p className="font-medium">{results.inputAirtimeHours} hours</p>
               </div>
               <div>
                 <span className="text-gray-600">Airtime/Week (derived):</span>
@@ -185,7 +185,7 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
               </div>
               <div>
                 <span className="text-gray-600">Ops Time Input (monthly):</span>
-                <p className="font-medium">{((results.annualManualHours || 0) / 12).toFixed(1)} hours</p>
+                <p className="font-medium">{results.inputOperationHours} hours</p>
               </div>
               <div>
                 <span className="text-gray-600">Ops Time/Week (derived):</span>
