@@ -94,9 +94,9 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   const annualSphereOperationsHours = sphereOperationsHoursPerMonth * 12;
   const annualRemoteHours = annualSphereOperationsHours; // For consistency with existing logic
   
-  // Sphere backed operations cost calculation - based on Sphere's operation hours, not manual operation hours
-  const monthlySphereBackedCost = sphereOperationsHoursPerMonth * SPHERE_HOURLY_RATE; // 26.38 × $110
-  const annualSphereBackedCost = monthlySphereBackedCost * 12; // Then × 12
+  // Sphere backed operations cost calculation - use hub infrastructure costs
+  const monthlySphereBackedCost = sphereOperationsHoursPerMonth * SPHERE_HOURLY_RATE; // 26.38 × $110 (for breakdown display)
+  const annualSphereBackedCost = HUBT_COST; // Use HubT cost as default Sphere backed operations cost
   
   // First year includes upfront hub cost, subsequent years only include amortized cost
   const firstYearRemoteCost = hubCost + annualRemoteLaborCost;
