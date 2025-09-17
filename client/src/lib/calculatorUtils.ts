@@ -49,30 +49,13 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   // Calculate on costs as 25% of salary including bonus and super
   const onCosts = salaryWithBonusAndSuper * ON_COSTS_RATE;
   
-  // Calculate working hours per year 
-  const workingHoursPerYear = WORK_DAYS_PER_YEAR * HOURS_PER_DAY;
-  const baseHourlyWageRate = salaryWithBonusAndSuper / workingHoursPerYear;
+  // Calculate day rate for FIFO operations
+  // Total salary package includes salary, bonus, super, on costs, and FIFO travel
+  const totalSalaryPackage = salaryWithBonusAndSuper + onCosts + FIFO_TRAVEL;
+  const dayRate = totalSalaryPackage / WORK_DAYS_PER_YEAR;
   
-  // FIXED: Apply weekend premiums for 8-on-6-off roster
-  // In a 14-day cycle (8 on + 6 off), approximately:
-  // - 5.7 weekdays, 1.15 Saturdays, 1.15 Sundays per 8-day work period
-  // This reflects the reality that 8 consecutive working days will include weekends
-  const cyclesPerYear = WORK_DAYS_PER_YEAR / 8; // ~26.125 cycles
-  const weekdaysPerCycle = 5.7; // Average weekdays in 8 consecutive days
-  const saturdaysPerCycle = 1.15; // Average Saturdays in 8 consecutive days  
-  const sundaysPerCycle = 1.15; // Average Sundays in 8 consecutive days
-  
-  const weekdayHours = cyclesPerYear * weekdaysPerCycle * HOURS_PER_DAY;
-  const saturdayHours = cyclesPerYear * saturdaysPerCycle * HOURS_PER_DAY;
-  const sundayHours = cyclesPerYear * sundaysPerCycle * HOURS_PER_DAY;
-  
-  const totalWeekdayWageCost = weekdayHours * baseHourlyWageRate;
-  const totalSaturdayWageCost = saturdayHours * baseHourlyWageRate * SATURDAY_MULTIPLIER;
-  const totalSundayWageCost = sundayHours * baseHourlyWageRate * SUNDAY_MULTIPLIER;
-  const totalAnnualWageCost = totalWeekdayWageCost + totalSaturdayWageCost + totalSundayWageCost;
-  
-  // Add fixed costs once (not multiplied by weekend rates)
-  const annualManualLaborCost = totalAnnualWageCost + onCosts + FIFO_TRAVEL;
+  // Annual labor cost is simply the total salary package
+  const annualManualLaborCost = totalSalaryPackage;
   const annualTravelCost = FIFO_TRAVEL;
   
   // FIXED: Equipment cost methodology with proper flight duration conversion
@@ -93,7 +76,8 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   // FIXED: Remote cost modeling with proper amortization
   const hubCost = HUBX_COST; // Default to HubX for now
   const annualDroneBoxAmortized = hubCost / 5; // Amortize over 5 years
-  const annualRemoteLaborCost = totalAnnualWageCost * 0.2 + onCosts * 0.2; // 20% of wage + proportional on-costs
+  // Remote operations require 20% of the labor (day rate approach)
+  const annualRemoteLaborCost = totalSalaryPackage * 0.2; // 20% of total salary package
   
   // First year includes upfront hub cost, subsequent years only include amortized cost
   const firstYearRemoteCost = hubCost + annualRemoteLaborCost;
