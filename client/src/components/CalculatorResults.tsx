@@ -44,7 +44,7 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
             <p className="text-2xl font-semibold text-gray-800">{formatCurrency(results.annualSavings)}</p>
             <p className="text-sm text-green-600 flex items-center">
               <i className="fa fa-arrow-up mr-1"></i>
-              <span>{results.savingsPercentage}%</span>&nbsp;cost reduction
+              <span>Cost reduction vs manual operations</span>
             </p>
           </CardContent>
         </Card>
@@ -256,6 +256,37 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
               <div>
                 <span className="text-gray-600">HubT Yearly Idle Cost:</span>
                 <p className="font-medium">{formatCurrency(results.hubtIdleCost || 0)}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Sphere Operations Calculation */}
+          <div className="mb-6">
+            <h4 className="font-medium text-gray-700 mb-3">Sphere Operations Calculation</h4>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+              <div>
+                <span className="text-gray-600">Manual Operations/Month:</span>
+                <p className="font-medium">{results.manualOperationsPerMonth} hours</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Manual Efficiency:</span>
+                <p className="font-medium">{results.manualEfficiencyPercent}%</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Sphere Efficiency:</span>
+                <p className="font-medium">80% (Fixed)</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Sphere Operations/Month:</span>
+                <p className="font-medium">{(results.sphereOperationsPerMonth || 0).toFixed(1)} hours</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Monthly Sphere Cost:</span>
+                <p className="font-medium">{formatCurrency(results.monthlySphereBackedCost)}</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Annual Sphere Cost:</span>
+                <p className="font-medium">{formatCurrency(results.annualSphereBackedCost)}</p>
               </div>
             </div>
           </div>

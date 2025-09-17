@@ -104,6 +104,12 @@ export const calculationResultSchema = z.object({
   
   // ROI timeframe
   roiTimeframe: z.number(),
+  
+  // Sphere operation breakdown values for display
+  manualOperationsPerMonth: z.number(),
+  manualEfficiencyPercent: z.number(),
+  sphereOperationsPerMonth: z.number(),
+  monthlySphereBackedCost: z.number(),
 });
 
 export type CalculationResult = z.infer<typeof calculationResultSchema>;

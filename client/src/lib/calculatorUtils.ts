@@ -132,6 +132,11 @@ export function calculateResults(input: CalculationInput): CalculationResult {
     annualHoursSaved,
     efficiencyGain,
     operationalEfficiency,
-    roiTimeframe
+    roiTimeframe,
+    // Sphere operation breakdown values for display
+    manualOperationsPerMonth: input.operationHours,
+    manualEfficiencyPercent: input.operationHours > 0 ? Math.round((input.airtimeHours / input.operationHours) * 100) : 0,
+    sphereOperationsPerMonth: sphereOperationsHoursPerMonth,
+    monthlySphereBackedCost
   };
 }
