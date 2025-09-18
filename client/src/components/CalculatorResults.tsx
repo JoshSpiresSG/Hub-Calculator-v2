@@ -300,7 +300,7 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
           </div>
 
           {/* Sphere Backed Operations */}
-          <div>
+          <div className="mb-6">
             <h4 className="font-medium text-gray-700 mb-3">Sphere Backed Operations</h4>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
               <div>
