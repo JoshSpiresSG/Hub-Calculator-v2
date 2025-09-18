@@ -115,14 +115,14 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
               <h4 className="font-medium text-gray-800 mb-2">Sphere HubT</h4>
               <p className="text-xl font-semibold text-green-700">{formatCurrency(results.hubtCost)}</p>
               <p className="text-sm text-gray-600 mt-1">Hub infrastructure cost</p>
-              <p className="text-xs text-gray-600 mt-1">{formatCurrency(results.hubtCost / (results.annualRemoteHours || 1))}/hour airtime</p>
+              <p className="text-xs text-gray-600 mt-1">{formatCurrency(results.hubtCost / (results.annualRemoteHours || 1))}/hour</p>
               <p className="text-xs text-green-600 mt-1 font-medium">Save: {formatCurrency(results.annualManualLaborCost - results.hubtCost)}</p>
             </div>
             <div className="bg-green-50 p-4 rounded-lg">
               <h4 className="font-medium text-gray-800 mb-2">Sphere HubX</h4>
               <p className="text-xl font-semibold text-green-700">{formatCurrency(results.totalDroneBoxCost)}</p>
               <p className="text-sm text-gray-600 mt-1">Hub infrastructure cost</p>
-              <p className="text-xs text-gray-600 mt-1">{formatCurrency(results.totalDroneBoxCost / (results.annualRemoteHours || 1))}/hour airtime</p>
+              <p className="text-xs text-gray-600 mt-1">{formatCurrency(results.totalDroneBoxCost / (results.annualRemoteHours || 1))}/hour</p>
               <p className="text-xs text-green-600 mt-1 font-medium">Save: {formatCurrency(results.annualManualLaborCost - results.totalDroneBoxCost)}</p>
             </div>
             <div className="bg-purple-50 p-4 rounded-lg">
@@ -199,6 +199,22 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
                 <span className="text-gray-600">Hourly Rate:</span>
                 <p className="font-medium">{formatCurrency((results.annualManualLaborCost || 0) / (results.annualManualHours || 1))}</p>
               </div>
+              <div>
+                <span className="text-gray-600">Step 1 - Monthly:</span>
+                <p className="font-medium">{results.manualOperationsPerMonth} hours × {formatCurrency(results.pilotHourlyRate || 157)}</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Monthly Labor Cost:</span>
+                <p className="font-medium font-semibold text-green-600">{formatCurrency(results.annualManualLaborCost / 12)}</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Step 2 - Annual:</span>
+                <p className="font-medium">{formatCurrency(results.annualManualLaborCost / 12)} × 12</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Annual Labor Cost:</span>
+                <p className="font-medium font-semibold text-blue-600">{formatCurrency(results.annualManualLaborCost)}</p>
+              </div>
             </div>
           </div>
 
@@ -272,29 +288,6 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
               <div>
                 <span className="text-gray-600">Implicit Hourly Rate:</span>
                 <p className="font-medium">{formatCurrency(394000 / (results.netWorkDaysPerYear * 12))}</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Client Operations Cost Calculation Steps */}
-          <div className="mb-6">
-            <h4 className="font-medium text-gray-700 mb-3">Client Operations Cost Calculation Steps</h4>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-              <div>
-                <span className="text-gray-600">Step 1 - Monthly:</span>
-                <p className="font-medium">{results.manualOperationsPerMonth} hours × {formatCurrency(results.pilotHourlyRate || 157)}</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Monthly Labor Cost:</span>
-                <p className="font-medium font-semibold text-green-600">{formatCurrency(results.annualManualLaborCost / 12)}</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Step 2 - Annual:</span>
-                <p className="font-medium">{formatCurrency(results.annualManualLaborCost / 12)} × 12</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Annual Labor Cost:</span>
-                <p className="font-medium font-semibold text-blue-600">{formatCurrency(results.annualManualLaborCost)}</p>
               </div>
             </div>
           </div>
