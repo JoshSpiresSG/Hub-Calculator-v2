@@ -232,7 +232,7 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
               </div>
               <div className="md:col-span-3">
                 <span className="text-gray-600">Total Cost to Business:</span>
-                <p className="font-semibold text-lg">{formatCurrency(394000)}</p>
+                <p className="font-semibold text-medium">{formatCurrency(394000)}</p>
               </div>
             </div>
           </div>
@@ -276,52 +276,6 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
             </div>
           </div>
 
-          {/* Hub Costs */}
-          <div className="mb-6">
-            <h4 className="font-medium text-gray-700 mb-3">Hub Costs</h4>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-              <div>
-                <span className="text-gray-600">HubX Yearly Cost:</span>
-                <p className="font-medium">{formatCurrency(results.totalDroneBoxCost || 0)}</p>
-              </div>
-              <div>
-                <span className="text-gray-600">HubX Idle Yearly Cost:</span>
-                <p className="font-medium">{formatCurrency(results.hubIdleCost || 0)}</p>
-              </div>
-              <div>
-                <span className="text-gray-600">HubT Yearly Cost:</span>
-                <p className="font-medium">{formatCurrency(results.hubtCost || 0)}</p>
-              </div>
-              <div>
-                <span className="text-gray-600">HubT Yearly Idle Cost:</span>
-                <p className="font-medium">{formatCurrency(results.hubtIdleCost || 0)}</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Client Operations for the Year */}
-          <div className="mb-6">
-            <h4 className="font-medium text-gray-700 mb-3">Client Operations for the Year</h4>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-              <div>
-                <span className="text-gray-600">Monthly Operations Input:</span>
-                <p className="font-medium">{results.manualOperationsPerMonth} hours</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Calculation:</span>
-                <p className="font-medium">{results.manualOperationsPerMonth} × 12 months</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Annual Operations Total:</span>
-                <p className="font-medium font-semibold text-blue-600">{(results.annualManualHours || 0).toLocaleString()} hours</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Monthly Average:</span>
-                <p className="font-medium">{((results.annualManualHours || 0) / 12).toFixed(1)} hours</p>
-              </div>
-            </div>
-          </div>
-
           {/* Client Operations Cost Calculation Steps */}
           <div className="mb-6">
             <h4 className="font-medium text-gray-700 mb-3">Client Operations Cost Calculation Steps</h4>
@@ -344,10 +298,43 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
               </div>
             </div>
           </div>
-          {/* Sphere Cost Calculation Steps */}
-          <div className="mb-6">
-            <h4 className="font-medium text-gray-700 mb-3">Sphere Cost Calculation Steps</h4>
+
+          {/* Sphere Backed Operations */}
+          <div>
+            <h4 className="font-medium text-gray-700 mb-3">Sphere Backed Operations</h4>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+              <div>
+                <span className="text-gray-600">HubX Yearly Cost:</span>
+                <p className="font-medium">{formatCurrency(results.totalDroneBoxCost || 0)}</p>
+              </div>
+              <div>
+                <span className="text-gray-600">HubX Idle Yearly Cost:</span>
+                <p className="font-medium">{formatCurrency(results.hubIdleCost || 0)}</p>
+              </div>
+              <div>
+                <span className="text-gray-600">HubT Yearly Cost:</span>
+                <p className="font-medium">{formatCurrency(results.hubtCost || 0)}</p>
+              </div>
+              <div>
+                <span className="text-gray-600">HubT Yearly Idle Cost:</span>
+                <p className="font-medium">{formatCurrency(results.hubtIdleCost || 0)}</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Sphere Hourly Rate:</span>
+                <p className="font-medium">{formatCurrency(results.sphereHourlyRate || 0)}/hour</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Annual Sphere Cost:</span>
+                <p className="font-medium">{formatCurrency(results.annualSphereBackedCost || 0)}</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Sphere Efficiency:</span>
+                <p className="font-medium">80% (Fixed)</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Sphere Operations/Month:</span>
+                <p className="font-medium">{(results.sphereOperationsPerMonth || 0).toFixed(1)} hours</p>
+              </div>
               <div>
                 <span className="text-gray-600">Step 1 - Monthly:</span>
                 <p className="font-medium">{(results.sphereOperationsPerMonth || 0).toFixed(1)} hours × $110</p>
@@ -425,45 +412,6 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
                   </tr>
                 </tbody>
               </table>
-            </div>
-          </div>
-
-          {/* Sphere Backed Operations */}
-          <div>
-            <h4 className="font-medium text-gray-700 mb-3">Sphere Backed Operations</h4>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-              <div>
-                <span className="text-gray-600">HubX Yearly Cost:</span>
-                <p className="font-medium">{formatCurrency(results.totalDroneBoxCost || 0)}</p>
-              </div>
-              <div>
-                <span className="text-gray-600">HubX Idle Yearly Cost:</span>
-                <p className="font-medium">{formatCurrency(results.hubIdleCost || 0)}</p>
-              </div>
-              <div>
-                <span className="text-gray-600">HubT Yearly Cost:</span>
-                <p className="font-medium">{formatCurrency(results.hubtCost || 0)}</p>
-              </div>
-              <div>
-                <span className="text-gray-600">HubT Yearly Idle Cost:</span>
-                <p className="font-medium">{formatCurrency(results.hubtIdleCost || 0)}</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Sphere Hourly Rate:</span>
-                <p className="font-medium">{formatCurrency(results.sphereHourlyRate || 0)}/hour</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Annual Sphere Cost:</span>
-                <p className="font-medium">{formatCurrency(results.annualSphereBackedCost || 0)}</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Sphere Efficiency:</span>
-                <p className="font-medium">80% (Fixed)</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Sphere Operations/Month:</span>
-                <p className="font-medium">{(results.sphereOperationsPerMonth || 0).toFixed(1)} hours</p>
-              </div>
             </div>
           </div>
         </CardContent>
