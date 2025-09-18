@@ -344,30 +344,6 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
               </div>
             </div>
           </div>
-
-          {/* Sphere Operations Calculation */}
-          <div className="mb-6">
-            <h4 className="font-medium text-gray-700 mb-3">Sphere Operations Calculation</h4>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-              <div>
-                <span className="text-gray-600">Manual Operations/Month:</span>
-                <p className="font-medium">{results.manualOperationsPerMonth} hours</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Manual Efficiency:</span>
-                <p className="font-medium">{results.manualEfficiencyPercent}%</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Sphere Efficiency:</span>
-                <p className="font-medium">80% (Fixed)</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Sphere Operations/Month:</span>
-                <p className="font-medium">{(results.sphereOperationsPerMonth || 0).toFixed(1)} hours</p>
-              </div>
-            </div>
-          </div>
-
           {/* Sphere Cost Calculation Steps */}
           <div className="mb-6">
             <h4 className="font-medium text-gray-700 mb-3">Sphere Cost Calculation Steps</h4>
@@ -461,7 +437,7 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
                 <p className="font-medium">{formatCurrency(results.totalDroneBoxCost || 0)}</p>
               </div>
               <div>
-                <span className="text-gray-600">Hub Idle Yearly Cost:</span>
+                <span className="text-gray-600">HubX Idle Yearly Cost:</span>
                 <p className="font-medium">{formatCurrency(results.hubIdleCost || 0)}</p>
               </div>
               <div>
@@ -479,6 +455,14 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
               <div>
                 <span className="text-gray-600">Annual Sphere Cost:</span>
                 <p className="font-medium">{formatCurrency(results.annualSphereBackedCost || 0)}</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Sphere Efficiency:</span>
+                <p className="font-medium">80% (Fixed)</p>
+              </div>
+              <div>
+                <span className="text-gray-600">Sphere Operations/Month:</span>
+                <p className="font-medium">{(results.sphereOperationsPerMonth || 0).toFixed(1)} hours</p>
               </div>
             </div>
           </div>
