@@ -72,7 +72,7 @@ export default function Calculator() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header Section */}
-      <header className="bg-white shadow-sm">
+      <header className="bg-white border-b border-[#ececec]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="flex items-center">
             <h1 className="text-2xl font-semibold text-gray-800">Remote Drone Ops ROI Calculator</h1>
