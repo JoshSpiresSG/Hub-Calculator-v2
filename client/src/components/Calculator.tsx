@@ -79,8 +79,7 @@ export default function Calculator() {
           <div>
             <button
   className="
-    border border-[#e85833] bg-[#e85833]
-    bg-[linear-gradient(35deg,#e85833_30%,#ff8543)] tracking-normal normal-case rounded-[20px] px-[28px] py-[8px] text-[14px] font-semibold leading-[18px] text-white"
+    border border-[#e85833] bg-[#e85833] bg-[linear-gradient(35deg,#e85833_30%,#ff8543)] tracking-normal normal-case rounded-[20px] px-[28px] py-[8px] text-[14px] font-semibold leading-[18px] text-white hover:border-[#bc4200] hover:bg-[#bc4200] hover:bg-none"
 >
   Contact us
 </button>
