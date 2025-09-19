@@ -40,8 +40,8 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
     <Card className="w-full max-w-2xl mx-auto">
       <CardContent className="space-y-6 p-8">
         <div className="text-center">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-2">Drone Operations Calculator</h2>
-          <p className="text-gray-600">Enter your operational parameters to calculate cost efficiency</p>
+          <h2 className="text-2xl font-semibold text-gray-900 mb-2">Input Parameters</h2>
+          <p className="text-gray-600">Update the details below to calculate your cost savings and ROI, or leave them blank to use our default values</p>
         </div>
 
         <Form {...form}>
