@@ -2,6 +2,9 @@ import { CalculationResult } from "@shared/schema";
 import { Card, CardContent } from "@/components/ui/card";
 import { formatCurrency } from "@/lib/calculatorUtils";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 interface CalculatorResultsProps {
   results: CalculationResult | null;
@@ -9,6 +12,7 @@ interface CalculatorResultsProps {
 }
 
 export default function CalculatorResults({ results, isLoading }: CalculatorResultsProps) {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   if (isLoading) {
     return <LoadingState />;
@@ -127,260 +131,273 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
               </p>
             </div>
           </div>
+          <div className="mt-6 flex justify-center">
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <DialogTrigger asChild>
+                <Button 
+                  variant="outline" 
+                  className="px-6 py-2"
+                  data-testid="button-calculation-breakdown"
+                >
+                  View Detailed Calculation Breakdown
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle data-testid="title-calculation-breakdown-dialog">Calculation Breakdown</DialogTitle>
+                </DialogHeader>
+                <div className="mt-4">
+                  {/* Operational Hours */}
+                  <div className="mb-6">
+                    <h4 className="font-medium text-gray-700 mb-3">Operational Analysis</h4>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                      <div>
+                        <span className="text-gray-600">Airtime Input (monthly):</span>
+                        <p className="font-medium" data-testid="text-airtime-input">{results.inputAirtimeHours} hours</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">Airtime/Week (derived):</span>
+                        <p className="font-medium" data-testid="text-airtime-week">{((results.annualRemoteHours || 0) / 52).toFixed(1)} hours</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">Airtime/Annual:</span>
+                        <p className="font-medium" data-testid="text-airtime-annual">{(results.inputAirtimeHours * 12).toFixed(0)} hours</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">Operational Efficiency:</span>
+                        <p className="font-medium" data-testid="text-operational-efficiency">{results.operationalEfficiency}%</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">Ops Time Input (monthly):</span>
+                        <p className="font-medium" data-testid="text-ops-time-input">{results.inputOperationHours} hours</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">Ops Time/Week (derived):</span>
+                        <p className="font-medium" data-testid="text-ops-time-week">{((results.annualManualHours || 0) / 52).toFixed(1)} hours</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">Ops Hours/Annual:</span>
+                        <p className="font-medium" data-testid="text-ops-hours-annual">{(results.annualManualHours || 0).toFixed(0)} hours</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">Hourly Rate:</span>
+                        <p className="font-medium" data-testid="text-hourly-rate">{formatCurrency((results.annualManualLaborCost || 0) / (results.annualManualHours || 1))}</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">Step 1 - Monthly:</span>
+                        <p className="font-medium" data-testid="text-step1-monthly">{results.manualOperationsPerMonth} hours × {formatCurrency(results.pilotHourlyRate || 157)}</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">Monthly Labor Cost:</span>
+                        <p className="font-medium font-semibold text-green-600" data-testid="text-monthly-labor-cost">{formatCurrency(results.annualManualLaborCost / 12)}</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">Step 2 - Annual:</span>
+                        <p className="font-medium" data-testid="text-step2-annual">{formatCurrency(results.annualManualLaborCost / 12)} × 12</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">Annual Labor Cost:</span>
+                        <p className="font-medium font-semibold text-blue-600" data-testid="text-annual-labor-cost">{formatCurrency(results.annualManualLaborCost)}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Salary Breakdown */}
+                  <div className="mb-6">
+                    <h4 className="font-medium text-gray-700 mb-3">Salary Breakdown</h4>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+                      <div>
+                        <span className="text-gray-600">Annual Salary:</span>
+                        <p className="font-medium" data-testid="text-annual-salary">{formatCurrency(200000)}</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">5% Bonus:</span>
+                        <p className="font-medium" data-testid="text-bonus">{formatCurrency(10000)}</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">Super (12%):</span>
+                        <p className="font-medium" data-testid="text-super">{formatCurrency(25200)}</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">Total Comp:</span>
+                        <p className="font-medium" data-testid="text-total-comp">{formatCurrency(235200)}</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">25% On Costs:</span>
+                        <p className="font-medium" data-testid="text-on-costs">{formatCurrency(58800)}</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">FIFO Travel:</span>
+                        <p className="font-medium" data-testid="text-fifo-travel">{formatCurrency(100000)}</p>
+                      </div>
+                      <div className="md:col-span-3">
+                        <span className="text-gray-600">Total Cost to Business:</span>
+                        <p className="font-semibold text-medium" data-testid="text-total-cost-business">{formatCurrency(394000)}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Work Schedule */}
+                  <div className="mb-6">
+                    <h4 className="font-medium text-gray-700 mb-3">Work Schedule</h4>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                      <div>
+                        <span className="text-gray-600">Hours per Day:</span>
+                        <p className="font-medium" data-testid="text-hours-per-day">12</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">Work Days in Year:</span>
+                        <p className="font-medium" data-testid="text-work-days-year">{results.workDaysPerYear}</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">Annual Leave:</span>
+                        <p className="font-medium" data-testid="text-annual-leave">{results.annualLeaveDays} days</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">Public Holidays:</span>
+                        <p className="font-medium" data-testid="text-public-holidays">{results.publicHolidayDays} days</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">Sick Days:</span>
+                        <p className="font-medium" data-testid="text-sick-days">{results.sickLeaveDays} days</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">Net Work Days:</span>
+                        <p className="font-medium" data-testid="text-net-work-days">{results.netWorkDaysPerYear}</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">Implicit Day Rate:</span>
+                        <p className="font-medium" data-testid="text-implicit-day-rate">{formatCurrency(394000 / results.netWorkDaysPerYear)}</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">Implicit Hourly Rate:</span>
+                        <p className="font-medium" data-testid="text-implicit-hourly-rate">{formatCurrency(394000 / (results.netWorkDaysPerYear * 12))}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Sphere Backed Operations */}
+                  <div className="mb-6">
+                    <h4 className="font-medium text-gray-700 mb-3">Sphere Backed Operations</h4>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                      <div>
+                        <span className="text-gray-600">HubX Yearly Cost:</span>
+                        <p className="font-medium" data-testid="text-hubx-yearly-cost">{formatCurrency(results.totalDroneBoxCost || 0)}</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">HubX Idle Yearly Cost:</span>
+                        <p className="font-medium" data-testid="text-hubx-idle-cost">{formatCurrency(results.hubIdleCost || 0)}</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">HubT Yearly Cost:</span>
+                        <p className="font-medium" data-testid="text-hubt-yearly-cost">{formatCurrency(results.hubtCost || 0)}</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">HubT Yearly Idle Cost:</span>
+                        <p className="font-medium" data-testid="text-hubt-idle-cost">{formatCurrency(results.hubtIdleCost || 0)}</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">Sphere Hourly Rate:</span>
+                        <p className="font-medium" data-testid="text-sphere-hourly-rate">{formatCurrency(results.sphereHourlyRate || 0)}/hour</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">Annual Sphere Cost:</span>
+                        <p className="font-medium" data-testid="text-annual-sphere-cost">{formatCurrency(results.annualSphereBackedCost || 0)}</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">Sphere Efficiency:</span>
+                        <p className="font-medium" data-testid="text-sphere-efficiency">80% (Fixed)</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">Sphere Operations/Month:</span>
+                        <p className="font-medium" data-testid="text-sphere-ops-month">{(results.sphereOperationsPerMonth || 0).toFixed(1)} hours</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">Step 1 - Monthly:</span>
+                        <p className="font-medium" data-testid="text-sphere-step1-monthly">{(results.sphereOperationsPerMonth || 0).toFixed(1)} hours × $110</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">Monthly Cost:</span>
+                        <p className="font-medium font-semibold text-green-600" data-testid="text-sphere-monthly-cost">{formatCurrency(results.monthlySphereBackedCost || 0)}</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">Step 2 - Annual:</span>
+                        <p className="font-medium" data-testid="text-sphere-step2-annual">{formatCurrency(results.monthlySphereBackedCost || 0)} × 12</p>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">Annual Cost:</span>
+                        <p className="font-medium font-semibold text-blue-600" data-testid="text-sphere-annual-cost">{formatCurrency(results.annualSphereBackedCost || 0)}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Maintenance Calculations */}
+                  <div className="mb-6">
+                    <h4 className="font-medium text-gray-700 mb-3">Maintenance Calculations (Per Hour Rate)</h4>
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-sm" data-testid="table-maintenance-calculations">
+                        <thead>
+                          <tr className="border-b">
+                            <th className="text-left py-2">Component</th>
+                            <th className="text-right py-2">Cycle/Flights</th>
+                            <th className="text-right py-2">Unit Cost</th>
+                            <th className="text-right py-2">Hour Rate</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr className="border-b">
+                            <td className="py-2">Battery</td>
+                            <td className="text-right">200</td>
+                            <td className="text-right">$300.00</td>
+                            <td className="text-right">$1.50</td>
+                          </tr>
+                          <tr className="border-b">
+                            <td className="py-2">Propellers</td>
+                            <td className="text-right">150</td>
+                            <td className="text-right">$25.00</td>
+                            <td className="text-right">$0.17</td>
+                          </tr>
+                          <tr className="border-b">
+                            <td className="py-2">Maintenance</td>
+                            <td className="text-right">400</td>
+                            <td className="text-right">$2,500.00</td>
+                            <td className="text-right">$6.25</td>
+                          </tr>
+                          <tr className="border-b">
+                            <td className="py-2">Drone</td>
+                            <td className="text-right">400</td>
+                            <td className="text-right">$5,000.00</td>
+                            <td className="text-right">$12.50</td>
+                          </tr>
+                          <tr>
+                            <td className="py-2">Sub-total</td>
+                            <td className="text-right"></td>
+                            <td className="text-right"></td>
+                            <td className="text-right">$20.42</td>
+                          </tr>
+                          <tr>
+                            <td className="py-2">10% Contingency</td>
+                            <td className="text-right"></td>
+                            <td className="text-right"></td>
+                            <td className="text-right">$2.04</td>
+                          </tr>
+                          <tr className="font-semibold border-t">
+                            <td className="py-2">Total</td>
+                            <td className="text-right"></td>
+                            <td className="text-right"></td>
+                            <td className="text-right">$22.46</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
+          </div>
         </CardContent>
       </Card>
 
-      {/* Detailed Calculation Breakdown */}
-      <Card className="shadow-sm mb-6">
-        <CardContent className="p-6">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">Calculation Breakdown</h3>
-          
-          {/* Operational Hours */}
-          <div className="mb-6">
-            <h4 className="font-medium text-gray-700 mb-3">Operational Analysis</h4>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-              <div>
-                <span className="text-gray-600">Airtime Input (monthly):</span>
-                <p className="font-medium">{results.inputAirtimeHours} hours</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Airtime/Week (derived):</span>
-                <p className="font-medium">{((results.annualRemoteHours || 0) / 52).toFixed(1)} hours</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Airtime/Annual:</span>
-                <p className="font-medium">{(results.inputAirtimeHours * 12).toFixed(0)} hours</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Operational Efficiency:</span>
-                <p className="font-medium">{results.operationalEfficiency}%</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Ops Time Input (monthly):</span>
-                <p className="font-medium">{results.inputOperationHours} hours</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Ops Time/Week (derived):</span>
-                <p className="font-medium">{((results.annualManualHours || 0) / 52).toFixed(1)} hours</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Ops Hours/Annual:</span>
-                <p className="font-medium">{(results.annualManualHours || 0).toFixed(0)} hours</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Hourly Rate:</span>
-                <p className="font-medium">{formatCurrency((results.annualManualLaborCost || 0) / (results.annualManualHours || 1))}</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Step 1 - Monthly:</span>
-                <p className="font-medium">{results.manualOperationsPerMonth} hours × {formatCurrency(results.pilotHourlyRate || 157)}</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Monthly Labor Cost:</span>
-                <p className="font-medium font-semibold text-green-600">{formatCurrency(results.annualManualLaborCost / 12)}</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Step 2 - Annual:</span>
-                <p className="font-medium">{formatCurrency(results.annualManualLaborCost / 12)} × 12</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Annual Labor Cost:</span>
-                <p className="font-medium font-semibold text-blue-600">{formatCurrency(results.annualManualLaborCost)}</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Salary Breakdown */}
-          <div className="mb-6">
-            <h4 className="font-medium text-gray-700 mb-3">Salary Breakdown</h4>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
-              <div>
-                <span className="text-gray-600">Annual Salary:</span>
-                <p className="font-medium">{formatCurrency(200000)}</p>
-              </div>
-              <div>
-                <span className="text-gray-600">5% Bonus:</span>
-                <p className="font-medium">{formatCurrency(10000)}</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Super (12%):</span>
-                <p className="font-medium">{formatCurrency(25200)}</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Total Comp:</span>
-                <p className="font-medium">{formatCurrency(235200)}</p>
-              </div>
-              <div>
-                <span className="text-gray-600">25% On Costs:</span>
-                <p className="font-medium">{formatCurrency(58800)}</p>
-              </div>
-              <div>
-                <span className="text-gray-600">FIFO Travel:</span>
-                <p className="font-medium">{formatCurrency(100000)}</p>
-              </div>
-              <div className="md:col-span-3">
-                <span className="text-gray-600">Total Cost to Business:</span>
-                <p className="font-semibold text-medium">{formatCurrency(394000)}</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Work Schedule */}
-          <div className="mb-6">
-            <h4 className="font-medium text-gray-700 mb-3">Work Schedule</h4>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-              <div>
-                <span className="text-gray-600">Hours per Day:</span>
-                <p className="font-medium">12</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Work Days in Year:</span>
-                <p className="font-medium">{results.workDaysPerYear}</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Annual Leave:</span>
-                <p className="font-medium">{results.annualLeaveDays} days</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Public Holidays:</span>
-                <p className="font-medium">{results.publicHolidayDays} days</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Sick Days:</span>
-                <p className="font-medium">{results.sickLeaveDays} days</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Net Work Days:</span>
-                <p className="font-medium">{results.netWorkDaysPerYear}</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Implicit Day Rate:</span>
-                <p className="font-medium">{formatCurrency(394000 / results.netWorkDaysPerYear)}</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Implicit Hourly Rate:</span>
-                <p className="font-medium">{formatCurrency(394000 / (results.netWorkDaysPerYear * 12))}</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Sphere Backed Operations */}
-          <div className="mb-6">
-            <h4 className="font-medium text-gray-700 mb-3">Sphere Backed Operations</h4>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-              <div>
-                <span className="text-gray-600">HubX Yearly Cost:</span>
-                <p className="font-medium">{formatCurrency(results.totalDroneBoxCost || 0)}</p>
-              </div>
-              <div>
-                <span className="text-gray-600">HubX Idle Yearly Cost:</span>
-                <p className="font-medium">{formatCurrency(results.hubIdleCost || 0)}</p>
-              </div>
-              <div>
-                <span className="text-gray-600">HubT Yearly Cost:</span>
-                <p className="font-medium">{formatCurrency(results.hubtCost || 0)}</p>
-              </div>
-              <div>
-                <span className="text-gray-600">HubT Yearly Idle Cost:</span>
-                <p className="font-medium">{formatCurrency(results.hubtIdleCost || 0)}</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Sphere Hourly Rate:</span>
-                <p className="font-medium">{formatCurrency(results.sphereHourlyRate || 0)}/hour</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Annual Sphere Cost:</span>
-                <p className="font-medium">{formatCurrency(results.annualSphereBackedCost || 0)}</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Sphere Efficiency:</span>
-                <p className="font-medium">80% (Fixed)</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Sphere Operations/Month:</span>
-                <p className="font-medium">{(results.sphereOperationsPerMonth || 0).toFixed(1)} hours</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Step 1 - Monthly:</span>
-                <p className="font-medium">{(results.sphereOperationsPerMonth || 0).toFixed(1)} hours × $110</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Monthly Cost:</span>
-                <p className="font-medium font-semibold text-green-600">{formatCurrency(results.monthlySphereBackedCost || 0)}</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Step 2 - Annual:</span>
-                <p className="font-medium">{formatCurrency(results.monthlySphereBackedCost || 0)} × 12</p>
-              </div>
-              <div>
-                <span className="text-gray-600">Annual Cost:</span>
-                <p className="font-medium font-semibold text-blue-600">{formatCurrency(results.annualSphereBackedCost || 0)}</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Maintenance Calculations */}
-          <div className="mb-6">
-            <h4 className="font-medium text-gray-700 mb-3">Maintenance Calculations (Per Hour Rate)</h4>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b">
-                    <th className="text-left py-2">Component</th>
-                    <th className="text-right py-2">Cycle/Flights</th>
-                    <th className="text-right py-2">Unit Cost</th>
-                    <th className="text-right py-2">Hour Rate</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="border-b">
-                    <td className="py-2">Battery</td>
-                    <td className="text-right">200</td>
-                    <td className="text-right">$300.00</td>
-                    <td className="text-right">$1.50</td>
-                  </tr>
-                  <tr className="border-b">
-                    <td className="py-2">Propellers</td>
-                    <td className="text-right">150</td>
-                    <td className="text-right">$25.00</td>
-                    <td className="text-right">$0.17</td>
-                  </tr>
-                  <tr className="border-b">
-                    <td className="py-2">Maintenance</td>
-                    <td className="text-right">400</td>
-                    <td className="text-right">$2,500.00</td>
-                    <td className="text-right">$6.25</td>
-                  </tr>
-                  <tr className="border-b">
-                    <td className="py-2">Drone</td>
-                    <td className="text-right">400</td>
-                    <td className="text-right">$5,000.00</td>
-                    <td className="text-right">$12.50</td>
-                  </tr>
-                  <tr>
-                    <td className="py-2">Sub-total</td>
-                    <td className="text-right"></td>
-                    <td className="text-right"></td>
-                    <td className="text-right">$20.42</td>
-                  </tr>
-                  <tr>
-                    <td className="py-2">10% Contingency</td>
-                    <td className="text-right"></td>
-                    <td className="text-right"></td>
-                    <td className="text-right">$2.04</td>
-                  </tr>
-                  <tr className="font-semibold border-t">
-                    <td className="py-2">Total</td>
-                    <td className="text-right"></td>
-                    <td className="text-right"></td>
-                    <td className="text-right">$22.46</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
       {/* Additional Benefits */}
       <Card className="shadow-sm mb-6">
         <CardContent className="p-6">
