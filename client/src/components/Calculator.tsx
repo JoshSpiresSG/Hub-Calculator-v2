@@ -90,7 +90,7 @@ export default function Calculator() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Intro Section */}
-        <div className="bg-white p-6 mb-8">
+        <div className="mb-8">
           <h1 className="text-xl font-semibold">Remote Drone Operations ROI Calculator</h1>
           <h2 className="text-m font-semibold mb-4">Estimate your remote drone ops ROI in 60 seconds</h2>
           <p className="mb-4">Thinking of switching to remote drone operations but not sure what the savings look like? Compare manual vs remote drone ops to see how much time and money you could save. Get an instant cost breakdown with 5-year projections.</p>
