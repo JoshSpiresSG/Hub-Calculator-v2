@@ -93,20 +93,6 @@ export default function Calculator() {
           <h2 className="text-m font-semibold text-gray-800 mb-4">Estimate your remote drone ops ROI in 60 seconds</h2>
           <p className="text-gray-600 mb-4">Thinking of switching to remote drone operations but not sure what the savings look like? Compare manual vs remote drone ops to see how much time and money you could save. Get an instant cost breakdown with 5-year projections.</p>
           <p className="text-sm text-gray-500 mb-4"><strong>Disclaimer:</strong> These results are indicative only. Real-world savings may vary depending on your setup, team, and operational needs.</p>
-          <div className="flex flex-wrap items-center gap-4">
-            <div className="flex items-center bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-sm">
-              <i className="fa fa-clock mr-2"></i>
-              <span>Save Time</span>
-            </div>
-            <div className="flex items-center bg-green-50 text-green-700 px-3 py-1 rounded-full text-sm">
-              <i className="fa fa-dollar-sign mr-2"></i>
-              <span>Reduce Costs</span>
-            </div>
-            <div className="flex items-center bg-purple-50 text-purple-700 px-3 py-1 rounded-full text-sm">
-              <i className="fa fa-chart-line mr-2"></i>
-              <span>Increase Efficiency</span>
-            </div>
-          </div>
         </div>
 
         {/* Calculator Layout - Form and Results Side by Side */}
