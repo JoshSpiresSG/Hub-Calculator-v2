@@ -74,7 +74,7 @@ export default function Calculator() {
       {/* Header Section */}
       <header className="bg-white border-b border-[#ececec] h-[60px]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center h-[60px]">
-          <div className="flex gap-[20px] content-baseline"><div><img src="https://cdn.prod.website-files.com/667cf0e5d33cd95d355e2846/67a04249abc45b4c901454ae_logo-Sphere-HOR-COL@2x.avif" alt="Sphere Logo" className="w-[200px]"
+          <div className="flex gap-[20px] content-baseline"><div><img src="https://cdn.prod.website-files.com/667cf0e5d33cd95d355e2846/67a04249abc45b4c901454ae_logo-Sphere-HOR-COL@2x.avif" alt="Sphere Logo" className="w-[100px]"
 />
 </div><div><a className="text-sm underline text-[#e85833] hover:text-[#bc4200]" href="https://www.spheredrones.com.au">Back to Sphere</a></div>
           </div>
