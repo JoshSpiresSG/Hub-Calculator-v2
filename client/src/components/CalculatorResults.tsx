@@ -26,7 +26,8 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
 
   return (
     <>
-    <Card className="w-full max-w-2xl mx-auto">
+    <Card className="w-full mx-auto">
+      <CardContent className="space-y-6 p-8">
       {/* Results Heading */}
       <div className="mb-6">
         <h2 className="text-2xl font-semibold text-gray-800">Results</h2>
@@ -409,6 +410,7 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
           </div>
         </CardContent>
       </Card>
+      </CardContent>
     </Card>
     </>
   );
