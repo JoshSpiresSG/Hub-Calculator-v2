@@ -37,7 +37,7 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
 
 
   return (
-    <Card className="w-full max-w-2xl mx-auto">
+    <Card className="w-full mx-auto">
       <CardContent className="space-y-6 p-8">
         <div>
           <h2 className="text-2xl font-semibold text-gray-900 mb-2">Input Parameters</h2>
