@@ -74,7 +74,7 @@ export default function Calculator() {
       {/* Header Section */}
       <header className="bg-white border-b border-[#ececec]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-semibold text-gray-800">Remote Drone Ops ROI Calculator</h1>
+          <h1 className="text-m font-semibold text-gray-800">Remote Drone Operationss ROI Calculator</h1>
         </div>
       </header>
 
