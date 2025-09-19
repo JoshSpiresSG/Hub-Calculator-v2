@@ -462,7 +462,7 @@ function LoadingState() {
     <>
       {/* Summary Cards Loading */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => (
+        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((i) => (
           <Card key={i}>
             <CardContent className="p-4">
               <Skeleton className="h-4 w-24 mb-2" />
