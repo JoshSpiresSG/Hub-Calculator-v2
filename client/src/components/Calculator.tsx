@@ -77,7 +77,7 @@ export default function Calculator() {
           <div className="flex gap-[10px] content-baseline"><div>Logo</div><div><a className="text-sm underline text-[#e85833] hover:text-[#bc4200]" href="https://www.spheredrones.com.au">Back to Sphere</a></div>
           </div>
           <div>
-            <button className="border border-[#e85833] bg-[#e85833] bg-[linear-gradient(35deg,#e85833_30%,#ff8543)] tracking-normal normal-case rounded-[20px] px-[28px] py-[8px] text-[14px] font-semibold leading-[18px] text-white hover:border-[#bc4200] hover:bg-[#bc4200] hover:bg-none">
+            <button className="transition-colors border border-[#e85833] bg-[#e85833] bg-[linear-gradient(35deg,#e85833_30%,#ff8543)] tracking-normal normal-case rounded-[20px] px-[28px] py-[8px] text-[14px] font-semibold leading-[18px] text-white hover:border-[#bc4200] hover:bg-[#bc4200] hover:bg-none">
   Contact us
 </button>
 
