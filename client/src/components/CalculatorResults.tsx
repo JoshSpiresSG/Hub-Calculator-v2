@@ -478,7 +478,7 @@ function LoadingState() {
         <CardContent className="p-6">
           <Skeleton className="h-6 w-40 mb-6" />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {[1, 2, 3].map((i) => (
+            {[1, 2, 3, 4, 5, 6].map((i) => (
               <div key={i} className="flex flex-col items-center p-3 bg-gray-50 rounded-lg">
                 <Skeleton className="w-12 h-12 rounded-full mb-3" />
                 <Skeleton className="h-4 w-24 mb-1" />
