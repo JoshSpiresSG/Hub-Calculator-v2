@@ -40,7 +40,7 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
     <Card className="w-full max-w-2xl mx-auto">
       <CardContent className="space-y-6 p-8">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Drone Operations Calculator</h2>
+          <h2 className="text-2xl font-semibold text-gray-900 mb-2">Drone Operations Calculator</h2>
           <p className="text-gray-600">Enter your operational parameters to calculate cost efficiency</p>
         </div>
 
@@ -49,7 +49,6 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
             
             {/* Inputs Section */}
             <div className="bg-yellow-50 p-4 rounded-lg space-y-4">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Inputs</h3>
               
               <FormField
                 control={form.control}
@@ -82,7 +81,7 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                   name="airtimeHours"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Airtime (hours/month)</FormLabel>
+                      <FormLabel>Flight hours per month</FormLabel>
                       <FormControl>
                         <Input 
                           type="number"
@@ -108,7 +107,7 @@ export default function CalculatorForm({ onCalculate, isCalculating }: Calculato
                   name="operationHours"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Ops Time (hours/month)</FormLabel>
+                      <FormLabel>Operation hours per month)</FormLabel>
                       <FormControl>
                         <Input 
                           type="number"
