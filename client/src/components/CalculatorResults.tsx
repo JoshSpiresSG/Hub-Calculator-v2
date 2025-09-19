@@ -20,7 +20,7 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
 
   if (!results) {
     return (
-      <Card className="shadow-sm p-6 mb-6 flex justify-center items-center h-[500px]">
+      <Card className="p-6 mb-6 flex justify-center items-center h-[500px]">
         <div className="text-center">
           <p className="text-gray-600">Your ROI analysis will appear here once it's been calculated</p>
         </div>
@@ -44,7 +44,7 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
       
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <Card className="shadow-sm border-l-4 border-primary">
+        <Card className="border-l-4 border-primary">
           <CardContent className="p-4">
             <span className="text-sm font-medium text-gray-500">Annual Savings</span>
             <p className="text-2xl font-semibold text-gray-800">{formatCurrency(results.annualSavings)}</p>
@@ -54,7 +54,7 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
             </p>
           </CardContent>
         </Card>
-        <Card className="shadow-sm border-l-4 border-secondary">
+        <Card className="border-l-4 border-secondary">
           <CardContent className="p-4">
             <span className="text-sm font-medium text-gray-500">Time Saved (Annual)</span>
             <p className="text-2xl font-semibold text-gray-800">{results.annualHoursSaved.toLocaleString()} hours</p>
@@ -64,7 +64,7 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
             </p>
           </CardContent>
         </Card>
-        <Card className="shadow-sm border-l-4 border-accent">
+        <Card className="border-l-4 border-accent">
           <CardContent className="p-4">
             <span className="text-sm font-medium text-gray-500">ROI Timeframe</span>
             <p className="text-2xl font-semibold text-gray-800">{(results.roiTimeframe || 0).toFixed(1)} years</p>
@@ -77,7 +77,7 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
       </div>
 
       {/* Cost Comparison */}
-      <Card className="shadow-sm mb-6">
+      <Card className="mb-6">
         <CardContent className="p-6">
           <h3 className="text-lg font-semibold text-gray-800 mb-4">Annual Cost Comparison</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -402,7 +402,7 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
       </Card>
 
       {/* Additional Benefits */}
-      <Card className="shadow-sm mb-6">
+      <Card className="mb-6">
         <CardContent className="p-6">
           <h3 className="text-lg font-semibold text-gray-800 mb-4">Additional Benefits</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -463,7 +463,7 @@ function LoadingState() {
       {/* Summary Cards Loading */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         {[1, 2, 3].map((i) => (
-          <Card key={i} className="shadow-sm">
+          <Card key={i}>
             <CardContent className="p-4">
               <Skeleton className="h-4 w-24 mb-2" />
               <Skeleton className="h-8 w-32 mb-2" />
