@@ -74,7 +74,7 @@ export default function Calculator() {
       {/* Header Section */}
       <header className="bg-white border-b border-[#ececec] h-[60px]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center h-[60px]">
-          <div className="flex gap-[10px] content-center"><div>Logo</div><div className="text-sm text-underline color-[#e85833]"><a href="https://www.spheredrones.com.au">Back to Sphere</a></div>
+          <div className="flex gap-[10px] content-baseline"><div>Logo</div><div className="text-sm decoration-solid text-[#e85833]"><a href="https://www.spheredrones.com.au">Back to Sphere</a></div>
           </div>
           <div>
             <button className="border border-[#e85833] bg-[#e85833] bg-[linear-gradient(35deg,#e85833_30%,#ff8543)] tracking-normal normal-case rounded-[20px] px-[28px] py-[8px] text-[14px] font-semibold leading-[18px] text-white hover:border-[#bc4200] hover:bg-[#bc4200] hover:bg-none">
