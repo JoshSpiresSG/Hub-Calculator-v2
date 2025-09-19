@@ -2,7 +2,7 @@ import { CalculationResult } from "@shared/schema";
 import { Card, CardContent } from "@/components/ui/card";
 import { formatCurrency } from "@/lib/calculatorUtils";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
@@ -145,6 +145,9 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
               <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
                   <DialogTitle data-testid="title-calculation-breakdown-dialog">Calculation Breakdown</DialogTitle>
+                  <DialogDescription>
+                    Detailed analysis of operational costs, labor calculations, and sphere-backed operations.
+                  </DialogDescription>
                 </DialogHeader>
                 <div className="mt-4">
                   {/* Operational Hours */}
@@ -402,27 +405,48 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
       <Card className="shadow-sm mb-6">
         <CardContent className="p-6">
           <h3 className="text-lg font-semibold text-gray-800 mb-4">Additional Benefits</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="flex flex-col items-center p-3 bg-blue-50 rounded-lg">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-3">
-                <i className="fa fa-bolt text-blue-600 text-xl"></i>
-              </div>
-              <h4 className="font-medium text-gray-800 mb-1">Faster Response</h4>
-              <p className="text-sm text-gray-600 text-center">Deploy flights instantly without travel delays</p>
-            </div>
-            <div className="flex flex-col items-center p-3 bg-green-50 rounded-lg">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="flex flex-col items-center p-3 bg-green-50 rounded-lg" data-testid="benefit-roi-manual">
               <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-3">
-                <i className="fa fa-leaf text-green-600 text-xl"></i>
+                <i className="fa fa-chart-line text-green-600 text-xl"></i>
               </div>
-              <h4 className="font-medium text-gray-800 mb-1">Reduced Emissions</h4>
-              <p className="text-sm text-gray-600 text-center">Eliminate travel-related carbon footprint</p>
+              <h4 className="font-medium text-gray-800 mb-1">ROI vs Manual</h4>
+              <p className="text-sm text-gray-600 text-center">Cut costs and unlock greater value compared to manual methods</p>
             </div>
-            <div className="flex flex-col items-center p-3 bg-purple-50 rounded-lg">
-              <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-3">
-                <i className="fa fa-shield-alt text-purple-600 text-xl"></i>
+            <div className="flex flex-col items-center p-3 bg-red-50 rounded-lg" data-testid="benefit-safety-case">
+              <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mb-3">
+                <i className="fa fa-shield-alt text-red-600 text-xl"></i>
               </div>
-              <h4 className="font-medium text-gray-800 mb-1">Improved Safety</h4>
-              <p className="text-sm text-gray-600 text-center">Reduce personnel exposure to hazardous environments</p>
+              <h4 className="font-medium text-gray-800 mb-1">Safety Case</h4>
+              <p className="text-sm text-gray-600 text-center">Reduce risk by keeping people out of hazardous environments</p>
+            </div>
+            <div className="flex flex-col items-center p-3 bg-blue-50 rounded-lg" data-testid="benefit-software-integrations">
+              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-3">
+                <i className="fa fa-plug text-blue-600 text-xl"></i>
+              </div>
+              <h4 className="font-medium text-gray-800 mb-1">Software Integrations</h4>
+              <p className="text-sm text-gray-600 text-center">Fit seamlessly into existing workflows with easy integrations</p>
+            </div>
+            <div className="flex flex-col items-center p-3 bg-purple-50 rounded-lg" data-testid="benefit-customer-service">
+              <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-3">
+                <i className="fa fa-headset text-purple-600 text-xl"></i>
+              </div>
+              <h4 className="font-medium text-gray-800 mb-1">Customer Service</h4>
+              <p className="text-sm text-gray-600 text-center">Rely on ongoing support that keeps operations running smoothly</p>
+            </div>
+            <div className="flex flex-col items-center p-3 bg-orange-50 rounded-lg" data-testid="benefit-airtime-efficiency">
+              <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mb-3">
+                <i className="fa fa-clock text-orange-600 text-xl"></i>
+              </div>
+              <h4 className="font-medium text-gray-800 mb-1">Airtime Efficiency</h4>
+              <p className="text-sm text-gray-600 text-center">Capture more data in less time with every flight</p>
+            </div>
+            <div className="flex flex-col items-center p-3 bg-teal-50 rounded-lg" data-testid="benefit-time-to-data">
+              <div className="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center mb-3">
+                <i className="fa fa-tachometer-alt text-teal-600 text-xl"></i>
+              </div>
+              <h4 className="font-medium text-gray-800 mb-1">Time to Data</h4>
+              <p className="text-sm text-gray-600 text-center">Go from collection to insights faster, enabling quicker decisions</p>
             </div>
           </div>
         </CardContent>
