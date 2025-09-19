@@ -74,7 +74,26 @@ export default function Calculator() {
       {/* Header Section */}
       <header className="bg-white border-b border-[#ececec] h-[60px]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          
+          <div>Logo
+          </div>
+          <div>
+            <button
+  class="
+    border border-[#e85833]
+    bg-[var(--sd-orange-primary)]
+    bg-[linear-gradient(35deg,#e85833)_30%,#ff8543)]
+    tracking-normal
+    normal-case
+    rounded-[20px]
+    px-[28px] py-[8px]
+    text-[14px] font-semibold leading-[18px]
+    text-white
+  "
+>
+  Contact us
+</button>
+
+          </div>
         </div>
       </header>
 
