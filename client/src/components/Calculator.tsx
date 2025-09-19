@@ -80,7 +80,7 @@ export default function Calculator() {
             <button
   class="
     border border-[#e85833]
-    bg-[var(--sd-orange-primary)]
+    bg-[#e85833]
     bg-[linear-gradient(35deg,#e85833)_30%,#ff8543)]
     tracking-normal
     normal-case
