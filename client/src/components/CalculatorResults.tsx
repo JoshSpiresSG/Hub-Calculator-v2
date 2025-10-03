@@ -423,7 +423,6 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
               </div>
               <p className="text-2xl font-bold text-blue-600" data-testid="text-co2-saved">{((results.annualCO2Saved || 0) / 1000).toFixed(2)} tonnes</p>
               <p className="text-sm text-gray-600 mt-1">CO₂ saved per year</p>
-              <p className="text-xs text-gray-500 mt-2">For team of 4 people</p>
             </div>
           </div>
           <div className="mt-6 flex justify-center">
