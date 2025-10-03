@@ -13,6 +13,7 @@ interface CalculatorResultsProps {
 
 export default function CalculatorResults({ results, isLoading }: CalculatorResultsProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isCO2DialogOpen, setIsCO2DialogOpen] = useState(false);
 
   if (isLoading) {
     return <LoadingState />;
@@ -447,6 +448,116 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
               Remote operations only include Sphere operations center headcount carbon (10.315 tonnes/person/year) with zero flight emissions. 
               Calculation based on a team of 4 people.
             </p>
+          </div>
+          <div className="mt-6 flex justify-center">
+            <Dialog open={isCO2DialogOpen} onOpenChange={setIsCO2DialogOpen}>
+              <DialogTrigger asChild>
+                <Button 
+                  variant="outline" 
+                  className="px-6 py-2"
+                  data-testid="button-co2-breakdown"
+                >
+                  View Detailed Calculation Breakdown
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle data-testid="title-co2-breakdown-dialog">CO₂ Emissions Breakdown</DialogTitle>
+                  <DialogDescription>
+                    Detailed breakdown of carbon emissions for manual FIFO operations versus remote drone operations.
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="mt-4">
+                  {/* Manual FIFO Operations Breakdown */}
+                  <div className="mb-6">
+                    <h4 className="font-semibold text-gray-800 mb-3">Manual FIFO Operations Carbon Emissions</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                      <div className="p-3 bg-gray-50 rounded">
+                        <span className="text-gray-600">Flight Carbon per Person:</span>
+                        <p className="font-medium text-lg" data-testid="text-flight-carbon-person">10.14 tonnes/year</p>
+                        <p className="text-xs text-gray-500 mt-1">Based on 8:6 roster, ~52 flights/year</p>
+                      </div>
+                      <div className="p-3 bg-gray-50 rounded">
+                        <span className="text-gray-600">Client Headcount Carbon per Person:</span>
+                        <p className="font-medium text-lg" data-testid="text-client-headcount-person">5.874 tonnes/year</p>
+                        <p className="text-xs text-gray-500 mt-1">Annual per-capita CO₂</p>
+                      </div>
+                      <div className="p-3 bg-blue-50 rounded">
+                        <span className="text-gray-600">Total Carbon per Person:</span>
+                        <p className="font-semibold text-lg text-blue-700" data-testid="text-manual-total-person">16.014 tonnes/year</p>
+                        <p className="text-xs text-gray-500 mt-1">10.14 + 5.874</p>
+                      </div>
+                      <div className="p-3 bg-blue-50 rounded">
+                        <span className="text-gray-600">Team Size:</span>
+                        <p className="font-semibold text-lg text-blue-700" data-testid="text-team-size">4 people</p>
+                      </div>
+                    </div>
+                    <div className="mt-4 p-4 bg-red-50 rounded-lg">
+                      <span className="text-gray-700 font-medium">Total Annual Manual Operations CO₂:</span>
+                      <p className="text-2xl font-bold text-red-600 mt-1" data-testid="text-manual-total-co2">
+                        {((results.annualManualCO2Emissions || 0) / 1000).toFixed(2)} tonnes
+                      </p>
+                      <p className="text-sm text-gray-600 mt-1">16.014 tonnes/person × 4 people</p>
+                    </div>
+                  </div>
+
+                  {/* Remote Drone Operations Breakdown */}
+                  <div className="mb-6">
+                    <h4 className="font-semibold text-gray-800 mb-3">Remote Drone Operations Carbon Emissions</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                      <div className="p-3 bg-gray-50 rounded">
+                        <span className="text-gray-600">Flight Carbon per Person:</span>
+                        <p className="font-medium text-lg text-green-600" data-testid="text-remote-flight-carbon">0 tonnes/year</p>
+                        <p className="text-xs text-gray-500 mt-1">No FIFO flights required</p>
+                      </div>
+                      <div className="p-3 bg-gray-50 rounded">
+                        <span className="text-gray-600">Sphere Ops Center Headcount Carbon per Person:</span>
+                        <p className="font-medium text-lg" data-testid="text-sphere-headcount-person">10.315 tonnes/year</p>
+                        <p className="text-xs text-gray-500 mt-1">Annual per-capita CO₂</p>
+                      </div>
+                      <div className="p-3 bg-blue-50 rounded">
+                        <span className="text-gray-600">Total Carbon per Person:</span>
+                        <p className="font-semibold text-lg text-blue-700" data-testid="text-remote-total-person">10.315 tonnes/year</p>
+                        <p className="text-xs text-gray-500 mt-1">0 + 10.315</p>
+                      </div>
+                      <div className="p-3 bg-blue-50 rounded">
+                        <span className="text-gray-600">Team Size:</span>
+                        <p className="font-semibold text-lg text-blue-700">4 people</p>
+                      </div>
+                    </div>
+                    <div className="mt-4 p-4 bg-green-50 rounded-lg">
+                      <span className="text-gray-700 font-medium">Total Annual Remote Operations CO₂:</span>
+                      <p className="text-2xl font-bold text-green-600 mt-1" data-testid="text-remote-total-co2">
+                        {((results.annualRemoteCO2Emissions || 0) / 1000).toFixed(2)} tonnes
+                      </p>
+                      <p className="text-sm text-gray-600 mt-1">10.315 tonnes/person × 4 people</p>
+                    </div>
+                  </div>
+
+                  {/* CO2 Savings Summary */}
+                  <div className="p-4 bg-gradient-to-r from-blue-50 to-green-50 rounded-lg border-2 border-blue-200">
+                    <h4 className="font-semibold text-gray-800 mb-2">Annual CO₂ Reduction</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                      <div>
+                        <p className="text-sm text-gray-600">Manual Operations</p>
+                        <p className="text-xl font-bold text-red-600">{((results.annualManualCO2Emissions || 0) / 1000).toFixed(2)} tonnes</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-600">Remote Operations</p>
+                        <p className="text-xl font-bold text-green-600">{((results.annualRemoteCO2Emissions || 0) / 1000).toFixed(2)} tonnes</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-600">CO₂ Saved</p>
+                        <p className="text-xl font-bold text-blue-600" data-testid="text-co2-saved-breakdown">{((results.annualCO2Saved || 0) / 1000).toFixed(2)} tonnes</p>
+                      </div>
+                    </div>
+                    <p className="text-sm text-gray-600 mt-3 text-center">
+                      Reduction: {(((results.annualCO2Saved || 0) / (results.annualManualCO2Emissions || 1)) * 100).toFixed(1)}% lower emissions
+                    </p>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
           </div>
         </CardContent>
       </Card>
