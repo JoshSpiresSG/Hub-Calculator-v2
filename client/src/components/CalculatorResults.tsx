@@ -403,7 +403,6 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
               </div>
               <p className="text-2xl font-bold text-red-600" data-testid="text-manual-co2">{((results.annualManualCO2Emissions || 0) / 1000).toFixed(2)} tonnes</p>
               <p className="text-sm text-gray-600 mt-1">CO₂ emissions per year</p>
-              <p className="text-xs text-gray-500 mt-2">Flights + headcount + driving (4 people)</p>
             </div>
             <div className="bg-green-50 p-4 rounded-lg" data-testid="card-remote-co2">
               <div className="flex items-center mb-2">
