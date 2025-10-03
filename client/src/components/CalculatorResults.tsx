@@ -503,7 +503,7 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
                       </div>
                       <div className="p-3 bg-blue-50 rounded">
                         <span className="text-gray-600">Team Size:</span>
-                        <p className="font-semibold text-lg text-blue-700">4 people</p>
+                        <p className="font-semibold text-lg text-blue-700">2 people</p>
                       </div>
                     </div>
                     <div className="mt-4 p-4 bg-green-50 rounded-lg">
@@ -511,7 +511,7 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
                       <p className="text-2xl font-bold text-green-600 mt-1" data-testid="text-remote-total-co2">
                         {((results.annualRemoteCO2Emissions || 0) / 1000).toFixed(2)} tonnes
                       </p>
-                      <p className="text-sm text-gray-600 mt-1">10.315 tonnes/person × 4 people</p>
+                      <p className="text-sm text-gray-600 mt-1">10.315 tonnes/person × 2 people</p>
                     </div>
                   </div>
 

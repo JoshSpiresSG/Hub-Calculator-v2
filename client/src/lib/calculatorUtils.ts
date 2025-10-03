@@ -125,7 +125,8 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   
   // CO2 Emissions Calculation
   // Based on headcount carbon cost data
-  const TEAM_SIZE = 4; // 4 people on the team
+  const MANUAL_TEAM_SIZE = 4; // 4 people on manual operations team
+  const REMOTE_TEAM_SIZE = 2; // 2 people at Sphere operations center
   
   // Flight carbon cost per person per year (from Qantas data)
   const FLIGHT_CARBON_PER_PERSON = 10.14; // tonnes per person per year
@@ -145,11 +146,11 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   // Calculate annual CO2 emissions for the team
   // Manual operations: Flight carbon + Client headcount carbon + Driving carbon
   const manualCarbonPerPerson = FLIGHT_CARBON_PER_PERSON + CLIENT_HEADCOUNT_CARBON_PER_PERSON + drivingCO2PerPersonPerYear;
-  const annualManualCO2Emissions = manualCarbonPerPerson * TEAM_SIZE * 1000; // kg per year for team
+  const annualManualCO2Emissions = manualCarbonPerPerson * MANUAL_TEAM_SIZE * 1000; // kg per year for team
   
   // Remote operations: Only Sphere headcount carbon (no flights, no driving)
   const remoteCarbonPerPerson = SPHERE_HEADCOUNT_CARBON_PER_PERSON; // 10.315 tonnes
-  const annualRemoteCO2Emissions = remoteCarbonPerPerson * TEAM_SIZE * 1000; // kg per year for team
+  const annualRemoteCO2Emissions = remoteCarbonPerPerson * REMOTE_TEAM_SIZE * 1000; // kg per year for team
   
   // CO2 saved by switching to remote operations
   const annualCO2Saved = annualManualCO2Emissions - annualRemoteCO2Emissions; // kg per year
