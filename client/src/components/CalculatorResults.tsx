@@ -416,7 +416,7 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
               </div>
               <p className="text-2xl font-bold text-red-600" data-testid="text-manual-co2">{((results.annualManualCO2Emissions || 0) / 1000).toFixed(2)} tonnes</p>
               <p className="text-sm text-gray-600 mt-1">CO₂ emissions per year</p>
-              <p className="text-xs text-gray-500 mt-2">Flights + headcount (4 people)</p>
+              <p className="text-xs text-gray-500 mt-2">Flights + headcount + driving (4 people)</p>
             </div>
             <div className="bg-green-50 p-4 rounded-lg" data-testid="card-remote-co2">
               <div className="flex items-center mb-2">
@@ -444,8 +444,8 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
           <div className="mt-4 p-3 bg-blue-50 rounded-lg">
             <p className="text-sm text-gray-700">
               <i className="fa fa-info-circle text-blue-600 mr-2"></i>
-              <strong>Calculation basis:</strong> Manual operations include flight carbon (10.14 tonnes/person/year) plus client headcount carbon (5.874 tonnes/person/year). 
-              Remote operations only include Sphere operations center headcount carbon (10.315 tonnes/person/year) with zero flight emissions. 
+              <strong>Calculation basis:</strong> Manual operations include flight carbon (10.14 tonnes/person/year), client headcount carbon (5.874 tonnes/person/year), and driving emissions at mine site (5.01 tonnes/person/year, 100km/day for 208 days). 
+              Remote operations only include Sphere operations center headcount carbon (10.315 tonnes/person/year) with zero flight or driving emissions. 
               Calculation based on a team of 4 people.
             </p>
           </div>
@@ -471,7 +471,7 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
                   {/* Manual FIFO Operations Breakdown */}
                   <div className="mb-6">
                     <h4 className="font-semibold text-gray-800 mb-3">Manual FIFO Operations Carbon Emissions</h4>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
                       <div className="p-3 bg-gray-50 rounded">
                         <span className="text-gray-600">Flight Carbon per Person:</span>
                         <p className="font-medium text-lg" data-testid="text-flight-carbon-person">10.14 tonnes/year</p>
@@ -482,10 +482,15 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
                         <p className="font-medium text-lg" data-testid="text-client-headcount-person">5.874 tonnes/year</p>
                         <p className="text-xs text-gray-500 mt-1">Annual per-capita CO₂</p>
                       </div>
-                      <div className="p-3 bg-blue-50 rounded">
+                      <div className="p-3 bg-gray-50 rounded">
+                        <span className="text-gray-600">Driving Carbon per Person:</span>
+                        <p className="font-medium text-lg" data-testid="text-driving-carbon-person">5.01 tonnes/year</p>
+                        <p className="text-xs text-gray-500 mt-1">~208 days × 24kg/day (100km/day)</p>
+                      </div>
+                      <div className="p-3 bg-blue-50 rounded lg:col-span-2">
                         <span className="text-gray-600">Total Carbon per Person:</span>
-                        <p className="font-semibold text-lg text-blue-700" data-testid="text-manual-total-person">16.014 tonnes/year</p>
-                        <p className="text-xs text-gray-500 mt-1">10.14 + 5.874</p>
+                        <p className="font-semibold text-lg text-blue-700" data-testid="text-manual-total-person">{((results.annualManualCO2Emissions || 0) / 1000 / 4).toFixed(2)} tonnes/year</p>
+                        <p className="text-xs text-gray-500 mt-1">10.14 + 5.874 + 5.01</p>
                       </div>
                       <div className="p-3 bg-blue-50 rounded">
                         <span className="text-gray-600">Team Size:</span>
@@ -497,7 +502,7 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
                       <p className="text-2xl font-bold text-red-600 mt-1" data-testid="text-manual-total-co2">
                         {((results.annualManualCO2Emissions || 0) / 1000).toFixed(2)} tonnes
                       </p>
-                      <p className="text-sm text-gray-600 mt-1">16.014 tonnes/person × 4 people</p>
+                      <p className="text-sm text-gray-600 mt-1">{((results.annualManualCO2Emissions || 0) / 1000 / 4).toFixed(2)} tonnes/person × 4 people</p>
                     </div>
                   </div>
 

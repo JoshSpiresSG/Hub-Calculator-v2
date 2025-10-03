@@ -134,12 +134,20 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   const CLIENT_HEADCOUNT_CARBON_PER_PERSON = 5.874; // tonnes per person per year (Client)
   const SPHERE_HEADCOUNT_CARBON_PER_PERSON = 10.315; // tonnes per person per year (Sphere)
   
+  // Driving emissions at mine site (manual operations only)
+  const ROSTER_CYCLE_DAYS = 14; // 8 on + 6 off
+  const WORK_DAYS_PER_CYCLE = 8;
+  const cyclesPerYear = 365 / ROSTER_CYCLE_DAYS; // ~26 cycles
+  const workDaysPerPersonPerYear = cyclesPerYear * WORK_DAYS_PER_CYCLE; // ~208 days
+  const DRIVING_CO2_PER_DAY = 24; // kg CO2 per day (100km per day)
+  const drivingCO2PerPersonPerYear = (workDaysPerPersonPerYear * DRIVING_CO2_PER_DAY) / 1000; // tonnes
+  
   // Calculate annual CO2 emissions for the team
-  // Manual operations: Flight carbon + Client headcount carbon
-  const manualCarbonPerPerson = FLIGHT_CARBON_PER_PERSON + CLIENT_HEADCOUNT_CARBON_PER_PERSON; // 16.014 tonnes
+  // Manual operations: Flight carbon + Client headcount carbon + Driving carbon
+  const manualCarbonPerPerson = FLIGHT_CARBON_PER_PERSON + CLIENT_HEADCOUNT_CARBON_PER_PERSON + drivingCO2PerPersonPerYear;
   const annualManualCO2Emissions = manualCarbonPerPerson * TEAM_SIZE * 1000; // kg per year for team
   
-  // Remote operations: Only Sphere headcount carbon (no flights)
+  // Remote operations: Only Sphere headcount carbon (no flights, no driving)
   const remoteCarbonPerPerson = SPHERE_HEADCOUNT_CARBON_PER_PERSON; // 10.315 tonnes
   const annualRemoteCO2Emissions = remoteCarbonPerPerson * TEAM_SIZE * 1000; // kg per year for team
   
