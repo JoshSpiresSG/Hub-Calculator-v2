@@ -81,7 +81,7 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
       <Card className="mb-6">
         <CardContent className="p-6">
           <h3 className="text-lg font-semibold text-gray-800 mb-4">Annual Cost Comparison</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <div className="bg-blue-50 p-4 rounded-lg">
               <span className="font-medium text-gray-800 mb-2">Client Operations</span>
               <p className="text-xl font-semibold text-blue-700">{formatCurrency(results.annualManualLaborCost)}</p>
