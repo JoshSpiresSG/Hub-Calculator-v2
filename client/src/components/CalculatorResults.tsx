@@ -441,14 +441,6 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
               <p className="text-xs text-gray-500 mt-2">For team of 4 people</p>
             </div>
           </div>
-          <div className="mt-4 p-3 bg-blue-50 rounded-lg">
-            <p className="text-sm text-gray-700">
-              <i className="fa fa-info-circle text-blue-600 mr-2"></i>
-              <strong>Calculation basis:</strong> Manual operations include flight carbon (10.14 tonnes/person/year), client headcount carbon (5.874 tonnes/person/year), and driving emissions at mine site (5.01 tonnes/person/year, 100km/day for 208 days). 
-              Remote operations only include Sphere operations center headcount carbon (10.315 tonnes/person/year) with zero flight or driving emissions. 
-              Calculation based on a team of 4 people.
-            </p>
-          </div>
           <div className="mt-6 flex justify-center">
             <Dialog open={isCO2DialogOpen} onOpenChange={setIsCO2DialogOpen}>
               <DialogTrigger asChild>
