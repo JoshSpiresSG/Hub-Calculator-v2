@@ -413,7 +413,7 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
                 </div>
                 <span className="font-medium text-gray-800">Manual FIFO Operations</span>
               </div>
-              <p className="text-2xl font-bold text-red-600" data-testid="text-manual-co2">{(results.annualManualCO2Emissions || 0).toLocaleString()} kg</p>
+              <p className="text-2xl font-bold text-red-600" data-testid="text-manual-co2">{((results.annualManualCO2Emissions || 0) / 1000).toFixed(2)} tonnes</p>
               <p className="text-sm text-gray-600 mt-1">CO₂ emissions per year</p>
               <p className="text-xs text-gray-500 mt-2">Based on 8:6 roster (~52 flights/year)</p>
             </div>
@@ -424,7 +424,7 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
                 </div>
                 <span className="font-medium text-gray-800">Remote Drone Operations</span>
               </div>
-              <p className="text-2xl font-bold text-green-600" data-testid="text-remote-co2">{(results.annualRemoteCO2Emissions || 0).toLocaleString()} kg</p>
+              <p className="text-2xl font-bold text-green-600" data-testid="text-remote-co2">{((results.annualRemoteCO2Emissions || 0) / 1000).toFixed(2)} tonnes</p>
               <p className="text-sm text-gray-600 mt-1">CO₂ emissions per year</p>
               <p className="text-xs text-gray-500 mt-2">Zero FIFO flights required</p>
             </div>
@@ -435,9 +435,9 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
                 </div>
                 <span className="font-medium text-gray-800">Annual CO₂ Reduction</span>
               </div>
-              <p className="text-2xl font-bold text-blue-600" data-testid="text-co2-saved">{(results.annualCO2Saved || 0).toLocaleString()} kg</p>
+              <p className="text-2xl font-bold text-blue-600" data-testid="text-co2-saved">{((results.annualCO2Saved || 0) / 1000).toFixed(2)} tonnes</p>
               <p className="text-sm text-gray-600 mt-1">CO₂ saved per year</p>
-              <p className="text-xs text-gray-500 mt-2">~{((results.annualCO2Saved || 0) / 1000).toFixed(1)} tonnes per person</p>
+              <p className="text-xs text-gray-500 mt-2">Per person, per year</p>
             </div>
           </div>
           <div className="mt-4 p-3 bg-blue-50 rounded-lg">
