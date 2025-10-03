@@ -102,14 +102,8 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
               <p className="text-xs text-gray-600 mt-1">{formatCurrency(results.totalDroneBoxCost / (results.annualRemoteHours || 1))}/hour</p>
               <p className="text-xs text-green-600 mt-1 font-medium">Save: {formatCurrency(results.annualManualLaborCost - results.totalDroneBoxCost)}</p>
             </div>
-            <div className="bg-purple-50 p-4 rounded-lg">
-              <span className="font-medium text-gray-800 mb-2">Hourly Rate Cost</span>
-              <p className="text-xl font-semibold text-purple-700">{formatCurrency((results.monthlySphereBackedCost || 0) * 12)}</p>
-              <p className="text-sm text-gray-600 mt-1">Annual hourly rate cost</p>
-              <p className="text-xs text-purple-600 mt-1 font-medium">Save: {formatCurrency(results.annualManualLaborCost - ((results.monthlySphereBackedCost || 0) * 12))}</p>
-            </div>
           </div>
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="p-4 bg-green-100 rounded-lg text-center">
               <span className="font-medium text-gray-800 mb-2">Best Savings: HubT</span>
               <p className="text-2xl font-bold text-green-600">{formatCurrency(results.annualManualLaborCost - results.hubtCost)}</p>
@@ -122,13 +116,6 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
               <p className="text-2xl font-bold text-green-600">{formatCurrency(results.annualManualLaborCost - results.totalDroneBoxCost)}</p>
               <p className="text-sm text-gray-600 mt-1">
                 {(((results.annualManualLaborCost - results.totalDroneBoxCost) / results.annualManualLaborCost) * 100).toFixed(1)}% cost reduction
-              </p>
-            </div>
-            <div className="p-4 bg-purple-100 rounded-lg text-center">
-              <span className="font-medium text-gray-800 mb-2">Hourly Rate Savings</span>
-              <p className="text-2xl font-bold text-purple-600">{formatCurrency(results.annualManualLaborCost - ((results.monthlySphereBackedCost || 0) * 12))}</p>
-              <p className="text-sm text-gray-600 mt-1">
-                {(((results.annualManualLaborCost - ((results.monthlySphereBackedCost || 0) * 12)) / results.annualManualLaborCost) * 100).toFixed(1)}% cost reduction
               </p>
             </div>
           </div>
