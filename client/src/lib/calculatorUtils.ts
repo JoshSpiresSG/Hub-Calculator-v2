@@ -124,20 +124,26 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   const efficiencyGain = annualManualHours > 0 ? Math.round((annualHoursSaved / annualManualHours) * 100) : 0;
   
   // CO2 Emissions Calculation
-  // Based on 8:6 roster pattern (8 days on, 6 days off = 14-day cycle)
-  const ROSTER_CYCLE_DAYS = 14; // 8 on + 6 off
-  const FLIGHTS_PER_CYCLE = 2; // One flight to site, one flight back
-  const cyclesPerYear = 365 / ROSTER_CYCLE_DAYS; // ~26 cycles per year
-  const fifoFlightsPerYear = cyclesPerYear * FLIGHTS_PER_CYCLE; // ~52 flights per year
-  
-  // Qantas data: ~2.2 hour flight, 90kg CO2 per passenger per hour
-  const FLIGHT_DURATION_HOURS = 2.2;
-  const CO2_PER_PASSENGER_PER_HOUR = 90; // kg
+  // Based on headcount carbon cost data
   const TEAM_SIZE = 4; // 4 people on the team
   
+  // Flight carbon cost per person per year (from Qantas data)
+  const FLIGHT_CARBON_PER_PERSON = 10.14; // tonnes per person per year
+  
+  // Headcount carbon cost per person per year
+  const CLIENT_HEADCOUNT_CARBON_PER_PERSON = 5.874; // tonnes per person per year (Client)
+  const SPHERE_HEADCOUNT_CARBON_PER_PERSON = 10.315; // tonnes per person per year (Sphere)
+  
   // Calculate annual CO2 emissions for the team
-  const annualManualCO2Emissions = fifoFlightsPerYear * FLIGHT_DURATION_HOURS * CO2_PER_PASSENGER_PER_HOUR * TEAM_SIZE; // kg per year for team
-  const annualRemoteCO2Emissions = 0; // Remote operations eliminate FIFO flights
+  // Manual operations: Flight carbon + Client headcount carbon
+  const manualCarbonPerPerson = FLIGHT_CARBON_PER_PERSON + CLIENT_HEADCOUNT_CARBON_PER_PERSON; // 16.014 tonnes
+  const annualManualCO2Emissions = manualCarbonPerPerson * TEAM_SIZE * 1000; // kg per year for team
+  
+  // Remote operations: Only Sphere headcount carbon (no flights)
+  const remoteCarbonPerPerson = SPHERE_HEADCOUNT_CARBON_PER_PERSON; // 10.315 tonnes
+  const annualRemoteCO2Emissions = remoteCarbonPerPerson * TEAM_SIZE * 1000; // kg per year for team
+  
+  // CO2 saved by switching to remote operations
   const annualCO2Saved = annualManualCO2Emissions - annualRemoteCO2Emissions; // kg per year
   
   
