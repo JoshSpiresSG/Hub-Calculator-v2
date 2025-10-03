@@ -123,6 +123,11 @@ export const calculationResultSchema = z.object({
   // Original input values for display
   inputAirtimeHours: z.number(),
   inputOperationHours: z.number(),
+  
+  // CO2 emissions comparison
+  annualManualCO2Emissions: z.number(),
+  annualRemoteCO2Emissions: z.number(),
+  annualCO2Saved: z.number(),
 });
 
 export type CalculationResult = z.infer<typeof calculationResultSchema>;

@@ -123,6 +123,21 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   const annualHoursSaved = annualManualHours - annualRemoteHours;
   const efficiencyGain = annualManualHours > 0 ? Math.round((annualHoursSaved / annualManualHours) * 100) : 0;
   
+  // CO2 Emissions Calculation
+  // Based on 8:6 roster pattern (8 days on, 6 days off = 14-day cycle)
+  const ROSTER_CYCLE_DAYS = 14; // 8 on + 6 off
+  const FLIGHTS_PER_CYCLE = 2; // One flight to site, one flight back
+  const cyclesPerYear = 365 / ROSTER_CYCLE_DAYS; // ~26 cycles per year
+  const fifoFlightsPerYear = cyclesPerYear * FLIGHTS_PER_CYCLE; // ~52 flights per year
+  
+  // Qantas data: ~2 hour flight uses 90kg CO2 per passenger
+  const CO2_PER_PASSENGER_PER_FLIGHT = 90; // kg
+  
+  // Calculate annual CO2 emissions
+  const annualManualCO2Emissions = fifoFlightsPerYear * CO2_PER_PASSENGER_PER_FLIGHT; // kg per year
+  const annualRemoteCO2Emissions = 0; // Remote operations eliminate FIFO flights
+  const annualCO2Saved = annualManualCO2Emissions - annualRemoteCO2Emissions; // kg per year
+  
   
   return {
     annualTravelCost,
@@ -160,6 +175,10 @@ export function calculateResults(input: CalculationInput): CalculationResult {
     netWorkDaysPerYear: NET_WORK_DAYS_PER_YEAR,
     // Original input values for display
     inputAirtimeHours: input.airtimeHours,
-    inputOperationHours: input.operationHours
+    inputOperationHours: input.operationHours,
+    // CO2 emissions comparison
+    annualManualCO2Emissions,
+    annualRemoteCO2Emissions,
+    annualCO2Saved
   };
 }

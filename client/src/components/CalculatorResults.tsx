@@ -401,6 +401,56 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
         </CardContent>
       </Card>
 
+      {/* Environmental Impact */}
+      <Card className="mb-6">
+        <CardContent className="p-6">
+          <h3 className="text-lg font-semibold text-gray-800 mb-4">Environmental Impact</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-red-50 p-4 rounded-lg" data-testid="card-manual-co2">
+              <div className="flex items-center mb-2">
+                <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mr-3">
+                  <i className="fa fa-plane text-red-600"></i>
+                </div>
+                <span className="font-medium text-gray-800">Manual FIFO Operations</span>
+              </div>
+              <p className="text-2xl font-bold text-red-600" data-testid="text-manual-co2">{(results.annualManualCO2Emissions || 0).toLocaleString()} kg</p>
+              <p className="text-sm text-gray-600 mt-1">CO₂ emissions per year</p>
+              <p className="text-xs text-gray-500 mt-2">Based on 8:6 roster (~52 flights/year)</p>
+            </div>
+            <div className="bg-green-50 p-4 rounded-lg" data-testid="card-remote-co2">
+              <div className="flex items-center mb-2">
+                <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                  <i className="fa fa-drone text-green-600"></i>
+                </div>
+                <span className="font-medium text-gray-800">Remote Drone Operations</span>
+              </div>
+              <p className="text-2xl font-bold text-green-600" data-testid="text-remote-co2">{(results.annualRemoteCO2Emissions || 0).toLocaleString()} kg</p>
+              <p className="text-sm text-gray-600 mt-1">CO₂ emissions per year</p>
+              <p className="text-xs text-gray-500 mt-2">Zero FIFO flights required</p>
+            </div>
+            <div className="bg-blue-50 p-4 rounded-lg" data-testid="card-co2-saved">
+              <div className="flex items-center mb-2">
+                <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                  <i className="fa fa-leaf text-blue-600"></i>
+                </div>
+                <span className="font-medium text-gray-800">Annual CO₂ Reduction</span>
+              </div>
+              <p className="text-2xl font-bold text-blue-600" data-testid="text-co2-saved">{(results.annualCO2Saved || 0).toLocaleString()} kg</p>
+              <p className="text-sm text-gray-600 mt-1">CO₂ saved per year</p>
+              <p className="text-xs text-gray-500 mt-2">~{((results.annualCO2Saved || 0) / 1000).toFixed(1)} tonnes per person</p>
+            </div>
+          </div>
+          <div className="mt-4 p-3 bg-blue-50 rounded-lg">
+            <p className="text-sm text-gray-700">
+              <i className="fa fa-info-circle text-blue-600 mr-2"></i>
+              <strong>Calculation basis:</strong> Qantas data shows ~2 hour FIFO flights emit 90kg CO₂ per passenger. 
+              An 8:6 roster (8 days on, 6 days off) requires approximately 52 return flights per year. 
+              Remote operations eliminate all FIFO travel emissions.
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Additional Benefits */}
       <Card className="mb-6">
         <CardContent className="p-6">
