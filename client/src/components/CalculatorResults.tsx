@@ -415,7 +415,7 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
               </div>
               <p className="text-2xl font-bold text-red-600" data-testid="text-manual-co2">{((results.annualManualCO2Emissions || 0) / 1000).toFixed(2)} tonnes</p>
               <p className="text-sm text-gray-600 mt-1">CO₂ emissions per year</p>
-              <p className="text-xs text-gray-500 mt-2">Based on 8:6 roster (~52 flights/year)</p>
+              <p className="text-xs text-gray-500 mt-2">For team of 4 people</p>
             </div>
             <div className="bg-green-50 p-4 rounded-lg" data-testid="card-remote-co2">
               <div className="flex items-center mb-2">
@@ -437,15 +437,15 @@ export default function CalculatorResults({ results, isLoading }: CalculatorResu
               </div>
               <p className="text-2xl font-bold text-blue-600" data-testid="text-co2-saved">{((results.annualCO2Saved || 0) / 1000).toFixed(2)} tonnes</p>
               <p className="text-sm text-gray-600 mt-1">CO₂ saved per year</p>
-              <p className="text-xs text-gray-500 mt-2">Per person, per year</p>
+              <p className="text-xs text-gray-500 mt-2">For team of 4 people</p>
             </div>
           </div>
           <div className="mt-4 p-3 bg-blue-50 rounded-lg">
             <p className="text-sm text-gray-700">
               <i className="fa fa-info-circle text-blue-600 mr-2"></i>
-              <strong>Calculation basis:</strong> Qantas data shows ~2 hour FIFO flights emit 90kg CO₂ per passenger. 
+              <strong>Calculation basis:</strong> Qantas data shows 2.2 hour FIFO flights emit 90kg CO₂ per passenger per hour. 
               An 8:6 roster (8 days on, 6 days off) requires approximately 52 return flights per year. 
-              Remote operations eliminate all FIFO travel emissions.
+              Calculation based on a team of 4 people. Remote operations eliminate all FIFO travel emissions.
             </p>
           </div>
         </CardContent>

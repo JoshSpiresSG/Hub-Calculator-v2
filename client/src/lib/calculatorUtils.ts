@@ -130,11 +130,13 @@ export function calculateResults(input: CalculationInput): CalculationResult {
   const cyclesPerYear = 365 / ROSTER_CYCLE_DAYS; // ~26 cycles per year
   const fifoFlightsPerYear = cyclesPerYear * FLIGHTS_PER_CYCLE; // ~52 flights per year
   
-  // Qantas data: ~2 hour flight uses 90kg CO2 per passenger
-  const CO2_PER_PASSENGER_PER_FLIGHT = 90; // kg
+  // Qantas data: ~2.2 hour flight, 90kg CO2 per passenger per hour
+  const FLIGHT_DURATION_HOURS = 2.2;
+  const CO2_PER_PASSENGER_PER_HOUR = 90; // kg
+  const TEAM_SIZE = 4; // 4 people on the team
   
-  // Calculate annual CO2 emissions
-  const annualManualCO2Emissions = fifoFlightsPerYear * CO2_PER_PASSENGER_PER_FLIGHT; // kg per year
+  // Calculate annual CO2 emissions for the team
+  const annualManualCO2Emissions = fifoFlightsPerYear * FLIGHT_DURATION_HOURS * CO2_PER_PASSENGER_PER_HOUR * TEAM_SIZE; // kg per year for team
   const annualRemoteCO2Emissions = 0; // Remote operations eliminate FIFO flights
   const annualCO2Saved = annualManualCO2Emissions - annualRemoteCO2Emissions; // kg per year
   
